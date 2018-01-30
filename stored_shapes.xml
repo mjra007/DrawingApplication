@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- edited with XML Spy v4.4 U (http://www.xmlspy.com) by University of Greenwich (University of Greenwich) -->
+<shape_script>
+    <shape>
+        <type>line</type>
+        <vertices>
+            <x>5</x>
+            <y>5</y>
+		    <x>9</x>
+            <y>40</y>
+		</vertices>
+        <colour>blue</colour>
+        <thickness>10</thickness>             
+    </shape>
+    <shape>
+        <type>line</type>
+        <vertices>
+            <x>50</x>
+            <y>40</y>
+            <x>150</x>
+            <y>140</y>
+        </vertices>
+        <colour>red</colour>
+        <thickness>10</thickness>                
+    </shape>
+    <shape>
+        <type>oval</type>
+        <vertices>
+            <x>5</x>
+            <y>5</y>
+            <x>50</x>
+            <y>40</y>
+        </vertices>
+        <colour>blue</colour>
+        <thickness>5</thickness>             
+    </shape>
+    <shape>
+        <type>line</type>
+        <vertices>
+            <x>95</x>
+            <y>45</y>
+            <x>17</x>
+            <y>240</y>
+        </vertices>
+        <colour>green</colour>
+        <thickness>10</thickness>                
+    </shape>
+    
+</shape_script>
