@@ -6,6 +6,7 @@
 package simpledrawer;
 
 import java.awt.Point;
+import java.util.List;
 
 /**
  *
@@ -24,6 +25,6 @@ public interface InteractiveShape {
     */
     public boolean contains(Point p);
     
-    public void translate(Point p);
+    public Shape translate(List<Point> list,Point offset);
     
 }

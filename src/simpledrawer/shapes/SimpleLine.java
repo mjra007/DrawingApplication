@@ -20,7 +20,7 @@ import simpledrawer.Drawer;
 import simpledrawer.InteractiveShape;
 import simpledrawer.Shape;
 
-public class SimpleLine extends Shape implements Drawer, InteractiveShape{
+public class SimpleLine extends Shape implements Drawer, InteractiveShape {
 
     //To draw a line you only need a starting point and end point
     public SimpleLine(Point startingPoint, Point endingPoint, Color c, int t, ShapeType st) {
@@ -50,7 +50,7 @@ public class SimpleLine extends Shape implements Drawer, InteractiveShape{
         //the second point on the list is the last point of the line
         Point point = super.getVertice(1);
         point.y = yEnd;
-        super.setVertice(1, point);    
+        super.setVertice(1, point);
     }
 
     public int getXStart() {
@@ -61,7 +61,7 @@ public class SimpleLine extends Shape implements Drawer, InteractiveShape{
         //the first point on the list is the last point of the line
         Point point = super.getVertice(0);
         point.x = xStart;
-        super.setVertice(0, point);    
+        super.setVertice(0, point);
     }
 
     public int getYStart() {
@@ -72,7 +72,7 @@ public class SimpleLine extends Shape implements Drawer, InteractiveShape{
         //the first point on the list is the last point of the line
         Point point = super.getVertice(0);
         point.y = yStart;
-        super.setVertice(0, point);       
+        super.setVertice(0, point);
     }
 
     @Override
@@ -85,7 +85,7 @@ public class SimpleLine extends Shape implements Drawer, InteractiveShape{
         // get start point
         int xs = this.getXStart();
         int ys = this.getYStart();
-        
+
         // draw the line
         g2d.drawLine(xs, ys, this.getXEnd(), this.getYEnd());
     }
@@ -93,20 +93,22 @@ public class SimpleLine extends Shape implements Drawer, InteractiveShape{
     @Override
     public boolean contains(Point p) {
         boolean doesIt = false;
-        Line2D.Double line = new Line2D.Double(this.getXStart(),this.getXEnd(),this.getYStart(), this.getYEnd());
+        Line2D.Double line = new Line2D.Double(this.getXStart(), this.getXEnd(), this.getYStart(), this.getYEnd());
         Rectangle rect = line.getBounds();
-        if(rect.contains(p)) doesIt = true;
+        if (rect.contains(p)) {
+            doesIt = true;
+        }
         return doesIt;
     }
 
     @Override
-    public void translate(Point p) {
-        Point pointA = this.getVertice(0);
-        Point pointB = this.getVertice(1);
-        pointA.translate(p.x, p.y);
-        pointB.translate(p.x, p.y);
-        this.setVertice(0, pointA);
-        this.setVertice(1, pointB);
+    public Shape translate(List<Point> list,Point offset) {
+        Shape shape =null;
+        int offsetX = offset.x;
+        int offsetY = offset.y;
+        shape.setVertice(0, new Point(list.get(0).x + offsetX, list.get(0).y + offsetY));
+        shape.setVertice(1, new Point(list.get(1).x+ offsetX, list.get(1).y + offsetY));
+        return shape;
     }
 
 }

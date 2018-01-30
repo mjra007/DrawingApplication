@@ -76,17 +76,15 @@ public class SimpleTriangle extends Shape implements Drawer, InteractiveShape{
         return doesIt;    
     }
     
-        @Override
-    public void translate(Point p) {
-        Point pointA = this.getVertice(0);
-        Point pointB = this.getVertice(1);
-        Point pointC = this.getVertice(2);
-        pointA.translate(p.x, p.y);
-        pointB.translate(p.x, p.y);
-        pointC.translate(p.x, p.y);
-        this.setVertice(0, pointA);
-        this.setVertice(1, pointB);
-        this.setVertice(2, pointC);
+    @Override
+    public Shape translate(List<Point> list,Point offset) {
+        Shape shape =this;
+        int offsetX = offset.x;
+        int offsetY = offset.y;
+        shape.setVertice(0, new Point(list.get(0).x + offsetX, list.get(0).y + offsetY));
+        shape.setVertice(1, new Point(list.get(1).x+ offsetX, list.get(1).y + offsetY));
+        shape.setVertice(2, new Point(list.get(2).x+ offsetX, list.get(2).y + offsetY));
+        return shape;
     }
       
 }

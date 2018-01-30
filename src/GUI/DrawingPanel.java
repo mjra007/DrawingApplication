@@ -52,9 +52,12 @@ public class DrawingPanel extends JPanel {
 
     private int indexSelectedShape;
     
+    //Holds the 
     int orginalX, orginalY;
-    int TranslateX, TranslateY;
-     int TranslateX2, TranslateY2;
+    
+    //holds the coordinates to be translated
+    private List<Point> translateCoords; 
+    
     private DrawingState state = DrawingState.DRAWING;
     /* Default constructor.  Sets default values for line colour, thickness 
      * and shape type.
@@ -173,13 +176,10 @@ public class DrawingPanel extends JPanel {
             Shape selected = getShapeAtLoc(e.getPoint());
             if(selected !=null){
                 System.out.println(selected.getShapeType().toString());
-                
                 orginalX = e.getX();
                 orginalY= e.getY();
-                TranslateX = selected.getVertice(0).x;
-                TranslateY = selected.getVertice(0).y;
-                TranslateX2 = selected.getVertice(1).x;
-                TranslateY2 = selected.getVertice(1).y;
+                translateCoords = new ArrayList<Point>();
+                for(Point coords:selected.getVertices()) translateCoords.add(coords);
                 state = DrawingState.MOVING;
                 return;
             }
@@ -239,14 +239,9 @@ public class DrawingPanel extends JPanel {
         public void mouseDragged(MouseEvent e) {
             if(DrawingState.MOVING.equals(state)){
                InteractiveShape selected = (InteractiveShape)shapes.get(indexSelectedShape);
-               int offsetX = e.getX() - orginalX;
+                int offsetX = e.getX() - orginalX;
                int offsetY = e.getY() - orginalY;
-               int newTranslateX = TranslateX+offsetX;
-               int newTranslateY = TranslateY + offsetY;
-               Shape shape = (Shape) selected;
-               shape.setVertice(0, new Point(newTranslateX, newTranslateY));
-               shape.setVertice(1, new Point(TranslateX2+offsetX, TranslateY2+offsetY));
-               shapes.add(indexSelectedShape, shape);
+               shapes.add(indexSelectedShape, selected.translate(translateCoords, new Point(offsetX,offsetY)));
                repaint();
             }
         }
