@@ -12,7 +12,7 @@ import java.awt.Graphics2D;
  *
  * @author micae
  */
-public interface Drawer {
+public interface DrawableI {
 
     /**
     * Draw the shape using a Graphics2D object

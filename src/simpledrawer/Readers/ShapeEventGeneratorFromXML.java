@@ -17,7 +17,7 @@ import java.util.*;
 import java.io.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import simpledrawer.Shape;
+import simpledrawer.Entity;
 import simpledrawer.shapes.ShapeType;
 
 
@@ -68,7 +68,7 @@ public class ShapeEventGeneratorFromXML extends DefaultHandler {
     private final XMLReader xmlReader;
 
     // details of current shape being read
-    private Shape currentShape;
+    private Entity currentShape;
 
     /**
      * 
@@ -128,7 +128,7 @@ public class ShapeEventGeneratorFromXML extends DefaultHandler {
 
         switch (currentTag) {
             case SHAPE_TAG:
-                currentShape = new Shape(); // starting a new shape so create object
+//                currentShape = new Entity(); // starting a new shape so create object
                 currentShape.setEventType("SHAPE");
                 break;
         }
@@ -161,11 +161,11 @@ public class ShapeEventGeneratorFromXML extends DefaultHandler {
                 currentShape.setShapeType(ShapeType.valueOf(val.toUpperCase()));
                 break;
             case X_TAG: // an x tag can either be for the start or end
-                    currentShape.getVertices().add(new Point(Integer.parseInt(val),0));
+                 //   currentShape.getVertices().add(new Point(Integer.parseInt(val),0));
                 break;
             case Y_TAG: // an y tag can either be for the start or end 
-                 int x = currentShape.getVertice(currentShape.getVertices().size()-1).x;
-                 currentShape.setVertice(currentShape.getVertices().size()-1,new Point(x,Integer.parseInt(val)));
+              //   int x = currentShape.getVertice(currentShape.getVertices().size()-1).x;
+             //    currentShape.setVertice(currentShape.getVertices().size()-1,new Point(x,Integer.parseInt(val)));
                 break;
             case COLOUR_TAG:
                 currentShape.setColourByString(val);
@@ -284,7 +284,7 @@ public class ShapeEventGeneratorFromXML extends DefaultHandler {
         ShapeEventGeneratorFromXML me = new ShapeEventGeneratorFromXML();
         ShapeEventListener sel = new ShapeEventListener() {
             @Override
-            public void processShapeEvent(Object originator, Shape se) {
+            public void processShapeEvent(Object originator, Entity se) {
                 System.out.println("***** " + se);
             }
         };

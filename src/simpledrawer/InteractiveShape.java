@@ -25,6 +25,6 @@ public interface InteractiveShape {
     */
     public boolean contains(Point p);
     
-    public Shape translate(List<Point> list,Point offset);
+    public Container translate(Point offset);
     
 }

@@ -9,9 +9,9 @@
  */
 package GUI;
 
-import simpledrawer.shapes.SimpleOval;
-import simpledrawer.shapes.SimpleTriangle;
-import simpledrawer.shapes.SimpleLine;
+import simpledrawer.shapes.SOval;
+import simpledrawer.shapes.STriangle;
+import simpledrawer.shapes.SLine;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -25,12 +25,15 @@ import java.util.List;
 import java.util.Vector;
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
-import simpledrawer.Drawer;
+import simpledrawer.Container;
+import simpledrawer.ContainerFactory;
 import simpledrawer.InteractiveShape;
-import simpledrawer.Shape;
-import simpledrawer.shapes.SimpleRectangle;
+import simpledrawer.Entity;
+import simpledrawer.shapes.SRectangle;
 import simpledrawer.shapes.ShapeType;
 import sun.awt.resources.awt;
+import simpledrawer.DrawableI;
+import simpledrawer.Utils;
 
 public class DrawingPanel extends JPanel {
 
@@ -40,7 +43,6 @@ public class DrawingPanel extends JPanel {
     private ShapeType currentShapeType;
     private float currentBrightness;
     private int currentRotation;
-    
 
     private List<Point> currentPoints; // x and y points for shape being drawn
 
@@ -48,17 +50,15 @@ public class DrawingPanel extends JPanel {
     private int x, y;
 
     // A List that stores the shapes that appear on the JPanel
-    private List<Shape> shapes; 
+    private List<Container> containers;
 
     private int indexSelectedShape;
-    
+
     //Holds the 
     int orginalX, orginalY;
-    
-    //holds the coordinates to be translated
-    private List<Point> translateCoords; 
-    
+
     private DrawingState state = DrawingState.DRAWING;
+
     /* Default constructor.  Sets default values for line colour, thickness 
      * and shape type.
      */
@@ -82,7 +82,7 @@ public class DrawingPanel extends JPanel {
         currentBrightness = 1;
 
         // instantiate the ArrayList to store shapes
-        shapes = new ArrayList<>();
+        containers = new ArrayList<>();
     }
 
     /*
@@ -108,10 +108,10 @@ public class DrawingPanel extends JPanel {
 
         // Loop though the ArrayList drawing
         // all the shapes stored in it
-        for (Object aShape : shapes) {
+        for (Object aShape : containers) {
             // draw the correct sort of shape: line or oval or triangle
-            if (aShape instanceof Drawer) {
-                Drawer ld = (Drawer) aShape;
+            if (aShape instanceof DrawableI) {
+                DrawableI ld = (DrawableI) aShape;
                 ld.drawShape(g2d, currentBrightness);
             }
         }
@@ -119,9 +119,9 @@ public class DrawingPanel extends JPanel {
         g2d.setStroke(s);  // restore saved stroke
 
         if (currentPoints != null && currentPoints.size() > 1) { // draw dot where line started
-            for(int i =0;i<currentPoints.size();i++){
-            g2d.setColor(currentColor);
-            g2d.fillOval(currentPoints.get(i).x, currentPoints.get(i).y, 3, 3);
+            for (int i = 0; i < currentPoints.size(); i++) {
+                g2d.setColor(currentColor);
+                g2d.fillOval(currentPoints.get(i).x, currentPoints.get(i).y, 3, 3);
             }
         }
     }
@@ -146,13 +146,14 @@ public class DrawingPanel extends JPanel {
     public float getCurrentBrightness() {
         return currentBrightness;
     }
-    
+
     /**
      * @return the currentColor
      */
     public Color getColour() {
         return this.currentColor;
     }
+
     /*
      * currentBrightness is passed in as a number in the range
      * 0 to 1.  In this class it needs to be in the range 0.75 to
@@ -173,17 +174,15 @@ public class DrawingPanel extends JPanel {
             // reset the rotation to 0 otherwise things get messy.
 
             currentRotation = 0;
-            Shape selected = getShapeAtLoc(e.getPoint());
-            if(selected !=null){
-                System.out.println(selected.getShapeType().toString());
+       /*     Container selected = getContainerAtLoc(e.getPoint());
+            if (selected != null) {
+       //        System.out.println(selected.getShapeType().toString());
                 orginalX = e.getX();
-                orginalY= e.getY();
-                translateCoords = new ArrayList<Point>();
-                for(Point coords:selected.getVertices()) translateCoords.add(coords);
+                orginalY = e.getY();
                 state = DrawingState.MOVING;
                 return;
-            }
-             state = DrawingState.DRAWING;
+            }*/
+            state = DrawingState.DRAWING;
 
             if (currentPoints == null) { // must be starting a new shape
                 currentPoints = new ArrayList<>();
@@ -192,57 +191,28 @@ public class DrawingPanel extends JPanel {
                 firstPoint.y = e.getY();
                 currentPoints.add(firstPoint);
             } else { // shape must have already been started
-                // decide what to do based on the current shape
-                switch (currentShapeType) {
-                    case LINE: // Draw the line 
-                        SimpleLine sl = new SimpleLine(new Point(currentPoints.get(0).x, currentPoints.get(0).y), new Point(e.getX(), e.getY()),
-                                currentColor, currentThickness, ShapeType.LINE);
-                        shapes.add(sl);
-                        currentPoints = null;
-                        break;
-                    case OVAL: // Draw the oval
-                        SimpleOval so = new SimpleOval(new Point(currentPoints.get(0).x, currentPoints.get(0).y), new Point(e.getX(), e.getY()),
-                                currentColor, currentThickness, ShapeType.OVAL);
-                        shapes.add(so);
-                        currentPoints = null;
-                        break;
-                    case TRIANGLE: // May or may not have finished the triangle
-                        Point nextPoint = new Point();
-                        nextPoint.x = e.getX();
-                        nextPoint.y = e.getY();
-                        currentPoints.add(nextPoint);
-                        if (currentPoints.size() == 3) { // 3 points so must be complete triangle
-                            SimpleTriangle st = new SimpleTriangle(currentPoints, currentColor, currentThickness, ShapeType.TRIANGLE);
-                            shapes.add(st);
-                            currentPoints = null;
-                            break;
-                        }
-                        break;
-                    case RECTANGLE:
-                        currentPoints.add(new Point(e.getX(), e.getY()));
-                        SimpleRectangle st = new SimpleRectangle(currentPoints, currentColor, currentThickness, ShapeType.RECTANGLE);
-                        shapes.add(st);
-                        currentPoints = null;
-                        break;
+                // decide what to do based on the current shape;
+                Container container = ContainerFactory.createEntity(currentPoints, currentColor, currentThickness, currentShapeType);
+                containers.add(container);
+                currentPoints = null;
 
-                }
             }
             repaint(); // causes paintComponent() to be called
         }
 
- 
     }
-    
-    public class MouseMotionWatcher implements MouseMotionListener{
+
+    public class MouseMotionWatcher implements MouseMotionListener {
 
         @Override
         public void mouseDragged(MouseEvent e) {
-            if(DrawingState.MOVING.equals(state)){
-               InteractiveShape selected = (InteractiveShape)shapes.get(indexSelectedShape);
+            if (DrawingState.MOVING.equals(state)) {
+                InteractiveShape selected = (InteractiveShape) containers.get(indexSelectedShape);
                 int offsetX = e.getX() - orginalX;
-               int offsetY = e.getY() - orginalY;
-               shapes.add(indexSelectedShape, selected.translate(translateCoords, new Point(offsetX,offsetY)));
-               repaint();
+                int offsetY = e.getY() - orginalY;
+                containers.add(indexSelectedShape, selected.translate(new Point(offsetX, offsetY)));
+                //shapes.add(indexSelectedShape, selected.translate(translateCoords, new Point(offsetX,offsetY)));
+                repaint();
             }
         }
 
@@ -250,29 +220,27 @@ public class DrawingPanel extends JPanel {
         public void mouseMoved(MouseEvent e) {
 
         }
-    
+
     }
 
     /**
      * @param locPoint coordinates of the point to check
      * @return the shape at that location or null if there is nothing
-     * 
+     *
      */
-    public Shape getShapeAtLoc(Point locPoint){
-        Shape shape = null;
-        int count =0;
-         for(Shape s: this.shapes){
-             if(s instanceof InteractiveShape){
-                if(((InteractiveShape) s).contains(locPoint)){
+    public Container getContainerAtLoc(Point locPoint) {
+        Container container = null;
+        int count = 0;
+        for (Container s : this.containers) {
+                if ( s.contains(locPoint)) {
                     this.indexSelectedShape = count;
-                    shape = s;
-                }
-             }
-             count++;
-         }
-         return shape;
+                    container = s;
+            }
+            count++;
+        }
+        return container;
     }
-    
+
     public void setCurrentThickness(int currentThickness) {
         this.currentThickness = currentThickness;
     }
@@ -283,7 +251,7 @@ public class DrawingPanel extends JPanel {
 
     public void clearDisplay() {
         // Empty the ArrayList and clear the display.
-        shapes.clear();
+        containers.clear();
         repaint();
     }
 
@@ -298,6 +266,6 @@ public class DrawingPanel extends JPanel {
     }
 
     public void setShapes(List shapes) {
-        this.shapes = shapes;
+        this.containers = shapes;
     }
 }

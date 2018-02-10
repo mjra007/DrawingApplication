@@ -10,8 +10,8 @@
  */
 package simpledrawer.Readers;
 
-import simpledrawer.shapes.SimpleOval;
-import simpledrawer.shapes.SimpleLine;
+import simpledrawer.shapes.SOval;
+import simpledrawer.shapes.SLine;
 import com.google.gson.*;
 import java.awt.Color;
 import java.awt.Point;
@@ -22,19 +22,19 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import simpledrawer.Shape;
-import simpledrawer.shapes.SimpleRectangle;
+import simpledrawer.Entity;
+import simpledrawer.shapes.SRectangle;
 import simpledrawer.shapes.ShapeType;
-import simpledrawer.shapes.SimpleTriangle;
+import simpledrawer.shapes.STriangle;
 
 public class JSONShapeReader {
 
     private static class listOfShape {
-        List<Shape> listOfShape;
+        List<Entity> listOfShape;
     }
 
     private listOfShape shapesList;
-    private List<Shape> lShapes;
+    private List<Entity> lShapes;
     private Gson gson; // gson object used to "parse" the JSON
 
     public JSONShapeReader() {
@@ -64,30 +64,30 @@ public class JSONShapeReader {
      */
     private void storeShapes() {
 
-        for (Shape se : shapesList.listOfShape) {
+        for (Entity se : shapesList.listOfShape) {
             switch (se.getShapeType()) {
                 case LINE:  // store the line
-                    SimpleLine sl = new SimpleLine(new Point(se.getVertice(0).x, se.getVertice(0).y), new Point(se.getVertice(1).x, se.getVertice(1).y), se.getColour(), se.getThickness(), ShapeType.LINE);
-                    lShapes.add(sl);
+              //      SLine sl = new SLine(new Point(se.getVertice(0).x, se.getVertice(0).y), new Point(se.getVertice(1).x, se.getVertice(1).y), se.getColour(), se.getThickness(), ShapeType.LINE);
+                //    lShapes.add(sl);
                     break;
                 case OVAL:  // store the oval
-                    SimpleOval ol = new SimpleOval(new Point(se.getVertice(0).x, se.getVertice(0).y), new Point(se.getVertice(1).x, se.getVertice(1).y), se.getColour(), se.getThickness(), ShapeType.OVAL);
-                    lShapes.add(ol);
+                //    SOval ol = new SOval(new Point(se.getVertice(0).x, se.getVertice(0).y), new Point(se.getVertice(1).x, se.getVertice(1).y), se.getColour(), se.getThickness(), ShapeType.OVAL);
+                //    lShapes.add(ol); */
                     break;
                 case TRIANGLE:  // store the Triangle
                     List<Point> list= new ArrayList<>();
-                    list.add(new Point(se.getVertice(0).x, se.getVertice(0).y));
+      /*              list.add(new Point(se.getVertice(0).x, se.getVertice(0).y));
                     list.add(new Point(se.getVertice(1).x, se.getVertice(1).y));      
                     list.add(new Point(se.getVertice(2).x, se.getVertice(2).y));  
-                    SimpleTriangle st = new SimpleTriangle(list, se.getColour(), se.getThickness(), ShapeType.TRIANGLE);
-                    lShapes.add(st);
+                    STriangle st = new STriangle(list, se.getColour(), se.getThickness(), ShapeType.TRIANGLE);
+                  lShapes.add(st);*/ 
                     break;
                 case RECTANGLE:  // store the rECTANGLE
-                    List<Point> list2= new ArrayList<>();
+              /*      List<Point> list2= new ArrayList<>();
                     list2.add(new Point(se.getVertice(0).x, se.getVertice(0).y));
                     list2.add(new Point(se.getVertice(1).x, se.getVertice(1).y));    
-                    SimpleRectangle rec = new SimpleRectangle(list2, se.getColour(), se.getThickness(), ShapeType.RECTANGLE);
-                    lShapes.add(rec);
+                    SRectangle rec = new SRectangle(list2, se.getColour(), se.getThickness(), ShapeType.RECTANGLE); */
+                //    lShapes.add(rec);
                     break;
             }
         }
@@ -97,7 +97,7 @@ public class JSONShapeReader {
      *
      * @return the list of line shapes
      */
-    public List<Shape> getShapes() {
+    public List<Entity> getShapes() {
         return this.lShapes;
     }
 
@@ -108,11 +108,11 @@ public class JSONShapeReader {
      * @param file the file into which to write the JSON
      */
     private static void generateTestJSON(String file) {
-        List<Shape> list = new ArrayList<>();
+        List<Entity> list = new ArrayList<>();
         // load in some hard-coded shapes
-        list.add(new Shape(new Point(20, 40),new Point(30, 0), Color.red, 5, ShapeType.LINE));
-        list.add(new Shape(new Point(20, 40),new Point(70, 90), Color.blue, 5, ShapeType.OVAL));
-        list.add(new Shape(new Point(80, 95),new Point(70, 45), Color.green, 5, ShapeType.LINE));
+      /*  list.add(new Entity(new Point(20, 40),new Point(30, 0), Color.red, 5, ShapeType.LINE));
+        list.add(new Entity(new Point(20, 40),new Point(70, 90), Color.blue, 5, ShapeType.OVAL));
+        list.add(new Entity(new Point(80, 95),new Point(70, 45), Color.green, 5, ShapeType.LINE)); */
         listOfShape lS= new listOfShape();
         lS.listOfShape = list;
         Gson gson = new Gson();

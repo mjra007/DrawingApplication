@@ -9,8 +9,8 @@
  */
 package simpledrawer.Readers;
 
-import simpledrawer.shapes.SimpleOval;
-import simpledrawer.shapes.SimpleLine;
+import simpledrawer.shapes.SOval;
+import simpledrawer.shapes.SLine;
 import java.awt.Point;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -19,16 +19,16 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.xml.parsers.ParserConfigurationException;
 import org.xml.sax.SAXException;
-import simpledrawer.Shape;
-import simpledrawer.shapes.SimpleRectangle;
+import simpledrawer.Entity;
+import simpledrawer.shapes.SRectangle;
 import simpledrawer.shapes.ShapeType;
-import simpledrawer.shapes.SimpleTriangle;
+import simpledrawer.shapes.STriangle;
 
 public class XMLShapeReader {
 
     private ShapeEventGeneratorFromXML segfx; // used to read the data
 
-    private List<Shape> shapeList; // list of lines
+    private List<Entity> shapeList; // list of lines
 
     public XMLShapeReader() throws ParserConfigurationException, SAXException {
 
@@ -50,7 +50,7 @@ public class XMLShapeReader {
              * that has just been read from file.
              */
             @Override
-            public void processShapeEvent(Object originator, Shape se) {
+            public void processShapeEvent(Object originator, Entity se) {
                 storeShape(se);
             }
         };
@@ -77,30 +77,30 @@ public class XMLShapeReader {
      * @param se the ShapeEvent object containing details of the shape to be
      * stored.
      */
-    private void storeShape(Shape se) {
+    private void storeShape(Entity se) {
         switch (se.getShapeType()) {
             case LINE: // store the line
-                SimpleLine sl = new SimpleLine(new Point(se.getVertice(0).x, se.getVertice(0).y), new Point(se.getVertice(1).x, se.getVertice(1).y), se.getColour(), se.getThickness(), ShapeType.LINE);
-                shapeList.add(sl);
+           //     SLine sl = new SLine(new Point(se.getVertice(0).x, se.getVertice(0).y), new Point(se.getVertice(1).x, se.getVertice(1).y), se.getColour(), se.getThickness(), ShapeType.LINE);
+            //    shapeList.add(sl);
                 break;
             case OVAL: // store the oval
-                SimpleOval ol = new SimpleOval(new Point(se.getVertice(0).x, se.getVertice(0).y), new Point(se.getVertice(1).x, se.getVertice(1).y), se.getColour(), se.getThickness(), ShapeType.OVAL);
-                shapeList.add(ol);
+         //       SOval ol = new SOval(new Point(se.getVertice(0).x, se.getVertice(0).y), new Point(se.getVertice(1).x, se.getVertice(1).y), se.getColour(), se.getThickness(), ShapeType.OVAL);
+         //       shapeList.add(ol);
                 break;
             case TRIANGLE:  // store the Triangle
-                List<Point> list = new ArrayList<>();
+           /*     List<Point> list = new ArrayList<>();
                 list.add(new Point(se.getVertice(0).x, se.getVertice(0).y));
                 list.add(new Point(se.getVertice(1).x, se.getVertice(1).y));
                 list.add(new Point(se.getVertice(2).x, se.getVertice(2).y));
-                SimpleTriangle st = new SimpleTriangle(list, se.getColour(), se.getThickness(), ShapeType.TRIANGLE);
-                shapeList.add(st);
+                STriangle st = new STriangle(list, se.getColour(), se.getThickness(), ShapeType.TRIANGLE);
+                shapeList.add(st);*/
                 break;
             case RECTANGLE:  // store the rECTANGLE
-                List<Point> list2 = new ArrayList<>();
+           /*     List<Point> list2 = new ArrayList<>();
                 list2.add(new Point(se.getVertice(0).x, se.getVertice(0).y));
                 list2.add(new Point(se.getVertice(1).x, se.getVertice(1).y));
-                SimpleRectangle rec = new SimpleRectangle(list2, se.getColour(), se.getThickness(), ShapeType.RECTANGLE);
-                shapeList.add(rec);
+                SRectangle rec = new SRectangle(list2, se.getColour(), se.getThickness(), ShapeType.RECTANGLE);
+                shapeList.add(rec);*/
                 break;
         }
     }
@@ -109,7 +109,7 @@ public class XMLShapeReader {
      *
      * @return the list of line shapes
      */
-    public List<Shape> getSlList() {
+    public List<Entity> getSlList() {
         return shapeList;
     }
 

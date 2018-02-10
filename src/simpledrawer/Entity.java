@@ -16,74 +16,61 @@ import java.util.List;
  *
  * @author micael
  */
+public abstract class Entity implements DrawableI {
 
-public class Shape {
-    
     /*List of vertices
     * When it makes sense the first
     * point should be always the starting point
-    */
-    private List<Point> vertices;
+     */
     private Color colour;
     private int thickness;
     // Type of shape e.g. line or oval
     private ShapeType shapeType;
     private String eventType; // currently always SHAPE
-    
-    public Shape(Color c, int t, ShapeType st) {
-        vertices = new ArrayList<>();
+    int width;
+    int height;
+
+    //These points are crucical points that the shapes depend on
+    List<Point> structuralPoints = new ArrayList<Point>();
+
+    public Entity(List<Point> list,int width, int height, Color c, int t, ShapeType st) {
         colour = c;
+        structuralPoints = list;
         thickness = t;
         shapeType = st;
+        this.height = height;
+        this.width = width;
     }
-    
-    public Shape(){
-        this.vertices = new ArrayList<>();
-        this.colour = new Color(0,0,0);
+
+    public Entity() {
+        this.colour = new Color(0, 0, 0);
         this.thickness = 5;
         this.shapeType = ShapeType.LINE;
         this.eventType = "shape";
+        this.height=5;
+        this.width = 5;
     }
-    
-    public Shape(Point startPoint, Point endPoint, Color c, int t, ShapeType st) {
-        vertices = new ArrayList<>();
-        colour = c;
-        thickness = t;
-        shapeType = st;
-    } 
-    
-    public Shape(List<Point> vertices, Color colour, int thickness, ShapeType shapeType) {
-        this.vertices = vertices;
+
+    public Entity(List<Point> points,int height,int width, Color colour, int thickness, ShapeType shapeType, String eventType) {
         this.colour = colour;
-        this.thickness = thickness;
-        this.shapeType = shapeType;
-    }
-    public Shape(List<Point> vertices, Color colour, int thickness, ShapeType shapeType, String eventType) {
-        this.vertices = vertices;
-        this.colour = colour;
+        this.structuralPoints = points;
         this.thickness = thickness;
         this.shapeType = shapeType;
         this.eventType = eventType;
+        this.height = height;
+        this.width = width;
     }
 
-    public void setVertices(List<Point> vertices){
-        this.vertices = vertices;
-    }
-    
-    public void setVertice(int index, Point point){
-        this.vertices.set(index, point);
-    }
-    
-    public List<Point> getVertices(){
-        return this.vertices;
-    }
-    
-    public Point getVertice(int index){
-        return this.vertices.get(index);
-    }  
-    
     public Color getColour() {
         return colour;
+    }
+
+    public void setStructuralPoints(List<Point> list) {
+        this.structuralPoints = list;
+    }
+
+    public List<Point> getStructuralPoints() {
+        return this.structuralPoints;
     }
 
     public void setColour(Color colour) {
@@ -114,7 +101,15 @@ public class Shape {
         this.eventType = eventType;
     }
 
-        /**
+    public int getWidth(){
+        return width;
+    }
+    
+    public int getHeight(){
+        return height;
+    }
+    
+    /**
      * The method converts the string representation of the colour passed to it
      * to the corresponding static constant of class Color e.g. "red" will be
      * converted to Color.RED. The strange code is an example of "reflection".

@@ -12,24 +12,24 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Point;
-import java.awt.geom.Ellipse2D;
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
-import simpledrawer.Drawer;
-import simpledrawer.InteractiveShape;
-import simpledrawer.Shape;
+import simpledrawer.Entity;
+import simpledrawer.DrawableI;
 
-public class SimpleTriangle extends Shape implements Drawer, InteractiveShape{
+public class STriangle extends Entity{
 
-    public SimpleTriangle(List<Point> p, Color c, int t, ShapeType st) {
-        super(p, c, t, st);
+    List<Point> vertices = new ArrayList<Point>();
+    
+    public STriangle(List<Point> p,int width , int height, Color c, int t, ShapeType st) {
+        super(p,width ,height, c , t, st);
+        this.vertices = p;
     }
     /**
      *
      * @return the area in pixels of the triangle. Does this work okay?
      */
     public double getArea() {
-        List<Point> vertices = super.getVertices();
         int term1 = vertices.get(0).x * (vertices.get(1).y - vertices.get(2).y);
         int term2 = vertices.get(1).x * (vertices.get(2).y - vertices.get(0).y);
         int term3 = vertices.get(2).x * (vertices.get(0).y - vertices.get(1).y);
@@ -41,12 +41,16 @@ public class SimpleTriangle extends Shape implements Drawer, InteractiveShape{
      * @return the area in pixels of the triangle. Does this work okay?
      */
     public double getArea(List<Point> v) {
-        List<Point> vertices = v;
         int term1 = vertices.get(0).x * (vertices.get(1).y - vertices.get(2).y);
         int term2 = vertices.get(1).x * (vertices.get(2).y - vertices.get(0).y);
         int term3 = vertices.get(2).x * (vertices.get(0).y - vertices.get(1).y);
         return Math.abs((term1 + term2 + term3) / 2.0);
     }  
+    
+    public List<Point> getVertices(){
+        return this.vertices;
+    }
+    
     
     @Override
     public void drawShape(Graphics2D g2d, float currentBrightness) {
@@ -62,29 +66,4 @@ public class SimpleTriangle extends Shape implements Drawer, InteractiveShape{
         g2d.drawLine(this.getVertices().get(2).x, this.getVertices().get(2).y, this.getVertices().get(0).x, this.getVertices().get(0).y);    
     }
 
-    @Override
-    public boolean contains(Point p) {
-        boolean doesIt = false;
-        double area = getArea();
-        Point a= this.getVertice(0);
-        Point b = this.getVertice(1);
-        Point c = this.getVertice(2);
-        double pab = getArea(Arrays.asList(p,a,b));
-        double pbc = getArea(Arrays.asList(p,b,c));
-        double pac = getArea(Arrays.asList(p,a,c));
-        if(pab+pbc+pac == area)doesIt = true;
-        return doesIt;    
-    }
-    
-    @Override
-    public Shape translate(List<Point> list,Point offset) {
-        Shape shape =this;
-        int offsetX = offset.x;
-        int offsetY = offset.y;
-        shape.setVertice(0, new Point(list.get(0).x + offsetX, list.get(0).y + offsetY));
-        shape.setVertice(1, new Point(list.get(1).x+ offsetX, list.get(1).y + offsetY));
-        shape.setVertice(2, new Point(list.get(2).x+ offsetX, list.get(2).y + offsetY));
-        return shape;
-    }
-      
 }
