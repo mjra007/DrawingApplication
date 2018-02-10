@@ -123,8 +123,8 @@ public class SimpleOval extends Shape implements Drawer, InteractiveShape{
     public Shape translate(List<Point> list,Point offset) {
         int offsetX = offset.x;
         int offsetY = offset.y;
-        shape.setVertice(0, new Point(list.get(0).x + offsetX, list.get(0).y + offsetY));
-        shape.setVertice(1, new Point(list.get(1).x+ offsetX, list.get(1).y + offsetY));
+        this.setVertice(0, new Point(list.get(0).x + offsetX, list.get(0).y + offsetY));
+        this.setVertice(1, new Point(list.get(1).x+ offsetX, list.get(1).y + offsetY));
         return this;
     }
 }
