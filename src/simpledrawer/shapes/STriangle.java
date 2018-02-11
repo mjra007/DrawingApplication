@@ -15,7 +15,6 @@ import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
 import simpledrawer.Entity;
-import simpledrawer.DrawableI;
 
 public class STriangle extends Entity{
 
