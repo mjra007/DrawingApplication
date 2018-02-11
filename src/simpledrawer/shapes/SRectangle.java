@@ -20,38 +20,33 @@ import simpledrawer.DrawableI;
  *
  * @author micael
  */
-public class SRectangle extends Entity{
+public class SRectangle extends Entity {
 
     int height;
     int width;
-    
+
     public SRectangle(Point origin, int width, int height, Color c, int t, ShapeType st) {
-        super(new ArrayList<Point>(){{add(origin);}},width,height,c, t, st);
-    }
-    
-    public int getXEnd() {
-        return getX() + this.getWidth();
+        super(new ArrayList<Point>() {
+            {
+                add(origin);
+            }
+        }, width, height, c, t, st);
     }
 
+    public int getXEnd() {
+        return getX() + getWidth();
+    }
 
     public int getYEnd() {
-        return getY() + this.getHeight();
+        return getY() + getHeight();
     }
-    
-    public int getY(){
+
+    public int getY() {
         return super.getStructuralPoints().get(0).y;
     }
-    
-    public int getX(){
+
+    public int getX() {
         return super.getStructuralPoints().get(0).x;
-    }
-    
-    public int getHeight(){
-        return this.height;
-    }
-    
-    public int getWidth(){
-        return this.height;
     }
 
     @Override
@@ -61,12 +56,9 @@ public class SRectangle extends Entity{
         g2d.setColor(c);
         // get start point
         // draw the line
-                // set the thickness of the line                
+        // set the thickness of the line                
         g2d.setStroke(new BasicStroke(this.getThickness()));
-        g2d.drawRect(getX(), getY(), getWidth() , getHeight());
+        g2d.drawRect(getX(), getY(), getWidth(), getHeight());
     }
-
-
-
 
 }

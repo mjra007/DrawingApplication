@@ -25,28 +25,35 @@ public class ContainerFactory {
         List<Point> reorganizedPoints;
         int width_mod, height_mod;
         Container container = null;
-        if (st.toString().equals("RECTANGLE")) {
-            reorganizedPoints = Utils.getReorganizedCoords(list.get(0), list.get(1));
-            width_mod = reorganizedPoints.get(1).x - reorganizedPoints.get(0).x;
-            height_mod = reorganizedPoints.get(1).y - reorganizedPoints.get(0).y;
-            SRectangle rect = new SRectangle(reorganizedPoints.get(0), width_mod, height_mod, c, t, st);
-            container = new Container(rect, reorganizedPoints.get(0), width_mod, height_mod);
-        } else if (st.toString().equals("OVAL")) {
-            reorganizedPoints = Utils.getReorganizedCoords(list.get(0), list.get(1));
-            width_mod = reorganizedPoints.get(1).x - reorganizedPoints.get(0).x;
-            height_mod = reorganizedPoints.get(1).y - reorganizedPoints.get(0).y;
-            SOval oval = new SOval(reorganizedPoints.get(0), width_mod, height_mod, c, t, st);
-            container = new Container(oval, reorganizedPoints.get(0), width_mod, height_mod);
-        } else if (st.toString().equals("TRIANGLE")) {
-            width_mod = list.get(1).x - list.get(0).x;
-            height_mod = list.get(1).y - list.get(0).y;
-            STriangle triangle = new STriangle(list, width_mod, height_mod, c, t, st);
-            container = new Container(triangle, list.get(0), width_mod, height_mod);
-        } else if (st.toString().equals("line")) {
-            width_mod = list.get(1).x - list.get(0).x;
-            height_mod = list.get(1).y - list.get(0).y;
-            SLine line = new SLine(list.get(0), list.get(1), width_mod, height_mod, c, t, st);
-            container = new Container(line, list.get(0), width_mod, height_mod);
+        switch (st.toString()) {
+            case "RECTANGLE":
+                reorganizedPoints = Utils.getReorganizedCoords(list.get(0), list.get(1));
+                width_mod = reorganizedPoints.get(1).x - reorganizedPoints.get(0).x;
+                height_mod = reorganizedPoints.get(1).y - reorganizedPoints.get(0).y;
+                SRectangle rect = new SRectangle(reorganizedPoints.get(0), width_mod, height_mod, c, t, st);
+                container = new Container(rect, reorganizedPoints.get(0), width_mod, height_mod);
+                break;
+            case "OVAL":
+                reorganizedPoints = Utils.getReorganizedCoords(list.get(0), list.get(1));
+                width_mod = reorganizedPoints.get(1).x - reorganizedPoints.get(0).x;
+                height_mod = reorganizedPoints.get(1).y - reorganizedPoints.get(0).y;
+                SOval oval = new SOval(reorganizedPoints.get(0), width_mod, height_mod, c, t, st);
+                container = new Container(oval, reorganizedPoints.get(0), width_mod, height_mod);
+                break;
+            case "TRIANGLE":
+                width_mod = list.get(1).x - list.get(0).x;
+                height_mod = list.get(1).y - list.get(0).y;
+                STriangle triangle = new STriangle(list, width_mod, height_mod, c, t, st);
+                container = new Container(triangle, list.get(0), width_mod, height_mod);
+                break;
+            case "line":
+                width_mod = list.get(1).x - list.get(0).x;
+                height_mod = list.get(1).y - list.get(0).y;
+                SLine line = new SLine(list.get(0), list.get(1), width_mod, height_mod, c, t, st);
+                container = new Container(line, list.get(0), width_mod, height_mod);
+                break;
+            default:
+                break;
         }
         return container;
     }

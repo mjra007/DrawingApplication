@@ -6,9 +6,11 @@
 package simpledrawer;
 
 import java.awt.BasicStroke;
+import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Rectangle;
+import java.util.List;
 /**
  *
  * @author ma8521e
@@ -29,14 +31,15 @@ public class Container implements DrawableI, InteractiveShape {
     int containerHeight;
     int containerWidth;
     final static float dash1[] = {10.0f};
-    final static BasicStroke dashed = new BasicStroke(1.0f,
+    final static BasicStroke dashed = new BasicStroke(2.0f,
             BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 10.0f, dash1, 0.0f);
 
     public Container(Entity entityContained, Point containerOrigin, int width, int height) {
             this.entityContained = entityContained;
+            entityContained.structuralPoints.set(0, new Point(containerOrigin.x+5,containerOrigin.y+5));
             this.containerOrigin = containerOrigin;
-            this.containerHeight = entityContained.getHeight();
-            this.containerWidth = entityContained.getWidth();
+            this.containerHeight = entityContained.getHeight()+10;
+            this.containerWidth = entityContained.getWidth()+10;
     }   
 
     @Override
@@ -47,21 +50,19 @@ public class Container implements DrawableI, InteractiveShape {
         rectangle.setLocation(this.entityContained.getStructuralPoints().get(0));
         if(rectangle.contains(p)) doesIt=true;
         return doesIt;
-
     }
 
     @Override
-    public Container translate(Point offset) {
+    public Container translate(List<Point> old,Point offset) {
         int offsetX = offset.x;
         int offsetY = offset.y;
-        for(int i=0; i<this.entityContained.getStructuralPoints().size();i++){
-            Point point = this.entityContained.getStructuralPoints().get(i);
-            this.entityContained.getStructuralPoints().set(i, new Point(point.x + offsetX, point.y + offsetY));
+        for(int i=0; i<old.size();i++){
+            Point point = old.get(i);
+            this.entityContained.structuralPoints.set(i, new Point(point.x + offsetX+5, point.y + offsetY+5));
         }
-        this.containerOrigin = new Point(containerOrigin.x + offsetX, containerOrigin.y + offsetY);
+        this.containerOrigin = new Point(old.get(0).x + offsetX, old.get(0).y + offsetY);
         return this;
     }
-
     
     /*
     All the current Entity Types that our program holds should be here
@@ -81,8 +82,8 @@ public class Container implements DrawableI, InteractiveShape {
     public Rectangle getDrawableContainer() {
         Rectangle rect = new Rectangle();
         rect.setLocation(containerOrigin);
-        rect.height = this.containerHeight;
-        rect.width = this.containerWidth;
+        rect.height = containerHeight;
+        rect.width = containerWidth;
         return rect;
     }
 
@@ -90,6 +91,7 @@ public class Container implements DrawableI, InteractiveShape {
     @Override
     public void drawShape(Graphics2D g2d, float currentBrightness) {
         g2d.setStroke(dashed);
+        g2d.setColor(Color.blue);
         g2d.draw(getDrawableContainer());
         entityContained.drawShape(g2d, currentBrightness);
     }

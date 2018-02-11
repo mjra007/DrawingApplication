@@ -9,9 +9,6 @@
  */
 package GUI;
 
-import simpledrawer.shapes.SOval;
-import simpledrawer.shapes.STriangle;
-import simpledrawer.shapes.SLine;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -22,18 +19,13 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Vector;
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 import simpledrawer.Container;
 import simpledrawer.ContainerFactory;
 import simpledrawer.InteractiveShape;
-import simpledrawer.Entity;
-import simpledrawer.shapes.SRectangle;
 import simpledrawer.shapes.ShapeType;
-import sun.awt.resources.awt;
 import simpledrawer.DrawableI;
-import simpledrawer.Utils;
 
 public class DrawingPanel extends JPanel {
 
@@ -48,6 +40,7 @@ public class DrawingPanel extends JPanel {
 
     // position of the latest click
     private int x, y;
+    private List<Point> translateCoords;
 
     // A List that stores the shapes that appear on the JPanel
     private List<Container> containers;
@@ -174,14 +167,21 @@ public class DrawingPanel extends JPanel {
             // reset the rotation to 0 otherwise things get messy.
 
             currentRotation = 0;
-       /*     Container selected = getContainerAtLoc(e.getPoint());
+            Container selected = getContainerAtLoc(e.getPoint());
             if (selected != null) {
-       //        System.out.println(selected.getShapeType().toString());
+                //        System.out.println(selected.getShapeType().toString());
                 orginalX = e.getX();
                 orginalY = e.getY();
+                translateCoords = new ArrayList<Point>();
+
+                for (Point coords : selected.getContained().getStructuralPoints()) {
+                    System.out.println("translateds"+coords.toString());
+                    translateCoords.add(coords);
+                }
+
                 state = DrawingState.MOVING;
                 return;
-            }*/
+            }
             state = DrawingState.DRAWING;
 
             if (currentPoints == null) { // must be starting a new shape
@@ -190,8 +190,12 @@ public class DrawingPanel extends JPanel {
                 firstPoint.x = e.getX();
                 firstPoint.y = e.getY();
                 currentPoints.add(firstPoint);
+                System.out.print(firstPoint.toString());
             } else { // shape must have already been started
                 // decide what to do based on the current shape;
+                currentPoints.add(e.getPoint());
+                System.out.print(e.getPoint().toString());
+                System.out.print(currentPoints.size() + "");
                 Container container = ContainerFactory.createEntity(currentPoints, currentColor, currentThickness, currentShapeType);
                 containers.add(container);
                 currentPoints = null;
@@ -210,7 +214,7 @@ public class DrawingPanel extends JPanel {
                 InteractiveShape selected = (InteractiveShape) containers.get(indexSelectedShape);
                 int offsetX = e.getX() - orginalX;
                 int offsetY = e.getY() - orginalY;
-                containers.add(indexSelectedShape, selected.translate(new Point(offsetX, offsetY)));
+                containers.add(indexSelectedShape, selected.translate(translateCoords, new Point(offsetX, offsetY)));
                 //shapes.add(indexSelectedShape, selected.translate(translateCoords, new Point(offsetX,offsetY)));
                 repaint();
             }
@@ -232,9 +236,9 @@ public class DrawingPanel extends JPanel {
         Container container = null;
         int count = 0;
         for (Container s : this.containers) {
-                if ( s.contains(locPoint)) {
-                    this.indexSelectedShape = count;
-                    container = s;
+            if (s.contains(locPoint)) {
+                this.indexSelectedShape = count;
+                container = s;
             }
             count++;
         }
