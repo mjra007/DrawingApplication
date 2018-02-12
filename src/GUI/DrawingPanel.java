@@ -14,6 +14,8 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Stroke;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
@@ -36,6 +38,8 @@ public class DrawingPanel extends JPanel {
     private float currentBrightness;
     private int currentRotation;
 
+    public static Container selected;
+
     private List<Point> currentPoints; // x and y points for shape being drawn
 
     // position of the latest click
@@ -45,7 +49,7 @@ public class DrawingPanel extends JPanel {
     // A List that stores the shapes that appear on the JPanel
     private List<Container> containers;
 
-    private int indexSelectedShape;
+    private  int indexSelectedShape;
 
     //Holds the 
     int orginalX, orginalY;
@@ -111,7 +115,7 @@ public class DrawingPanel extends JPanel {
 
         g2d.setStroke(s);  // restore saved stroke
 
-        if (currentPoints != null && currentPoints.size() > 1) { // draw dot where line started
+        if (currentPoints != null && currentPoints.size() >= 1) { // draw dot where line started
             for (int i = 0; i < currentPoints.size(); i++) {
                 g2d.setColor(currentColor);
                 g2d.fillOval(currentPoints.get(i).x, currentPoints.get(i).y, 3, 3);
@@ -163,19 +167,28 @@ public class DrawingPanel extends JPanel {
      */
     private class MouseWatcher extends MouseAdapter {
 
+        @Override
         public void mousePressed(MouseEvent e) {
             // reset the rotation to 0 otherwise things get messy.
 
             currentRotation = 0;
-            Container selected = getContainerAtLoc(e.getPoint());
+            selected = getContainerAtLoc(e.getPoint());
             if (selected != null) {
+                  if (DrawingState.MOVING.equals(state)) {
+                InteractiveShape selected = (InteractiveShape) containers.get(indexSelectedShape);
+                int offsetX = e.getX() - orginalX;
+                int offsetY = e.getY() - orginalY;
+                containers.add(indexSelectedShape, selected.translate(translateCoords, new Point(offsetX, offsetY)));
+                //shapes.add(indexSelectedShape, selected.translate(translateCoords, new Point(offsetX,offsetY)));
+                repaint();
+            }
+                selected.Select();
                 //        System.out.println(selected.getShapeType().toString());
                 orginalX = e.getX();
                 orginalY = e.getY();
                 translateCoords = new ArrayList<Point>();
 
                 for (Point coords : selected.getContained().getStructuralPoints()) {
-                    System.out.println("translateds"+coords.toString());
                     translateCoords.add(coords);
                 }
 
@@ -183,7 +196,6 @@ public class DrawingPanel extends JPanel {
                 return;
             }
             state = DrawingState.DRAWING;
-
             if (currentPoints == null) { // must be starting a new shape
                 currentPoints = new ArrayList<>();
                 Point firstPoint = new Point();
@@ -233,6 +245,9 @@ public class DrawingPanel extends JPanel {
      *
      */
     public Container getContainerAtLoc(Point locPoint) {
+        if (selected != null) {
+            selected.deSelect();
+        }
         Container container = null;
         int count = 0;
         for (Container s : this.containers) {
@@ -244,6 +259,7 @@ public class DrawingPanel extends JPanel {
         }
         return container;
     }
+
 
     public void setCurrentThickness(int currentThickness) {
         this.currentThickness = currentThickness;
@@ -269,6 +285,8 @@ public class DrawingPanel extends JPanel {
         repaint();
     }
 
+
+    
     public void setShapes(List shapes) {
         this.containers = shapes;
     }
