@@ -27,21 +27,22 @@ import java.util.List;
  */
 public class Container implements DrawableI, InteractiveShape {
 
-    Entity entityContained;
+    //Points required to draw the shape contained
+    Entity entityContained=null;
     Point containerOrigin = null;
-    int containerHeight;
-    int containerWidth;
+    Integer containerHeight=null;
+    Integer containerWidth=null;
     boolean selected = false;
     final static float dash1[] = {10.0f};
     final static BasicStroke dashed = new BasicStroke(2.0f,
             BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 10.0f, dash1, 0.0f);
 
-    public Container(Entity entityContained, Point containerOrigin, int width, int height) {
-        this.entityContained = entityContained;
-        entityContained.structuralPoints.set(0, new Point(containerOrigin.x + 5, containerOrigin.y + 5));
-        this.containerOrigin = containerOrigin;
-        this.containerHeight = entityContained.getHeight() + 10;
-        this.containerWidth = entityContained.getWidth() + 10;
+    public Container(Entity entity) {
+        this.entityContained = entity;
+        List<Point> reorganizedCoords = Utils.getReorganizedCoords(entityContained.getStructuralPoints().get(0), entityContained.getStructuralPoints().get(1));
+        this.containerOrigin = new Point(reorganizedCoords.get(0).x-5,reorganizedCoords.get(0).y-5);  
+        this.containerHeight = (reorganizedCoords.get(1).y-reorganizedCoords.get(0).y) + 10;
+        this.containerWidth = (reorganizedCoords.get(1).x-reorganizedCoords.get(0).x) + 10;
     }
 
     @Override
@@ -49,7 +50,7 @@ public class Container implements DrawableI, InteractiveShape {
         boolean doesIt = false;
         Rectangle rectangle = new Rectangle();
         rectangle.setSize(containerHeight, containerWidth);
-        rectangle.setLocation(this.entityContained.getStructuralPoints().get(0));
+        rectangle.setLocation(containerOrigin);
         if (rectangle.contains(p)) {
             doesIt = true;
         }
@@ -62,14 +63,14 @@ public class Container implements DrawableI, InteractiveShape {
         int offsetY = offset.y;
         for (int i = 0; i < old.size(); i++) {
             Point point = old.get(i);
-            this.entityContained.structuralPoints.set(i, new Point(point.x + offsetX + 5, point.y + offsetY + 5));
+            this.entityContained.structuralPoints.set(i, new Point(point.x + offsetX +5, point.y + offsetY +5));
         }
         this.containerOrigin = new Point(old.get(0).x + offsetX, old.get(0).y + offsetY);
         return this;
     }
 
     @Override
-    public Container resize() {
+    public Container resize(Point offSet) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
@@ -113,4 +114,5 @@ public class Container implements DrawableI, InteractiveShape {
         }
         entityContained.drawShape(g2d, currentBrightness);
     }
+   
 }

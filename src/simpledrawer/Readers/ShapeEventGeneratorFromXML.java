@@ -18,7 +18,6 @@ import java.io.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import simpledrawer.Entity;
-import simpledrawer.shapes.ShapeType;
 
 
 public class ShapeEventGeneratorFromXML extends DefaultHandler {
@@ -129,7 +128,7 @@ public class ShapeEventGeneratorFromXML extends DefaultHandler {
         switch (currentTag) {
             case SHAPE_TAG:
 //                currentShape = new Entity(); // starting a new shape so create object
-                currentShape.setEventType("SHAPE");
+          //      currentShape.setEventType("SHAPE");
                 break;
         }
     }
@@ -158,7 +157,7 @@ public class ShapeEventGeneratorFromXML extends DefaultHandler {
         // process the characters based on what type of tag we are currently dealing with.
         switch (currentTag) {
             case TYPE_TAG:
-                currentShape.setShapeType(ShapeType.valueOf(val.toUpperCase()));
+               // currentShape.setShapeType(ShapeType.valueOf(val.toUpperCase()));
                 break;
             case X_TAG: // an x tag can either be for the start or end
                  //   currentShape.getVertices().add(new Point(Integer.parseInt(val),0));
@@ -168,10 +167,10 @@ public class ShapeEventGeneratorFromXML extends DefaultHandler {
              //    currentShape.setVertice(currentShape.getVertices().size()-1,new Point(x,Integer.parseInt(val)));
                 break;
             case COLOUR_TAG:
-                currentShape.setColourByString(val);
+                //currentShape.setColourByString(val);
                 break;
             case THICK_TAG:
-                currentShape.setThickness(Integer.parseInt(val));
+              //  currentShape.setThickness(Integer.parseInt(val));
                 break;
         }
     }
@@ -188,13 +187,13 @@ public class ShapeEventGeneratorFromXML extends DefaultHandler {
      * @param qName
      * @throws SAXException
      */
-    @Override
+  /*  @Override
     public void endElement(String uri, String localName, String qName)
             throws SAXException {
 
         if (localName.equals(SHAPE_TAG)) { // we are at the end of the SHAPE
             // get all listeners
-            List<ShapeEventListener> listeners = shapeListeners.getListeners(currentShape.getEventType());
+          //  List<ShapeEventListener> listeners = shapeListeners.getListeners(currentShape.getEventType());
             if (listeners != null) {
                 // loop through the listeners passing the event object to them - this is "firing" the event
                 for (ShapeEventListener sel : listeners) {
@@ -204,7 +203,7 @@ public class ShapeEventGeneratorFromXML extends DefaultHandler {
             currentShape = null;
         }
         currentTag = "";
-    }
+    }*/
 
     /**
      * registerShapeEventListener() is called by objects that want to be
@@ -292,5 +291,5 @@ public class ShapeEventGeneratorFromXML extends DefaultHandler {
         me.processScriptFile(filename);
         me.removeShapeEventListener("SHAPE", sel);
         me.processScriptFile(filename);
-    }
+    } 
 }

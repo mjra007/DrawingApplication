@@ -23,14 +23,12 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import simpledrawer.Entity;
-import simpledrawer.shapes.SRectangle;
-import simpledrawer.shapes.ShapeType;
-import simpledrawer.shapes.STriangle;
+
 
 public class JSONShapeReader {
 
     private static class listOfShape {
-        List<Entity> listOfShape;
+        List<Entity.EntityType> listOfShape;
     }
 
     private listOfShape shapesList;
@@ -64,8 +62,8 @@ public class JSONShapeReader {
      */
     private void storeShapes() {
 
-        for (Entity se : shapesList.listOfShape) {
-            switch (se.getShapeType()) {
+        for (Entity.EntityType se : shapesList.listOfShape) {
+            switch (se) {
                 case LINE:  // store the line
               //      SLine sl = new SLine(new Point(se.getVertice(0).x, se.getVertice(0).y), new Point(se.getVertice(1).x, se.getVertice(1).y), se.getColour(), se.getThickness(), ShapeType.LINE);
                 //    lShapes.add(sl);
@@ -114,7 +112,7 @@ public class JSONShapeReader {
         list.add(new Entity(new Point(20, 40),new Point(70, 90), Color.blue, 5, ShapeType.OVAL));
         list.add(new Entity(new Point(80, 95),new Point(70, 45), Color.green, 5, ShapeType.LINE)); */
         listOfShape lS= new listOfShape();
-        lS.listOfShape = list;
+    //    lS.listOfShape = list;
         Gson gson = new Gson();
         String json = gson.toJson(list); // convert the object to a JSON string
 

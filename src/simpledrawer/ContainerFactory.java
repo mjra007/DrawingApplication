@@ -12,7 +12,6 @@ import simpledrawer.shapes.SLine;
 import simpledrawer.shapes.SOval;
 import simpledrawer.shapes.SRectangle;
 import simpledrawer.shapes.STriangle;
-import simpledrawer.shapes.ShapeType;
 
 /**
  *
@@ -20,42 +19,55 @@ import simpledrawer.shapes.ShapeType;
  */
 public class ContainerFactory {
 
-    public static Container createEntity(List<Point> list, Color c, int t, ShapeType st) {
-
-        List<Point> reorganizedPoints;
-        int width_mod, height_mod;
+    public static Container createEntity(List<Point> list, Color c, int t, Entity.EntityType et) {
         Container container = null;
-        switch (st.toString()) {
+        switch (et.toString()) {
             case "RECTANGLE":
-                reorganizedPoints = Utils.getReorganizedCoords(list.get(0), list.get(1));
-                width_mod = reorganizedPoints.get(1).x - reorganizedPoints.get(0).x;
-                height_mod = reorganizedPoints.get(1).y - reorganizedPoints.get(0).y;
-                SRectangle rect = new SRectangle(reorganizedPoints.get(0), width_mod, height_mod, c, t, st);
-                container = new Container(rect, reorganizedPoints.get(0), width_mod, height_mod);
+                SRectangle rect = new SRectangle(list, c, t, et);
+                container = new Container(rect);
                 break;
             case "OVAL":
-                reorganizedPoints = Utils.getReorganizedCoords(list.get(0), list.get(1));
-                width_mod = reorganizedPoints.get(1).x - reorganizedPoints.get(0).x;
-                height_mod = reorganizedPoints.get(1).y - reorganizedPoints.get(0).y;
-                SOval oval = new SOval(reorganizedPoints.get(0), width_mod, height_mod, c, t, st);
-                container = new Container(oval, reorganizedPoints.get(0), width_mod, height_mod);
+                SOval oval = new SOval(list, c, t, et);
+                container = new Container(oval);
                 break;
             case "TRIANGLE":
-                width_mod = list.get(1).x - list.get(0).x;
-                height_mod = list.get(1).y - list.get(0).y;
-                STriangle triangle = new STriangle(list, width_mod, height_mod, c, t, st);
-                container = new Container(triangle, list.get(0), width_mod, height_mod);
+                STriangle triangle = new STriangle(list, c, t, et);
+                container = new Container(triangle);
                 break;
-            case "line":
-                width_mod = list.get(1).x - list.get(0).x;
-                height_mod = list.get(1).y - list.get(0).y;
-                SLine line = new SLine(list.get(0), list.get(1), width_mod, height_mod, c, t, st);
-                container = new Container(line, list.get(0), width_mod, height_mod);
+            case "LINE":
+                SLine line = new SLine(list, c, t, et);
+                container = new Container(line);
                 break;
             default:
                 break;
         }
+                        container.Select();
+
         return container;
     }
 
+    public static int getRequiredPoints(List<Point> list, Color c, int t, Entity.EntityType et) {
+        int points = 0;
+        switch (et.toString()) {
+            case "RECTANGLE":
+                SRectangle rect = new SRectangle(list, c, t, et);
+                points = rect.getPointsRequired();
+                break;
+            case "OVAL":
+                SOval oval = new SOval(list, c, t, et);
+                points = oval.getPointsRequired();
+                break;
+            case "TRIANGLE":
+                STriangle triangle = new STriangle(list, c, t, et);
+                points = triangle.getPointsRequired();
+                break;
+            case "LINE":
+                SLine line = new SLine(list, c, t, et);
+                points = line.getPointsRequired();
+                break;
+            default:
+                break;
+        }
+        return points;
+    }
 }

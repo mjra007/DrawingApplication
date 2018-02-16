@@ -24,9 +24,9 @@ public interface InteractiveShape {
     * @param point to be checked
     */
     public boolean contains(Point p);
-    
+        
     public Container translate(List<Point> old,Point offset);
     
-    public Container resize();
+    public Container resize(Point offSet);
     
 }
