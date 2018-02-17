@@ -41,8 +41,6 @@ public class ContainerFactory {
             default:
                 break;
         }
-                        container.Select();
-
         return container;
     }
 

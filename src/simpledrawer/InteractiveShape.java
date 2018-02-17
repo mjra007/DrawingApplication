@@ -24,7 +24,15 @@ public interface InteractiveShape {
     * @param point to be checked
     */
     public boolean contains(Point p);
+    
+    public boolean containsBottomRightCorner(Point p);
         
+    public boolean containsBottomLeftCorner(Point p);
+
+    public boolean containsTopRightCorner(Point p);
+        
+    public boolean containsTopLeftCorner(Point p);
+
     public Container translate(List<Point> old,Point offset);
     
     public Container resize(Point offSet);

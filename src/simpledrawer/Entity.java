@@ -13,12 +13,12 @@ public abstract class Entity implements DrawableI {
 
     // Type of shape e.g. line or oval
     private final EntityType type; // currently always SHAPE
-    final int pointsRequired;
-    int width;
-    int height;
+    private final int pointsRequired;
+    private int width;
+    private int height;
 
     //These points are crucical points that the shapes depend on
-    List<Point> structuralPoints = new ArrayList<Point>();
+    private List<Point> structuralPoints = new ArrayList<Point>();
 
     public Entity(List<Point> list,int pointsRequired, EntityType et) {
         structuralPoints = list;
