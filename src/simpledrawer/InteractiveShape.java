@@ -35,6 +35,6 @@ public interface InteractiveShape {
 
     public Container translate(List<Point> old,Point offset);
     
-    public Container resize(Point offSet);
+    public Container resize(List<Point> old,Point offset);
     
 }

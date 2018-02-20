@@ -25,6 +25,7 @@ public class Container implements DrawableI, InteractiveShape {
     //Points required to draw the shape contained
     Entity contained = null;
     boolean selected = false;
+    boolean selectedCorners = false;
     final static float dash1[] = {10.0f};
     final static BasicStroke dashed = new BasicStroke(2.0f,
             BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 10.0f, dash1, 0.0f);
@@ -69,41 +70,67 @@ public class Container implements DrawableI, InteractiveShape {
     public Container translate(List<Point> old, Point offset) {
         for (int i = 0; i < old.size(); i++) {
             Point oldPoint = old.get(i);
-            this.contained.getStructuralPoints().set(i, new Point(oldPoint.x + offset.x , oldPoint.y + offset.y));
+            this.contained.getStructuralPoints().set(i, new Point(oldPoint.x + offset.x, oldPoint.y + offset.y));
         }
         return this;
     }
 
     @Override
-    public Container resize(Point offSet) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public Container resize(List<Point> old,Point offSet) {
+
+            Point oldPoint = old.get(1);
+            
+            this.contained.getStructuralPoints().set(1, new Point( offSet.x, offSet.y));
+       
+        return this;
     }
 
     @Override
     public boolean containsBottomRightCorner(Point p) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-
+        boolean doesIt = false;
+        Rectangle rectangle = new Rectangle();
+        rectangle.setFrameFromDiagonal(new Point(getEndPoint().x - 10, getEndPoint().y - 10), new Point(getEndPoint().x + 10, getEndPoint().y + 10));
+        if (rectangle.contains(p)) {
+            doesIt = true;
+            System.out.println("bottomright");
+        }
+        return doesIt;
     }
 
     @Override
     public boolean containsBottomLeftCorner(Point p) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        boolean doesIt = false;
+        Rectangle rectangle = new Rectangle();
+        rectangle.setFrameFromDiagonal(new Point(getOrigin().x - 10, getEndPoint().y - 10), new Point(getOrigin().x + 10, getEndPoint().y + 10));
+        if (rectangle.contains(p)) {
+            doesIt = true;
+            System.out.println("bottomleft");
+        }
+        return doesIt;
     }
 
     @Override
     public boolean containsTopRightCorner(Point p) {
         boolean doesIt = false;
         Rectangle rectangle = new Rectangle();
-        rectangle.setFrameFromDiagonal(new Point(getOrigin().x-10, getOrigin().y-10),new Point(getOrigin().x+10, getOrigin().y+10));
+        rectangle.setFrameFromDiagonal(new Point(getEndPoint().x - 10, getOrigin().y - 10), new Point(getEndPoint().x + 10, getOrigin().y + 10));
         if (rectangle.contains(p)) {
             doesIt = true;
+            System.out.println("topright");
         }
         return doesIt;
     }
 
     @Override
     public boolean containsTopLeftCorner(Point p) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        boolean doesIt = false;
+        Rectangle rectangle = new Rectangle();
+        rectangle.setFrameFromDiagonal(new Point(getOrigin().x - 10, getOrigin().y - 10), new Point(getOrigin().x + 10, getOrigin().y + 10));
+        if (rectangle.contains(p)) {
+            doesIt = true;
+            System.out.println("topleft");
+        }
+        return doesIt;
     }
 
     /*
@@ -129,6 +156,18 @@ public class Container implements DrawableI, InteractiveShape {
         return selected = false;
     }
 
+    public boolean SelectCorners() {
+        return selectedCorners = true;
+    }
+
+    public boolean deSelectCorners() {
+        return selectedCorners = false;
+    }
+
+    public void drawResizeIndicator(Graphics2D g2d, Point point) {
+        g2d.drawOval(point.x - 5, point.y - 5, 10, 10);
+    }
+
     public Rectangle getDrawableContainer() {
         Rectangle rect = new Rectangle();
         rect.setLocation(getOrigin());
@@ -137,10 +176,9 @@ public class Container implements DrawableI, InteractiveShape {
         return rect;
     }
 
-  /*  public  getDrawableCorner(Point origin){
+    /*  public  getDrawableCorner(Point origin){
         
     }*/
-    
     @Override
     public void drawShape(Graphics2D g2d, float currentBrightness) {
         g2d.setStroke(dashed);
@@ -149,6 +187,13 @@ public class Container implements DrawableI, InteractiveShape {
             g2d.draw(getDrawableContainer());
         }
         contained.drawShape(g2d, currentBrightness);
+        g2d.setColor(Color.MAGENTA);
+        if (selectedCorners) {
+            drawResizeIndicator(g2d, new Point(getOrigin()));
+            drawResizeIndicator(g2d, new Point(getEndPoint()));
+            drawResizeIndicator(g2d, new Point(getEndPoint().x, getOrigin().y));
+            drawResizeIndicator(g2d, new Point(getOrigin().x, getEndPoint().y));
+        }
     }
 
 }

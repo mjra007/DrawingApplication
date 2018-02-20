@@ -39,6 +39,8 @@ public class DrawingPanel extends JPanel {
     private int currentRotation;
 
     public static Container selected;
+    
+    public boolean selectedCorners=false;
 
     private List<Point> currentPoints; // x and y points for shape being drawn
 
@@ -172,27 +174,45 @@ public class DrawingPanel extends JPanel {
         @Override
         public void mousePressed(MouseEvent e) {
             //unselect whatever it is selected if it is otherwise objects will be selected when they dont need to
-            if(selected!=null){
+            if (selected != null) {
                 selected.deSelect();
+                selected.deSelectCorners();
             }
-             // reset the rotation to 0 otherwise things get messy.
+            // reset the rotation to 0 otherwise things get messy.
             currentRotation = 0;
             //get selected container at the mouse location if it exists
             selected = getContainerAtLoc(e.getPoint());
             //checking if it exists
-            if (selected != null) {
+            if (selectedCorners){
+               //saving coords of the mouse
+                orginalX = e.getX();
+                orginalY = e.getY();
+                //saving entity coords.
+                translateCoords = new ArrayList<Point>();
+                for (Point coords : selected.getContained().getStructuralPoints()) {
+                    translateCoords.add(coords);
+                }
+
+                //selecting object
+                selected.Select();
+                //and telling the mouse dragg event we are indeed moving a shape and not drawing
+                state = DrawingState.RESIZING;
+                //if there is no shape selected then we would check whether we have a point for a shape by checking if our list is null 
+            }else if (selected != null) {
                 //saving coords of the mouse
                 orginalX = e.getX();
                 orginalY = e.getY();
                 //saving entity coords.
                 translateCoords = new ArrayList<Point>();
-                for (Point coords : selected.getContained().getStructuralPoints())translateCoords.add(coords);
-                
+                for (Point coords : selected.getContained().getStructuralPoints()) {
+                    translateCoords.add(coords);
+                }
+
                 //selecting object
                 selected.Select();
                 //and telling the mouse dragg event we are indeed moving a shape and not drawing
                 state = DrawingState.MOVING;
-               //if there is no shape selected then we would check whether we have a point for a shape by checking if our list is null
+                //if there is no shape selected then we would check whether we have a point for a shape by checking if our list is null
             } else if (currentPoints == null) {
                 //as it is let s add the current point clicked to the current points list
                 state = DrawingState.DRAWING;
@@ -218,6 +238,7 @@ public class DrawingPanel extends JPanel {
     }
 
     public class MouseMotionWatcher implements MouseMotionListener {
+
         @Override
         public void mouseDragged(MouseEvent e) {
             if (DrawingState.MOVING.equals(state)) {
@@ -228,12 +249,21 @@ public class DrawingPanel extends JPanel {
                 containers.add(indexSelectedShape, interactiveSelected.translate(translateCoords, new Point(offsetX, offsetY)));
                 //shapes.add(indexSelectedShape, selected.translate(translateCoords, new Point(offsetX,offsetY)));
                 repaint();
+            }else
+            if (DrawingState.RESIZING.equals(state)){
+                InteractiveShape interactiveSelected = (InteractiveShape) containers.get(indexSelectedShape);
+                //figuring out the offset of our first click and the last done
+                int offsetX = e.getX() + orginalX;
+                int offsetY = e.getY() + orginalY;
+                containers.add(indexSelectedShape, interactiveSelected.resize(translateCoords, new Point(offsetX, offsetY)));
+                //shapes.add(indexSelectedShape, selected.translate(translateCoords, new Point(offsetX,offsetY)));
+                repaint();
             }
         }
 
         @Override
         public void mouseMoved(MouseEvent e) {
-       
+
         }
 
     }
@@ -256,6 +286,7 @@ public class DrawingPanel extends JPanel {
 
         if (selected != null) {
             selected.deSelect();
+            selected.deSelectCorners();
         }
 
         Container container = null;
@@ -264,8 +295,12 @@ public class DrawingPanel extends JPanel {
                 this.indexSelectedShape = i;
                 container = containers.get(i);
             }
-            if(containers.get(i).containsTopRightCorner(locPoint)){
-                System.out.println("true");
+            if (containers.get(i).containsTopRightCorner(locPoint)
+                    || containers.get(i).containsTopLeftCorner(locPoint)
+                    || containers.get(i).containsBottomLeftCorner(locPoint)
+                    || containers.get(i).containsBottomRightCorner(locPoint)) {
+                containers.get(i).SelectCorners();
+                selectedCorners = true;
             }
         }
         return container;
