@@ -18,7 +18,6 @@
 package GUI;
 
 import simpledrawer.Readers.JSONShapeReader;
-import simpledrawer.Readers.XMLShapeReader;
 import java.awt.Color;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -27,7 +26,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.xml.parsers.ParserConfigurationException;
 import org.xml.sax.SAXException;
-import simpledrawer.shapes.ShapeType;
+import simpledrawer.Entity;
 
 public class DrawerMain extends javax.swing.JFrame {
 
@@ -422,17 +421,7 @@ public class DrawerMain extends javax.swing.JFrame {
     }//GEN-LAST:event_scrBrightnessAdjustmentValueChanged
 
     private void btnLoadXMLActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoadXMLActionPerformed
-        try {
-            XMLShapeReader shapeReader = new XMLShapeReader();
-
-            shapeReader.getShapesFromFile("stored_shapes.xml");
-            List listOfShapes = shapeReader.getSlList();
-            drawingPanel.setShapes(listOfShapes);
-            drawingPanel.repaint();
-
-        } catch (ParserConfigurationException | SAXException | IOException ex) {
-            Logger.getLogger(XMLShapeReader.class.getName()).log(Level.SEVERE, null, ex);
-        }
+ 
 
 
     }//GEN-LAST:event_btnLoadXMLActionPerformed
@@ -452,20 +441,20 @@ public class DrawerMain extends javax.swing.JFrame {
     }//GEN-LAST:event_btnLoadJSONActionPerformed
     private void radShapeActionPerformed(java.awt.event.ActionEvent evt) {                                         
         if (radLine.isSelected()) {
-            drawingPanel.setCurrentShapeType(ShapeType.LINE);
+            drawingPanel.setCurrentShapeType(Entity.EntityType.LINE);
             return;
         }
         if (radOval.isSelected()) {
-            drawingPanel.setCurrentShapeType(ShapeType.OVAL);
+            drawingPanel.setCurrentShapeType(Entity.EntityType.OVAL);
             return;
         }
 
         if (radRectangle.isSelected()) {
-            drawingPanel.setCurrentShapeType(ShapeType.RECTANGLE);
+            drawingPanel.setCurrentShapeType(Entity.EntityType.RECTANGLE);
             return;
         }
         if (radTriangle.isSelected()) {
-            drawingPanel.setCurrentShapeType(ShapeType.TRIANGLE);
+            drawingPanel.setCurrentShapeType(Entity.EntityType.TRIANGLE);
             return;
         }
     }

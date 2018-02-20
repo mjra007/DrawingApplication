@@ -1,14 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package simpledrawer;
 
-import simpledrawer.shapes.ShapeType;
 import java.awt.Color;
 import java.awt.Point;
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,51 +11,36 @@ import java.util.List;
  */
 public abstract class Entity implements DrawableI {
 
-    /*List of vertices
-    * When it makes sense the first
-    * point should be always the starting point
-     */
-    private Color colour;
-    private int thickness;
     // Type of shape e.g. line or oval
-    private ShapeType shapeType;
-    private String eventType; // currently always SHAPE
-    int width;
-    int height;
+    private final EntityType type; // currently always SHAPE
+    private final int pointsRequired;
+    private int width;
+    private int height;
 
     //These points are crucical points that the shapes depend on
-    List<Point> structuralPoints = new ArrayList<Point>();
+    private List<Point> structuralPoints = new ArrayList<Point>();
 
-    public Entity(List<Point> list,int width, int height, Color c, int t, ShapeType st) {
-        colour = c;
+    public Entity(List<Point> list,int pointsRequired, EntityType et) {
         structuralPoints = list;
-        thickness = t;
-        shapeType = st;
-        this.height = height;
-        this.width = width;
+        type = et;
+        this.pointsRequired=pointsRequired;
+        this.height = this.structuralPoints.get(1).y - this.getStructuralPoints().get(0).y;
+        this.width = list.get(1).x - list.get(0).x;
+        this.height = list.get(1).y - list.get(0).y;
     }
 
     public Entity() {
-        this.colour = new Color(0, 0, 0);
-        this.thickness = 5;
-        this.shapeType = ShapeType.LINE;
-        this.eventType = "shape";
-        this.height=5;
+        this.type = EntityType.LINE;
+        this.height = 5;
         this.width = 5;
+        pointsRequired = 0;
     }
 
-    public Entity(List<Point> points,int height,int width, Color colour, int thickness, ShapeType shapeType, String eventType) {
-        this.colour = colour;
-        this.structuralPoints = points;
-        this.thickness = thickness;
-        this.shapeType = shapeType;
-        this.eventType = eventType;
-        this.height = height;
-        this.width = width;
-    }
-
-    public Color getColour() {
-        return colour;
+    /*
+    All the current Entity Types that our program holds should be here
+     */
+    public static enum EntityType {
+        LINE, OVAL, TRIANGLE, RECTANGLE;
     }
 
     public void setStructuralPoints(List<Point> list) {
@@ -73,59 +51,45 @@ public abstract class Entity implements DrawableI {
         return this.structuralPoints;
     }
 
-    public void setColour(Color colour) {
-        this.colour = colour;
+    public int getPointsRequired(){
+        return pointsRequired;
+    }
+    
+    public Entity.EntityType getEventType() {
+        return this.type;
     }
 
-    public int getThickness() {
-        return thickness;
-    }
-
-    public void setThickness(int thickness) {
-        this.thickness = thickness;
-    }
-
-    public ShapeType getShapeType() {
-        return shapeType;
-    }
-
-    public void setShapeType(ShapeType shapeType) {
-        this.shapeType = shapeType;
-    }
-
-    public String getEventType() {
-        return eventType;
-    }
-
-    public void setEventType(String eventType) {
-        this.eventType = eventType;
-    }
-
-    public int getWidth(){
+    public int getWidth() {
         return width;
     }
-    
-    public int getHeight(){
+
+    public int getHeight() {
         return height;
     }
-    
-    /**
-     * The method converts the string representation of the colour passed to it
-     * to the corresponding static constant of class Color e.g. "red" will be
-     * converted to Color.RED. The strange code is an example of "reflection".
-     * See
-     * http://stackoverflow.com/questions/5822384/getting-a-color-from-a-string-input
-     * for more explanation.
-     *
-     * @param colour string representation of the Color required
-     */
-    public void setColourByString(String colour) {
-        try {
-            Color c;
-            Field f = Color.class.getField(colour.toUpperCase());
-            this.colour = (Color) f.get(null);
-        } catch (NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException ex) {
-            this.colour = Color.BLACK;
+
+    public static List<Point> getReorganizedCoords(Point point, Point point2) {
+
+        int x, xend, y, yend;
+        List<Point> listPoints = new ArrayList<Point>();
+
+        x = point.x;
+        xend = point2.x;
+        y = point.y;
+        yend = point2.y;
+
+        if (xend < x) {
+            int mem = x;
+            x = xend;
+            xend = mem;
         }
+        if (yend < y) {
+            int mem = y;
+            y = yend;
+            yend = mem;
+
+        }
+        listPoints.add(new Point(x, y));
+        listPoints.add(new Point(xend, yend));
+        return listPoints;
     }
 }

@@ -26,19 +26,21 @@ import javax.swing.JPanel;
 import simpledrawer.Container;
 import simpledrawer.ContainerFactory;
 import simpledrawer.InteractiveShape;
-import simpledrawer.shapes.ShapeType;
 import simpledrawer.DrawableI;
+import simpledrawer.Entity;
 
 public class DrawingPanel extends JPanel {
 
     // current settings used when drawing
     private int currentThickness;
     private Color currentColor;
-    private ShapeType currentShapeType;
+    private Entity.EntityType currentEntityType;
     private float currentBrightness;
     private int currentRotation;
 
     public static Container selected;
+    
+    public boolean selectedCorners=false;
 
     private List<Point> currentPoints; // x and y points for shape being drawn
 
@@ -49,7 +51,7 @@ public class DrawingPanel extends JPanel {
     // A List that stores the shapes that appear on the JPanel
     private List<Container> containers;
 
-    private  int indexSelectedShape;
+    private int indexSelectedShape;
 
     //Holds the 
     int orginalX, orginalY;
@@ -60,13 +62,13 @@ public class DrawingPanel extends JPanel {
      * and shape type.
      */
     public DrawingPanel() {
-        this(Color.BLACK, 5, ShapeType.RECTANGLE);
+        this(Color.BLACK, 5, Entity.EntityType.RECTANGLE);
     }
 
     /* Constructor used to create a DrawingPanel with a
      * specified line colour, thickness and shape type
      */
-    public DrawingPanel(Color c, int t, ShapeType st) {
+    public DrawingPanel(Color c, int t, Entity.EntityType et) {
         this.addMouseListener(new MouseWatcher());
         this.addMouseMotionListener(new MouseMotionWatcher());
         this.setBorder(BorderFactory.createLoweredBevelBorder());
@@ -74,7 +76,7 @@ public class DrawingPanel extends JPanel {
         y = -1;
         currentColor = c;
         currentThickness = t;
-        currentShapeType = st;
+        currentEntityType = et;
         currentRotation = 0;
         currentBrightness = 1;
 
@@ -107,6 +109,8 @@ public class DrawingPanel extends JPanel {
         // all the shapes stored in it
         for (Object aShape : containers) {
             // draw the correct sort of shape: line or oval or triangle
+            Container shape = (Container) aShape;
+            //   System.out.println(shape.getContained().toString());
             if (aShape instanceof DrawableI) {
                 DrawableI ld = (DrawableI) aShape;
                 ld.drawShape(g2d, currentBrightness);
@@ -126,15 +130,15 @@ public class DrawingPanel extends JPanel {
     /**
      * @return the currentShapeType
      */
-    public ShapeType getCurrentShapeType() {
-        return currentShapeType;
+    public Entity.EntityType getCurrentShapeType() {
+        return currentEntityType;
     }
 
     /**
      * @param currentShapeType the currentShapeType to set
      */
-    public void setCurrentShapeType(ShapeType currentShapeType) {
-        this.currentShapeType = currentShapeType;
+    public void setCurrentShapeType(Entity.EntityType currentShapeType) {
+        this.currentEntityType = currentShapeType;
     }
 
     /**
@@ -169,53 +173,68 @@ public class DrawingPanel extends JPanel {
 
         @Override
         public void mousePressed(MouseEvent e) {
-            // reset the rotation to 0 otherwise things get messy.
-
-            currentRotation = 0;
-            selected = getContainerAtLoc(e.getPoint());
+            //unselect whatever it is selected if it is otherwise objects will be selected when they dont need to
             if (selected != null) {
-                  if (DrawingState.MOVING.equals(state)) {
-                InteractiveShape selected = (InteractiveShape) containers.get(indexSelectedShape);
-                int offsetX = e.getX() - orginalX;
-                int offsetY = e.getY() - orginalY;
-                containers.add(indexSelectedShape, selected.translate(translateCoords, new Point(offsetX, offsetY)));
-                //shapes.add(indexSelectedShape, selected.translate(translateCoords, new Point(offsetX,offsetY)));
-                repaint();
+                selected.deSelect();
+                selected.deSelectCorners();
             }
-                selected.Select();
-                //        System.out.println(selected.getShapeType().toString());
+            // reset the rotation to 0 otherwise things get messy.
+            currentRotation = 0;
+            //get selected container at the mouse location if it exists
+            selected = getContainerAtLoc(e.getPoint());
+            //checking if it exists
+            if (selectedCorners){
+               //saving coords of the mouse
                 orginalX = e.getX();
                 orginalY = e.getY();
+                //saving entity coords.
                 translateCoords = new ArrayList<Point>();
-
                 for (Point coords : selected.getContained().getStructuralPoints()) {
                     translateCoords.add(coords);
                 }
 
+                //selecting object
+                selected.Select();
+                //and telling the mouse dragg event we are indeed moving a shape and not drawing
+                state = DrawingState.RESIZING;
+                //if there is no shape selected then we would check whether we have a point for a shape by checking if our list is null 
+            }else if (selected != null) {
+                //saving coords of the mouse
+                orginalX = e.getX();
+                orginalY = e.getY();
+                //saving entity coords.
+                translateCoords = new ArrayList<Point>();
+                for (Point coords : selected.getContained().getStructuralPoints()) {
+                    translateCoords.add(coords);
+                }
+
+                //selecting object
+                selected.Select();
+                //and telling the mouse dragg event we are indeed moving a shape and not drawing
                 state = DrawingState.MOVING;
-                return;
-            }
-            state = DrawingState.DRAWING;
-            if (currentPoints == null) { // must be starting a new shape
+                //if there is no shape selected then we would check whether we have a point for a shape by checking if our list is null
+            } else if (currentPoints == null) {
+                //as it is let s add the current point clicked to the current points list
+                state = DrawingState.DRAWING;
                 currentPoints = new ArrayList<>();
-                Point firstPoint = new Point();
-                firstPoint.x = e.getX();
-                firstPoint.y = e.getY();
-                currentPoints.add(firstPoint);
-                System.out.print(firstPoint.toString());
-            } else { // shape must have already been started
-                // decide what to do based on the current shape;
                 currentPoints.add(e.getPoint());
-                System.out.print(e.getPoint().toString());
-                System.out.print(currentPoints.size() + "");
-                Container container = ContainerFactory.createEntity(currentPoints, currentColor, currentThickness, currentShapeType);
-                containers.add(container);
-                currentPoints = null;
-
+                //in case it is not the first point
+            } else if (currentPoints != null) {
+                //add point to the list
+                currentPoints.add(e.getPoint());
+                //and check wehther we meet the amount of required points for the shape selected
+                if (currentPoints.size() == ContainerFactory.getRequiredPoints(currentPoints, currentColor, currentThickness, currentEntityType)) {
+                    //Cool, we met the requirement of points, now we can call the factory and get the Container with tghe shape easily
+                    // dont you love design patterns :p
+                    Container container = ContainerFactory.createEntity(currentPoints, currentColor, currentThickness, currentEntityType);
+                    //adding container to the list of containers to be drawn
+                    containers.add(container);
+                    //reseting the cpoints selected
+                    currentPoints = null;
+                }
             }
-            repaint(); // causes paintComponent() to be called
+            repaint();
         }
-
     }
 
     public class MouseMotionWatcher implements MouseMotionListener {
@@ -223,10 +242,20 @@ public class DrawingPanel extends JPanel {
         @Override
         public void mouseDragged(MouseEvent e) {
             if (DrawingState.MOVING.equals(state)) {
-                InteractiveShape selected = (InteractiveShape) containers.get(indexSelectedShape);
+                InteractiveShape interactiveSelected = (InteractiveShape) containers.get(indexSelectedShape);
+                //figuring out the offset of our first click and the last done
                 int offsetX = e.getX() - orginalX;
                 int offsetY = e.getY() - orginalY;
-                containers.add(indexSelectedShape, selected.translate(translateCoords, new Point(offsetX, offsetY)));
+                containers.add(indexSelectedShape, interactiveSelected.translate(translateCoords, new Point(offsetX, offsetY)));
+                //shapes.add(indexSelectedShape, selected.translate(translateCoords, new Point(offsetX,offsetY)));
+                repaint();
+            }else
+            if (DrawingState.RESIZING.equals(state)){
+                InteractiveShape interactiveSelected = (InteractiveShape) containers.get(indexSelectedShape);
+                //figuring out the offset of our first click and the last done
+                int offsetX = e.getX() + orginalX;
+                int offsetY = e.getY() + orginalY;
+                containers.add(indexSelectedShape, interactiveSelected.resize(translateCoords, new Point(offsetX, offsetY)));
                 //shapes.add(indexSelectedShape, selected.translate(translateCoords, new Point(offsetX,offsetY)));
                 repaint();
             }
@@ -239,27 +268,43 @@ public class DrawingPanel extends JPanel {
 
     }
 
+    public boolean isFirstClick() {
+        return currentPoints == null;
+    }
+
+    public boolean isDoubleClick() {
+        int size = currentPoints.size();
+        return size >= 2 && currentPoints.get(size - 2).equals(currentPoints.get(size - 1));
+    }
+
     /**
      * @param locPoint coordinates of the point to check
      * @return the shape at that location or null if there is nothing
      *
      */
     public Container getContainerAtLoc(Point locPoint) {
+
         if (selected != null) {
             selected.deSelect();
+            selected.deSelectCorners();
         }
+
         Container container = null;
-        int count = 0;
-        for (Container s : this.containers) {
-            if (s.contains(locPoint)) {
-                this.indexSelectedShape = count;
-                container = s;
+        for (int i = 0; i < containers.size(); i++) {
+            if (containers.get(i).contains(locPoint)) {
+                this.indexSelectedShape = i;
+                container = containers.get(i);
             }
-            count++;
+            if (containers.get(i).containsTopRightCorner(locPoint)
+                    || containers.get(i).containsTopLeftCorner(locPoint)
+                    || containers.get(i).containsBottomLeftCorner(locPoint)
+                    || containers.get(i).containsBottomRightCorner(locPoint)) {
+                containers.get(i).SelectCorners();
+                selectedCorners = true;
+            }
         }
         return container;
     }
-
 
     public void setCurrentThickness(int currentThickness) {
         this.currentThickness = currentThickness;
@@ -285,8 +330,6 @@ public class DrawingPanel extends JPanel {
         repaint();
     }
 
-
-    
     public void setShapes(List shapes) {
         this.containers = shapes;
     }
