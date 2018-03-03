@@ -14,28 +14,22 @@ import java.awt.Graphics2D;
 import java.awt.Point;
 import java.util.List;
 
-import simpledrawer.Entity;
-import simpledrawer.SShape;
 import simpledrawer.Utils;
 
 public class SOval extends SShape {
 
-    public SOval(List<Point> p , Color c, int t, Entity.EntityType et) {
-        super(Utils.getReorganizedCoords(p.get(0), p.get(1)), c, t,2 , et);
+    public SOval(List<Point> p , Color c, int t) {
+        super(Utils.getReorganizedCoords(p.get(0), p.get(1)), c, t,2 , Entity.EntityType.OVAL);
     }
-
-    public int getX() {
-        return super.getStructuralPoints().get(0).x;
-    }
-
-    public int getY() {
-        return this.getStructuralPoints().get(0).y;
-    }
-
+    /**
+     * @return an int that is the y of the opposite point of the origin
+     */
     public int getXEnd() {
         return getX() + getWidth();
     }
-
+    /**
+     * @return an int that is the y of the opposite point of the origin
+     */
     public int getYEnd() {
         return getY() + getHeight();
     }
@@ -52,15 +46,15 @@ public class SOval extends SShape {
     }
 
     @Override
-    public void drawShape(Graphics2D g2d, float currentBrightness) {
+    public void drawShape(Graphics2D g2d) {
         // scale the brightness of the colour
-        Color c = scaleColour(super.getColor(), currentBrightness);
-        g2d.setColor(c);
+      //  Color c = scaleColour(super.getColor(), currentBrightness);
+        g2d.setColor(super.getColor());
         // set the thickness of the line
         g2d.setStroke(new BasicStroke(this.getThickness()));
-
+        
         // draw the oval        
-        g2d.drawOval(getX(), getY(),
+        g2d.fillOval(getX(), getY(),
                 getWidth(),
                 getHeight());
     }

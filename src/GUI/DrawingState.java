@@ -10,5 +10,5 @@ package GUI;
  * @author micae
  */
 public enum DrawingState {
-        MOVING ,RESIZING ,DRAWING;
+        MOVING ,RESIZING ,DRAWING, ROTATE;
 }

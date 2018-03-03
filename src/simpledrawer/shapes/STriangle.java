@@ -13,14 +13,12 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.util.List;
-import simpledrawer.Entity;
-import simpledrawer.SShape;
 
 public class STriangle extends SShape {
 
     
-    public STriangle(List<Point> p, Color c, int t, Entity.EntityType et) {
-        super(p, c , t, 3 , et);
+    public STriangle(List<Point> p, Color c, int t) {
+        super(p, c , t, 3 , Entity.EntityType.TRIANGLE);
     }
     /**
      *
@@ -39,10 +37,10 @@ public class STriangle extends SShape {
     
     
     @Override
-    public void drawShape(Graphics2D g2d, float currentBrightness) {
+    public void drawShape(Graphics2D g2d) {
         // scale the brightness of the colour
-        Color c = scaleColour(getColor(), currentBrightness);
-        g2d.setColor(c);
+      // Color c = scaleColour(getColor());
+        g2d.setColor(super.getColor());
         // set the thickness of the line
         g2d.setStroke(new BasicStroke(getThickness()));
 

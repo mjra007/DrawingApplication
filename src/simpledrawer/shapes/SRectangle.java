@@ -11,8 +11,6 @@ import java.awt.Graphics2D;
 import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
-import simpledrawer.Entity;
-import simpledrawer.SShape;
 import simpledrawer.Utils;
 
 
@@ -25,30 +23,36 @@ public class SRectangle extends SShape {
     int height;
     int width;
 
-    public SRectangle(List<Point> p, Color c, int t, Entity.EntityType et) {
-        super(Utils.getReorganizedCoords(p.get(0), p.get(1)), c ,t, 2 ,et);
+    public SRectangle(List<Point> p, Color c, int t) {
+        super(Utils.getReorganizedCoords(p.get(0), p.get(1)), c ,t, 2 ,Entity.EntityType.RECTANGLE);
     }
-
+    
+    /**
+     * @return an int that is the x of the opposite point of the origin
+     */
     public int getXEnd() {
         return getX() + getWidth();
     }
-
+    /**
+     * @return an int that is the y of the opposite point of the origin
+     */
     public int getYEnd() {
         return getY() + getHeight();
     }
 
-
+    
     @Override
-    public void drawShape(Graphics2D g2d, float currentBrightness) {
+    public void drawShape(Graphics2D g2d) {
         // scale the brightness of the colour
-        Color c = scaleColour(getColor(), currentBrightness);
-        g2d.setColor(c);
+        //Color c = scaleColour(getColor(), currentBrightness);
+        g2d.setColor(super.getColor());
         // get start point
         // draw the line
         // set the thickness of the line                
         g2d.setStroke(new BasicStroke(this.getThickness()));
         g2d.drawRect(getX(), getY(), getWidth(), getHeight());
     }
+    
     @Override
     public String toString(){
         return "Color: "+super.getColor()+" Thick: "+super.getThickness()+" Points: "+super.getStructuralPoints().toString()+" width: "+super.getWidth()+" height: "+super.getHeight()+"  "+super.getX()+" , "+super.getX()+"Last "+this.getXEnd()+", "+this.getYEnd();

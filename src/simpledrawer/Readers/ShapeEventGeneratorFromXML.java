@@ -17,7 +17,7 @@ import java.util.*;
 import java.io.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import simpledrawer.Entity;
+import simpledrawer.shapes.Entity;
 
 
 public class ShapeEventGeneratorFromXML extends DefaultHandler {

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package simpledrawer;
+package simpledrawer.shapes;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
@@ -43,7 +43,7 @@ public class SShape extends Entity{
     }
     
     @Override
-    public void drawShape(Graphics2D g2d, float currentBrightness) {
+    public void drawShape(Graphics2D g2d) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     

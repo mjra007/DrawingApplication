@@ -1,6 +1,6 @@
 package simpledrawer.Readers;
 
-import simpledrawer.Entity;
+import simpledrawer.shapes.Entity;
 
 /**
  * Interface implemented by classes that want to be notified of ShapeEvents

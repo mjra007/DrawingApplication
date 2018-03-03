@@ -5,36 +5,31 @@
  */
 package simpledrawer;
 
+import simpledrawer.shapes.Container;
 import java.awt.Point;
+import java.awt.Rectangle;
 import java.util.List;
 
 /**
  *
- * @author micael
- * The classes implementing this interface will be able
- * to me modified much easier by the user.
- * This interface will allow us to know when user has clicked a shape
- * If Shape is overlaping another rshape etc.
- * 
+ * @author micael The classes implementing this interface will be able to me
+ * modified much easier by the user. This interface will allow us to know when
+ * user has clicked a shape If Shape is overlaping another rshape etc.
+ *
  */
 public interface InteractiveShape {
-    
+
     /*Checks whether the shape contains a certain coordinate 
     * @return true if it does   and false if not
     * @param point to be checked
-    */
+     */
     public boolean contains(Point p);
-    
-    public boolean containsBottomRightCorner(Point p);
-        
-    public boolean containsBottomLeftCorner(Point p);
 
-    public boolean containsTopRightCorner(Point p);
-        
-    public boolean containsTopLeftCorner(Point p);
+    public boolean contains(Point p, Rectangle r);
 
-    public Container translate(List<Point> old,Point offset);
-    
-    public Container resize(List<Point> old,Point offset);
-    
+    public Container updateLocation(List<Point> old, Point origin);
+
+    public Container resize(List<Point> old, Point offset);
+
+    public Container rotate(List<Point> old, Point offset);
 }
