@@ -1,5 +1,5 @@
 /*
- * DrawingPanelView.java
+ * Canvas.java
  *
  * @author Gill Windall
  *
@@ -9,7 +9,7 @@
  */
 package GUI.Views;
 
-import GUI.Controllers.DrawingPanelController;
+import GUI.Controllers.CanvasController;
 import GUI.View;
 import java.awt.Color;
 import java.awt.Graphics;
@@ -17,23 +17,22 @@ import java.awt.Graphics2D;
 import java.awt.Stroke;
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
-import simpledrawer.shapes.Container;
 import simpledrawer.DrawableI;
 import simpledrawer.shapes.Entity;
 
-public class DrawingPanelView extends JPanel implements View {
+public class Canvas extends JPanel implements View {
 
-    private DrawingPanelController controller;
+    private CanvasController controller;
 
-    /* Constructor used to create a DrawingPanelView with a
+    /* Constructor used to create a Canvas with a
      * specified line colour, thickness and shape type
      */
-    public DrawingPanelView() {
+    public Canvas() {
         this.setBorder(BorderFactory.createLoweredBevelBorder());
 
     }
 
-    public void addController(DrawingPanelController ct) {
+    public void addController(CanvasController ct) {
         controller = ct;
         this.addMouseListener(controller);
         this.addMouseMotionListener(controller);

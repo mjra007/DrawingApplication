@@ -17,7 +17,7 @@
  */
 package GUI.Views;
 
-import GUI.Controllers.DrawingMainController;
+import GUI.Controllers.DrawingOptionsController;
 import GUI.View;
 import javax.swing.JButton;
 import javax.swing.JRadioButton;
@@ -29,8 +29,8 @@ import javax.swing.JScrollBar;
 
 public class DrawerMainView extends JFrame implements View {
 
-    private DrawingPanelView drawingPanel; // the drawing panel
-    private DrawingMainController controller;
+    private Canvas drawingPanel; // the drawing panel
+    private DrawingOptionsController controller;
 
     /**
      * Initialise the components in the screen and then cast a reference to the
@@ -38,7 +38,7 @@ public class DrawerMainView extends JFrame implements View {
      *
      * @param dpv
      */
-    public DrawerMainView(DrawingPanelView dpv) {
+    public DrawerMainView(Canvas dpv) {
         this.drawingPanel = dpv;
         initComponents();
     }
@@ -47,7 +47,7 @@ public class DrawerMainView extends JFrame implements View {
         return (View) this;
     }
 
-    public void addController(DrawingMainController c) {
+    public void addController(DrawingOptionsController c) {
         this.controller = c;
     }
 

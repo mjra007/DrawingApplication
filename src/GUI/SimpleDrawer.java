@@ -6,11 +6,12 @@
 package GUI;
 
 import GUI.Models.EntitiesModel;
-import GUI.Controllers.DrawingMainController;
-import GUI.Controllers.DrawingPanelController;
+import GUI.Controllers.DrawingOptionsController;
+import GUI.Controllers.CanvasController;
 import GUI.Models.OptionsModel;
 import GUI.Views.DrawerMainView;
-import GUI.Views.DrawingPanelView;
+import GUI.Views.Canvas;
+import GUI.Views.DrawingOptions;
 import javax.swing.UIManager;
 
 /**
@@ -30,14 +31,18 @@ public class SimpleDrawer {
         } catch (Exception e) {
             // If Nimbus is not available, you can set the GUI to another look and feel.
         }
-        EntitiesModel entityModel = new EntitiesModel();
-        OptionsModel optionsModel= new OptionsModel();
-        DrawingPanelView dpv= new DrawingPanelView();
-        DrawerMainView dmv = new DrawerMainView(dpv);
-        DrawingMainController dmc = new DrawingMainController(dmv,entityModel,optionsModel);
-        DrawingPanelController dpc = new DrawingPanelController(dpv,entityModel,optionsModel);
-        dpv.addController(dpc);
-        dmv.addController(dmc);
-        dmv.setVisible(true);
+        //starting models
+        EntitiesModel entitiesModel = new EntitiesModel();
+        OptionsModel optionsModel = new OptionsModel();
+        //starting controllers
+        CanvasController canvasController = new CanvasController(new EntitiesModel(), new OptionsModel());
+        DrawingOptionsController drawingOptionsController = new DrawingOptionsController(entitiesModel,optionsModel);
+        //now views
+        Canvas canvas = new Canvas();
+        canvas.addController(canvasController);
+        DrawingOptions drawingOptions = new DrawingOptions(canvas);
+        drawingOptionsController.addView(drawingOptions);
+        drawingOptions.addController(drawingOptionsController);
+        drawingOptions.setVisible(true);
     }
 }

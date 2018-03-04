@@ -26,18 +26,20 @@ import simpledrawer.shapes.SOval;
  *
  * @author ma8521e
  */
-public class DrawingPanelController implements MouseListener, MouseMotionListener {
+public class CanvasController implements MouseListener, MouseMotionListener {
 
     private View view;
     private EntitiesModel entitiesModel;
     private OptionsModel guiOptions;
 
-    public DrawingPanelController(View v, EntitiesModel m, OptionsModel guiOptions) {
+    public CanvasController( EntitiesModel m, OptionsModel guiOptions) {
         entitiesModel = m;
         this.guiOptions = guiOptions;
-        view = v;
     }
 
+    public void addView(View view){
+        this.view = view;
+    }
     @Override
     public void mouseClicked(MouseEvent e) {
 
