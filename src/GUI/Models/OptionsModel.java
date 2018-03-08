@@ -23,12 +23,13 @@ public class OptionsModel {
     private int currentRotation;
     private int currentThickness;
     private Color currentColor;
+    private Color background;
     private DrawingState state;
     private List<Point> currentPoints;
     private List<Point> oldPoints;
 
     public OptionsModel() {
-        currentEntityType = Entity.EntityType.RECTANGLE;
+        currentEntityType = Entity.EntityType.LINE;
         currentColor = Color.BLACK;
         currentThickness = 5;
         currentRotation = 0;
@@ -41,6 +42,14 @@ public class OptionsModel {
 
     public DrawingState getState() {
         return this.state;
+    }
+
+    public Color getBackground() {
+        return this.background;
+    }
+
+    public void setBackground(Color c) {
+        this.background = c;
     }
 
     public void addMouseClick(Point point) {
@@ -84,13 +93,6 @@ public class OptionsModel {
         return this.oldPoints;
     }
 
-    /**
-     * @param currentShapeType the currentShapeType to set
-     */
-    public void setCurrentShapeType(Entity.EntityType currentShapeType) {
-        this.currentEntityType = currentShapeType;
-    }
-
     public void setCurrentThickness(int currentThickness) {
         this.currentThickness = currentThickness;
     }
@@ -130,6 +132,7 @@ public class OptionsModel {
 
     public void setEntityTypeSelected(Entity.EntityType type) {
         this.currentEntityType = type;
+
     }
 
     public Entity.EntityType getEntityTypeSelected() {

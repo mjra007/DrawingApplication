@@ -8,20 +8,18 @@ package GUI.Models;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import simpledrawer.shapes.Entity;
-import simpledrawer.shapes.SOval;
+import simpledrawer.DrawableI;
 
 public class EntitiesModel {
 
-    private Entity selected;
-    private List<Entity> entityList;
+    private DrawableI selected;
+    private List<DrawableI> entityList;
     //saves the last 100 changes
-    private HashMap<Integer, List<Entity>> entityListHistory;
-    private List<Entity> drawingPoints ;
+    private HashMap<Integer, List<DrawableI>> entityListHistory;
     private Integer indexSelect;
 
     public EntitiesModel() {
-        this.entityList = new ArrayList<Entity>();
+        this.entityList = new ArrayList<DrawableI>();
         this.entityListHistory = new HashMap<>();
     }
 
@@ -29,7 +27,7 @@ public class EntitiesModel {
     /**
      * @return entityList to be drawn
      */
-    public List<Entity> getEntityList() {
+    public List<DrawableI> getEntityList() {
         return this.entityList;
     }
 
@@ -37,9 +35,9 @@ public class EntitiesModel {
      *
      * @param entity to add to currentList
      */
-    public void addEntityToList(Entity entity) {
+    public void addEntityToList(DrawableI entity) {
         if(getEntityList()==null){
-           this.entityList=new ArrayList<Entity>();
+           this.entityList=new ArrayList<DrawableI>();
         }
         getEntityList().add(entity);
     }
@@ -47,7 +45,7 @@ public class EntitiesModel {
     /**
      * @return entityListHistory
      */
-    public HashMap<Integer, List<Entity>> getHistory() {
+    public HashMap<Integer, List<DrawableI>> getHistory() {
         return entityListHistory;
     }
 
@@ -55,24 +53,13 @@ public class EntitiesModel {
      *
      * @param et the entity you want to make selected
      */
-    public void setSelected(Entity et, Integer i) {
+    public void setSelected(DrawableI et, Integer i) {
         this.selected = et;
         this.setIndexSelect(i);
     }
 
     private void setIndexSelect(Integer index) {
         this.indexSelect = index;
-    }
-
-    public void addDrawingPoints(SOval oval){
-        if(getDrawingPoints()==null){
-           this.drawingPoints=new ArrayList<Entity>();
-        }
-        this.drawingPoints.add(oval);
-    }
-    
-    public List<Entity> getDrawingPoints(){
-        return this.drawingPoints;
     }
     
     @Deprecated
@@ -84,7 +71,7 @@ public class EntitiesModel {
      *
      * @return the entity that it is currently selected
      */
-    public Entity getSelected() {
+    public DrawableI getSelected() {
         return this.selected;
     }
 }

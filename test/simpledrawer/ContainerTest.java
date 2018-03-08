@@ -6,7 +6,7 @@
 package simpledrawer;
 
 import simpledrawer.shapes.Container;
-import simpledrawer.shapes.Entity;
+import simpledrawer.shapes.DrawableI;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Point;
@@ -245,7 +245,7 @@ public class ContainerTest extends TestCase {
      */
     public void testContain() {
         System.out.println("contain");
-        Entity entity = null;
+        DrawableI entity = null;
         Container instance = null;
         instance.contain(entity);
         // TODO review the generated test code and remove the default call to fail.
@@ -258,8 +258,8 @@ public class ContainerTest extends TestCase {
     public void testGetContained() {
         System.out.println("getContained");
         Container instance = null;
-        Entity expResult = null;
-        Entity result = instance.getContained();
+        DrawableI expResult = null;
+        DrawableI result = instance.getContained();
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");

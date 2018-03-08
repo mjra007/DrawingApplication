@@ -39,7 +39,7 @@ public abstract class Entity implements DrawableI {
     }
 
     /*
-    All the current Entity Types that our program holds should be here
+    All the current DrawableI Types that our program holds should be here
      */
     public static enum EntityType {
         LINE, OVAL, TRIANGLE, RECTANGLE;
@@ -100,7 +100,27 @@ public abstract class Entity implements DrawableI {
     public int getHeight() {
         return height;
     }
-
+    /**
+     * 
+     * @return endPointX - origiPointX
+     * you might want to override the method depending on what shape 
+     * your entity takes
+     * 
+     */
+    public void setWidth(int width) {
+        this.width=width;
+    }
+    
+    /**
+     * 
+     * @return endPointY - origiPointY
+     * you might want to override the method depending on what shape 
+     * your entity takes
+     * 
+     */
+    public void setHeight(int height) {
+        this.height=height;
+    }
     /**
      *  Select the shape should be set the shape
      *  to selected

@@ -18,7 +18,6 @@ import java.awt.Stroke;
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 import simpledrawer.DrawableI;
-import simpledrawer.shapes.Entity;
 
 public class Canvas extends JPanel implements View {
 
@@ -29,13 +28,13 @@ public class Canvas extends JPanel implements View {
      */
     public Canvas() {
         this.setBorder(BorderFactory.createLoweredBevelBorder());
-
     }
 
     public void addController(CanvasController ct) {
         controller = ct;
         this.addMouseListener(controller);
         this.addMouseMotionListener(controller);
+        this.addMouseWheelListener(controller);
     }
 
     /*
@@ -57,13 +56,13 @@ public class Canvas extends JPanel implements View {
         // rotate the drawing by the current rotation amount
         double rotateTheta;
         rotateTheta = controller.getCurrentRotation() * Math.PI / 180;
-        g2d.rotate(0, this.getWidth() / 2, this.getHeight() / 2);
+        g2d.rotate(rotateTheta, this.getWidth() / 2, this.getHeight() / 2);
 
         // Loop though the ArrayList drawing
         // all the shapes stored in it
         for (Object aShape : controller.getDrawingList()) {
             // draw the correct sort of shape: line or oval or triangle
-            Entity shape = (Entity) aShape;
+            DrawableI shape = (DrawableI) aShape;
             //   System.out.println(shape.getContained().toString());
             if (aShape instanceof DrawableI) {
                 DrawableI ld = (DrawableI) aShape;
@@ -83,7 +82,6 @@ public class Canvas extends JPanel implements View {
 
     @Override
     public void refresh() {
-        System.out.println("sdsds");
         repaint();
     }
 

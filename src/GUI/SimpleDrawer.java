@@ -35,11 +35,12 @@ public class SimpleDrawer {
         EntitiesModel entitiesModel = new EntitiesModel();
         OptionsModel optionsModel = new OptionsModel();
         //starting controllers
-        CanvasController canvasController = new CanvasController(new EntitiesModel(), new OptionsModel());
+        CanvasController canvasController = new CanvasController(entitiesModel, optionsModel);
         DrawingOptionsController drawingOptionsController = new DrawingOptionsController(entitiesModel,optionsModel);
         //now views
         Canvas canvas = new Canvas();
         canvas.addController(canvasController);
+        canvasController.addView(canvas);
         DrawingOptions drawingOptions = new DrawingOptions(canvas);
         drawingOptionsController.addView(drawingOptions);
         drawingOptions.addController(drawingOptionsController);

@@ -5,7 +5,6 @@
  */
 package GUI.Controllers;
 
-import GUI.DrawingState;
 import GUI.Models.EntitiesModel;
 import GUI.Models.OptionsModel;
 import GUI.View;
@@ -171,6 +170,7 @@ public class DrawingOptionsController {
     /* rotate the drawing 90 degrees to the left */
     private void rotateLeft(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLeftActionPerformed
         guiOptions.rotate(-90);
+        getView().getCanvas().repaint();
     }//GEN-LAST:event_btnLeftActionPerformed
 
     /* clear the drawing */
@@ -196,6 +196,8 @@ public class DrawingOptionsController {
     /* rotate the drawing 90 degrees to the right */
     private void rotateRight(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRightActionPerformed
         guiOptions.rotate(90);
+        getView().getCanvas().repaint();
+
     }
 
     public void menuTriangle(ActionEvent evt) {

@@ -18,6 +18,7 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Rectangle;
+import java.awt.geom.AffineTransform;
 import java.util.List;
 import simpledrawer.DrawableI;
 import simpledrawer.InteractiveShape;
@@ -93,7 +94,6 @@ public class Container implements DrawableI, InteractiveShape {
         rectangle.setFrameFromDiagonal(getOrigin(), getEndPoint());
         if (contains(p, rectangle)) {
             doesIt = true;
-            getContained().Select();
         }
         getContained().deSelect();
         return doesIt;
@@ -112,6 +112,7 @@ public class Container implements DrawableI, InteractiveShape {
             contained.getStructuralPoints().set(i, new Point(oldPoint.x + offset.x, oldPoint.y + offset.y));
         }
         return this;
+
     }
 
     /**
@@ -146,11 +147,11 @@ public class Container implements DrawableI, InteractiveShape {
         Rectangle rectangle = r;
         /*setting the rectangle with this method prevents the endX to be lower than
         the originX and the endY to be lower than the originY. Sometimes users
-        can select the end point first.
-         */
+        can select the end point first.*/
         rectangle.setFrameFromDiagonal(getOrigin(), getEndPoint());
         if (rectangle.contains(p)) {
             doesIt = true;
+            contained.Select();
         }
         return doesIt;
     }
@@ -227,8 +228,20 @@ public class Container implements DrawableI, InteractiveShape {
         return doesIt;
     }
 
+    @Override
+    public Container resize(float amount) {
+        this.contained.setHeight((int) (contained.getHeight() + amount));
+        this.contained.setWidth((int) (contained.getWidth() + amount));
+        return this;
+    }
+
+    @Override
+    public List<Point> getStructuralPoints() {
+        return this.getContained().getStructuralPoints();
+    }
+
     /*
-    All the current Entity Types that our program holds should be here
+    All the current DrawableI Types that our program holds should be here
      */
     public static enum EntityTypes {
         LINE, OVAL, TRIANGLE, RECTANGLE;
@@ -283,12 +296,12 @@ public class Container implements DrawableI, InteractiveShape {
         }
         contained.drawShape(g2d);
         g2d.setColor(Color.MAGENTA);
-        if (contained.areCornersSelected()) {
+        /*    if (contained.areCornersSelected()) {
             drawResizeIndicator(g2d, new Point(getOrigin()));
             drawResizeIndicator(g2d, new Point(getEndPoint()));
             drawResizeIndicator(g2d, new Point(getEndPoint().x, getOrigin().y));
             drawResizeIndicator(g2d, new Point(getOrigin().x, getEndPoint().y));
-        }
+        }*/
     }
 
 }
