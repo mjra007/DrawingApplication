@@ -7,10 +7,13 @@ package GUI.Views;
 
 import GUI.Controllers.DrawingOptionsController;
 import GUI.View;
+import colormixerbean.ColorMixer;
+import javax.swing.JButton;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 public class DrawingOptions extends javax.swing.JFrame implements View {
 
@@ -63,7 +66,7 @@ public class DrawingOptions extends javax.swing.JFrame implements View {
         red1 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         Brush1 = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
+        btnBackground = new javax.swing.JButton();
         panDrawingArea = this.drawingPanel;
         jMenuBar1 = new javax.swing.JMenuBar();
         menuFile = new javax.swing.JMenu();
@@ -85,19 +88,19 @@ public class DrawingOptions extends javax.swing.JFrame implements View {
         menuTriangle = new javax.swing.JCheckBoxMenuItem();
         menuLine = new javax.swing.JCheckBoxMenuItem();
         menuColorMixer = new javax.swing.JMenu();
-        colorMixerBean1 = new colormixerbean.ColorMixerBean();
+        colorMixerBean1 = new colormixerbean.ColorMixer();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        toolbar.setBackground(new java.awt.Color(255, 255, 255));
-        toolbar.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED), "Toolbar"	, javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 11))); // NOI18N
+        toolbar.setBackground(new java.awt.Color(204, 204, 204));
+        toolbar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.lightGray, java.awt.Color.lightGray, java.awt.Color.lightGray, java.awt.Color.lightGray));
         toolbar.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
         java.awt.GridBagLayout toolbarLayout = new java.awt.GridBagLayout();
         toolbarLayout.columnWidths = new int[] {0, 5, 0, 5, 0, 5, 0, 5, 0, 5, 0};
         toolbarLayout.rowHeights = new int[] {0};
         toolbar.setLayout(toolbarLayout);
 
-        Colors.setBackground(new java.awt.Color(238, 237, 237));
+        Colors.setBackground(new java.awt.Color(204, 204, 204));
         Colors.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 1, 1, new java.awt.Color(204, 204, 204)), "Pick a colour", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 12))); // NOI18N
         Colors.setToolTipText("Brush");
         Colors.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
@@ -108,49 +111,49 @@ public class DrawingOptions extends javax.swing.JFrame implements View {
 
         red.setBackground(new java.awt.Color(255, 0, 0));
         red.setText("      ");
-        red.setBorder(new javax.swing.border.MatteBorder(null));
+        red.setBorder(javax.swing.BorderFactory.createMatteBorder(2, 2, 2, 2, new java.awt.Color(102, 102, 102)));
         red.setOpaque(true);
         Colors.add(red);
 
         yellow.setBackground(new java.awt.Color(255, 255, 0));
         yellow.setText("      ");
-        yellow.setBorder(new javax.swing.border.MatteBorder(null));
+        yellow.setBorder(javax.swing.BorderFactory.createMatteBorder(2, 2, 2, 2, new java.awt.Color(102, 102, 102)));
         yellow.setOpaque(true);
         Colors.add(yellow);
 
         orange.setBackground(new java.awt.Color(255, 102, 0));
         orange.setText("      ");
-        orange.setBorder(new javax.swing.border.MatteBorder(null));
+        orange.setBorder(javax.swing.BorderFactory.createMatteBorder(2, 2, 2, 2, new java.awt.Color(102, 102, 102)));
         orange.setOpaque(true);
         Colors.add(orange);
 
         blue.setBackground(new java.awt.Color(0, 153, 255));
         blue.setText("      ");
-        blue.setBorder(new javax.swing.border.MatteBorder(null));
+        blue.setBorder(javax.swing.BorderFactory.createMatteBorder(2, 2, 2, 2, new java.awt.Color(102, 102, 102)));
         blue.setOpaque(true);
         Colors.add(blue);
 
         green.setBackground(new java.awt.Color(0, 204, 0));
         green.setText("      ");
-        green.setBorder(new javax.swing.border.MatteBorder(null));
+        green.setBorder(javax.swing.BorderFactory.createMatteBorder(2, 2, 2, 2, new java.awt.Color(102, 102, 102)));
         green.setOpaque(true);
         Colors.add(green);
 
         pink.setBackground(new java.awt.Color(255, 51, 204));
         pink.setText("      ");
-        pink.setBorder(new javax.swing.border.MatteBorder(null));
+        pink.setBorder(javax.swing.BorderFactory.createMatteBorder(2, 2, 2, 2, new java.awt.Color(102, 102, 102)));
         pink.setOpaque(true);
         Colors.add(pink);
 
         black.setBackground(new java.awt.Color(0, 0, 0));
         black.setText("      ");
-        black.setBorder(new javax.swing.border.MatteBorder(null));
+        black.setBorder(javax.swing.BorderFactory.createMatteBorder(2, 2, 2, 2, new java.awt.Color(102, 102, 102)));
         black.setOpaque(true);
         Colors.add(black);
 
         white.setBackground(new java.awt.Color(255, 255, 255));
         white.setText("      ");
-        white.setBorder(new javax.swing.border.MatteBorder(null));
+        white.setBorder(javax.swing.BorderFactory.createMatteBorder(2, 2, 2, 2, new java.awt.Color(102, 102, 102)));
         white.setOpaque(true);
         Colors.add(white);
 
@@ -160,7 +163,7 @@ public class DrawingOptions extends javax.swing.JFrame implements View {
         gridBagConstraints.anchor = java.awt.GridBagConstraints.PAGE_START;
         toolbar.add(Colors, gridBagConstraints);
 
-        Brush.setBackground(new java.awt.Color(238, 237, 237));
+        Brush.setBackground(new java.awt.Color(204, 204, 204));
         Brush.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 1, 1, new java.awt.Color(204, 204, 204)), "Brush", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 12))); // NOI18N
         Brush.setToolTipText("Brush");
         Brush.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
@@ -179,6 +182,9 @@ public class DrawingOptions extends javax.swing.JFrame implements View {
         txtThickness.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
         txtThickness.setText("5");
         txtThickness.setBorder(javax.swing.BorderFactory.createCompoundBorder());
+        txtThickness.setMaximumSize(new java.awt.Dimension(20, 16));
+        txtThickness.setMinimumSize(new java.awt.Dimension(20, 16));
+        txtThickness.setPreferredSize(new java.awt.Dimension(20, 16));
         txtThickness.setRequestFocusEnabled(false);
         txtThickness.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -199,12 +205,13 @@ public class DrawingOptions extends javax.swing.JFrame implements View {
 
         red1.setBackground(new java.awt.Color(255, 0, 0));
         red1.setText("      ");
-        red1.setBorder(new javax.swing.border.MatteBorder(null));
+        red1.setBorder(javax.swing.BorderFactory.createMatteBorder(2, 2, 2, 2, new java.awt.Color(102, 102, 102)));
         red1.setOpaque(true);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 1;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
+        gridBagConstraints.insets = new java.awt.Insets(6, 0, 0, 0);
         Brush.add(red1, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -220,7 +227,7 @@ public class DrawingOptions extends javax.swing.JFrame implements View {
         gridBagConstraints.weightx = 0.2;
         toolbar.add(jPanel2, gridBagConstraints);
 
-        Brush1.setBackground(new java.awt.Color(238, 237, 237));
+        Brush1.setBackground(new java.awt.Color(204, 204, 204));
         Brush1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 1, 1, new java.awt.Color(204, 204, 204)), "Settings", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 12))); // NOI18N
         Brush1.setToolTipText("Brush");
         Brush1.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
@@ -230,8 +237,8 @@ public class DrawingOptions extends javax.swing.JFrame implements View {
         Brush1.setPreferredSize(new java.awt.Dimension(100, 70));
         Brush1.setLayout(new java.awt.GridBagLayout());
 
-        jButton1.setText("Change Background");
-        Brush1.add(jButton1, new java.awt.GridBagConstraints());
+        btnBackground.setText("Change Background");
+        Brush1.add(btnBackground, new java.awt.GridBagConstraints());
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 4;
@@ -353,16 +360,24 @@ public class DrawingOptions extends javax.swing.JFrame implements View {
         return this.jMenuBar1;
     }
 
+    public JTextField getTxtThickness() {
+        return this.txtThickness;
+    }
+
     public JMenuItem getmenuClear() {
         return this.menuClear;
     }
-    
-    public JMenuItem getmenuShapes(){
+
+    public JMenuItem getmenuShapes() {
         return this.menuShapes;
     }
 
     public JMenu getmenuColorMixer() {
         return this.menuColorMixer;
+    }
+
+    public ColorMixer getColorMixer() {
+        return this.colorMixerBean1;
     }
 
     public JMenu getmenuEdit() {
@@ -421,16 +436,24 @@ public class DrawingOptions extends javax.swing.JFrame implements View {
         return this.menuReset;
     }
 
+    public JButton getbtnBackground() {
+        return this.btnBackground;
+    }
+
+    public JPanel getDrawingPanel() {
+        return this.drawingPanel;
+    }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel Brush;
     private javax.swing.JPanel Brush1;
     private javax.swing.JPanel Colors;
     private javax.swing.JLabel black;
     private javax.swing.JLabel blue;
-    private colormixerbean.ColorMixerBean colorMixerBean1;
+    private javax.swing.JButton btnBackground;
+    private colormixerbean.ColorMixer colorMixerBean1;
     private javax.swing.JLabel currentColor;
     private javax.swing.JLabel green;
-    private javax.swing.JButton jButton1;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JLabel lblThickness;
@@ -466,6 +489,6 @@ public class DrawingOptions extends javax.swing.JFrame implements View {
 
     @Override
     public void refresh() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        repaint();
     }
 }

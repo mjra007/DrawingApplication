@@ -12,21 +12,24 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Point;
+import java.awt.RenderingHints;
 import java.util.List;
 
 import simpledrawer.Utils;
 
 public class SOval extends SShape {
 
-    public SOval(List<Point> p , Color c, int t) {
-        super(Utils.getReorganizedCoords(p.get(0), p.get(1)), c, t,2 , Entity.EntityType.OVAL);
+    public SOval(List<Point> p, Color c, int t) {
+        super(Utils.getReorganizedCoords(p.get(0), p.get(1)), c, t, 2, Entity.EntityType.OVAL);
     }
+
     /**
      * @return an int that is the y of the opposite point of the origin
      */
     public int getXEnd() {
         return getX() + getWidth();
     }
+
     /**
      * @return an int that is the y of the opposite point of the origin
      */
@@ -47,12 +50,14 @@ public class SOval extends SShape {
 
     @Override
     public void drawShape(Graphics2D g2d) {
+        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+                RenderingHints.VALUE_ANTIALIAS_ON);
         // scale the brightness of the colour
-      //  Color c = scaleColour(super.getColor(), currentBrightness);
+        //  Color c = scaleColour(super.getColor(), currentBrightness);
         g2d.setColor(super.getColor());
         // set the thickness of the line
         g2d.setStroke(new BasicStroke(this.getThickness()));
-        
+
         // draw the oval        
         g2d.fillOval(getX(), getY(),
                 getWidth(),

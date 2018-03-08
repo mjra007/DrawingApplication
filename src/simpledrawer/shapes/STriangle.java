@@ -12,14 +12,15 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Point;
+import java.awt.RenderingHints;
 import java.util.List;
 
 public class STriangle extends SShape {
 
-    
     public STriangle(List<Point> p, Color c, int t) {
-        super(p, c , t, 3 , Entity.EntityType.TRIANGLE);
+        super(p, c, t, 3, Entity.EntityType.TRIANGLE);
     }
+
     /**
      *
      * @return the area in pixels of the triangle. Does this work okay?
@@ -31,15 +32,16 @@ public class STriangle extends SShape {
         return Math.abs((term1 + term2 + term3) / 2.0);
     }
 
-    public List<Point> getVertices(){
+    public List<Point> getVertices() {
         return this.getStructuralPoints();
     }
-    
-    
+
     @Override
     public void drawShape(Graphics2D g2d) {
+        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+                RenderingHints.VALUE_ANTIALIAS_ON);
         // scale the brightness of the colour
-      // Color c = scaleColour(getColor());
+        // Color c = scaleColour(getColor());
         g2d.setColor(super.getColor());
         // set the thickness of the line
         g2d.setStroke(new BasicStroke(getThickness()));
@@ -47,10 +49,11 @@ public class STriangle extends SShape {
         // draw the triangle
         g2d.drawLine(this.getVertices().get(0).x, this.getVertices().get(0).y, this.getVertices().get(1).x, this.getVertices().get(1).y);
         g2d.drawLine(this.getVertices().get(2).x, this.getVertices().get(2).y, this.getVertices().get(1).x, this.getVertices().get(1).y);
-        g2d.drawLine(this.getVertices().get(2).x, this.getVertices().get(2).y, this.getVertices().get(0).x, this.getVertices().get(0).y);    
+        g2d.drawLine(this.getVertices().get(2).x, this.getVertices().get(2).y, this.getVertices().get(0).x, this.getVertices().get(0).y);
     }
+
     @Override
-    public String toString(){
-        return "Color: "+super.getColor()+" Thick: "+super.getThickness()+" Points: "+super.getStructuralPoints().toString()+" width: "+super.getWidth()+" height: "+super.getHeight()+"  "+super.getX()+" , "+super.getX();
+    public String toString() {
+        return "Color: " + super.getColor() + " Thick: " + super.getThickness() + " Points: " + super.getStructuralPoints().toString() + " width: " + super.getWidth() + " height: " + super.getHeight() + "  " + super.getX() + " , " + super.getX();
     }
 }

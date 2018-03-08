@@ -108,9 +108,9 @@ public class JSONShapeReader {
     private static void generateTestJSON(String file) {
         List<Entity> list = new ArrayList<>();
         // load in some hard-coded shapes
-      /*  list.add(new Entity(new Point(20, 40),new Point(30, 0), Color.red, 5, ShapeType.LINE));
-        list.add(new Entity(new Point(20, 40),new Point(70, 90), Color.blue, 5, ShapeType.OVAL));
-        list.add(new Entity(new Point(80, 95),new Point(70, 45), Color.green, 5, ShapeType.LINE)); */
+      /*  list.add(new DrawableI(new Point(20, 40),new Point(30, 0), Color.red, 5, ShapeType.LINE));
+        list.add(new DrawableI(new Point(20, 40),new Point(70, 90), Color.blue, 5, ShapeType.OVAL));
+        list.add(new DrawableI(new Point(80, 95),new Point(70, 45), Color.green, 5, ShapeType.LINE)); */
         listOfShape lS= new listOfShape();
     //    lS.listOfShape = list;
         Gson gson = new Gson();

@@ -5,15 +5,9 @@
  */
 package simpledrawer.shapes;
 
-import simpledrawer.shapes.Container;
-import simpledrawer.shapes.Entity;
 import java.awt.Color;
 import java.awt.Point;
 import java.util.List;
-import simpledrawer.shapes.SLine;
-import simpledrawer.shapes.SOval;
-import simpledrawer.shapes.SRectangle;
-import simpledrawer.shapes.STriangle;
 
 /**
  *

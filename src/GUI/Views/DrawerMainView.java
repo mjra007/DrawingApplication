@@ -399,6 +399,7 @@ public class DrawerMainView extends JFrame implements View {
         return this.drawingPanel;
     }
 
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnClear;
     private javax.swing.JButton btnLeft;

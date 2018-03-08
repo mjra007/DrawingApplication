@@ -17,6 +17,8 @@ import java.util.*;
 import java.io.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import simpledrawer.DrawableI;
+import simpledrawer.shapes.Container;
 import simpledrawer.shapes.Entity;
 
 
@@ -127,7 +129,7 @@ public class ShapeEventGeneratorFromXML extends DefaultHandler {
 
         switch (currentTag) {
             case SHAPE_TAG:
-//                currentShape = new Entity(); // starting a new shape so create object
+//                currentShape = new DrawableI(); // starting a new shape so create object
           //      currentShape.setEventType("SHAPE");
                 break;
         }
@@ -283,9 +285,10 @@ public class ShapeEventGeneratorFromXML extends DefaultHandler {
         ShapeEventGeneratorFromXML me = new ShapeEventGeneratorFromXML();
         ShapeEventListener sel = new ShapeEventListener() {
             @Override
-            public void processShapeEvent(Object originator, Entity se) {
+            public void processShapeEvent(Object originator, DrawableI se) {
                 System.out.println("***** " + se);
             }
+
         };
         me.registerShapeEventListener("SHAPE", sel);
         me.processScriptFile(filename);
