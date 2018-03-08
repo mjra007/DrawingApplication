@@ -88,50 +88,66 @@ public class DrawingOptionsController {
         });
         getView().getmenuRectangle().addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
-                radShapeActionPerformed(evt);
+                menuRectangle(evt);
             }
         });
         getView().getmenuOval().addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
-                radShapeActionPerformed(evt);
+                menuOval(evt);
             }
         });
         getView().getmenuLine().addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
-                radShapeActionPerformed(evt);
+                menuLine(evt);
             }
         });
         getView().getmenuTriangle().addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
-                radShapeActionPerformed(evt);
+                menuTriangle(evt);
             }
         });
-        getView().getmenuShapes().addActionListener(new ActionListener() {
+        getView().getTxtThickness().addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
-                menuShapes(evt);
+                txtThicknessActionPerformed(evt);
+            }
+        });
+        getView().getbtnBackground().addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                btnChangeBackground(evt);
             }
         });
     }
 
     public void setupFocusListener() {
-        /*       getView()..addFocusListener(new java.awt.event.FocusAdapter() {
+        getView().getTxtThickness().addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
                 txtThicknessFocusLost(evt);
             }
-        });*/
+        });
     }
 
     public void setupKeyListener() {
-        /*   DrawerMainView view = (DrawerMainView) this.view;
-        view.getTxtThickness().addKeyListener(new java.awt.event.KeyAdapter() {
+        getView().getTxtThickness().addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 txtThicknessKeyReleased(evt);
             }
-        });*/
+        });
     }
 
     public void importJSON(ActionEvent evt) {
+        try {
+            JSONShapeReader shapeReader = new JSONShapeReader();
+            shapeReader.getShapesFromFile("stored_shapes.json");
+            List listOfShapes = shapeReader.getShapes();
+            //entitiesModel.setEntityList(listOfShapes);
+            view.refresh();
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(DrawerMainView.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 
+    public void getColor() {
+        this.getView().getColorMixer().getMix();
     }
 
     public void importXML(ActionEvent evt) {
@@ -165,7 +181,7 @@ public class DrawingOptionsController {
     /* user pressed return in the thickness field */
     private void txtThicknessActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtThicknessActionPerformed
         handleThickness();
-    }//GEN-LAST:event_txtThicknessActionPerformed
+    }
 
     /* user has clicked away from the thickness field */
     private void txtThicknessFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtThicknessFocusLost
@@ -182,80 +198,36 @@ public class DrawingOptionsController {
         guiOptions.rotate(90);
     }
 
-    private void btnLoadJSONActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoadJSONActionPerformed
-
-        try {
-            JSONShapeReader shapeReader = new JSONShapeReader();
-            shapeReader.getShapesFromFile("stored_shapes.json");
-            List listOfShapes = shapeReader.getShapes();
-            //entitiesModel.setEntityList(listOfShapes);
-            view.refresh();
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(DrawerMainView.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-    }//GEN-LAST:event_btnLoadJSONActionPerformed
-
-    private void radShapeActionPerformed(java.awt.event.ActionEvent evt) {
-        setShapeSelection(guiOptions.getEntityTypeSelected());
-        if (getView().getmenuLine().isSelected()) {
-            guiOptions.setCurrentShapeType(Entity.EntityType.LINE);
-            clearShapeSelection();
-            setShapeSelection(Entity.EntityType.LINE);
-
-            return;
-        }
-        if (getView().getmenuOval().isSelected()) {
-            guiOptions.setCurrentShapeType(Entity.EntityType.OVAL);
-            clearShapeSelection();
-            setShapeSelection(Entity.EntityType.OVAL);
-
-            return;
-        }
-        if (getView().getmenuRectangle().isSelected()) {
-            guiOptions.setCurrentShapeType(Entity.EntityType.RECTANGLE);
-            clearShapeSelection();
-               setShapeSelection(Entity.EntityType.RECTANGLE);
-
-            return;
-        }
-        if (getView().getmenuTriangle().isSelected()) {
-            guiOptions.setCurrentShapeType(Entity.EntityType.TRIANGLE);
-           clearShapeSelection();
-            setShapeSelection(Entity.EntityType.TRIANGLE);
-            return;
-        }
-
-    }
-
-    public void clearShapeSelection() {
-        getView().getmenuTriangle().setSelected(false);
+    public void menuTriangle(ActionEvent evt) {
+        guiOptions.setEntityTypeSelected(Entity.EntityType.TRIANGLE);
+        getView().getmenuTriangle().setSelected(true);
         getView().getmenuOval().setSelected(false);
         getView().getmenuRectangle().setSelected(false);
         getView().getmenuLine().setSelected(false);
     }
 
-    public void setShapeSelection(Entity.EntityType entity) {
-        switch (entity) {
-            case LINE:
-                getView().getmenuLine().setSelected(true);
-                break;
-            case OVAL:
-                getView().getmenuOval().setSelected(true);
-                break;
-            case TRIANGLE:
-                getView().getmenuTriangle().setSelected(true);
-                break;
-            case RECTANGLE:
-                getView().getmenuRectangle().setSelected(true);
-            default:
-                break;
-        }
+    public void menuOval(ActionEvent evt) {
+        guiOptions.setEntityTypeSelected(Entity.EntityType.OVAL);
+        getView().getmenuTriangle().setSelected(false);
+        getView().getmenuOval().setSelected(true);
+        getView().getmenuRectangle().setSelected(false);
+        getView().getmenuLine().setSelected(false);
     }
 
-    public void menuShapes(ActionEvent evt) {
-        System.out.println("sds");
-        setShapeSelection(guiOptions.getEntityTypeSelected());
+    public void menuRectangle(ActionEvent evt) {
+        guiOptions.setEntityTypeSelected(Entity.EntityType.RECTANGLE);
+        getView().getmenuTriangle().setSelected(false);
+        getView().getmenuOval().setSelected(false);
+        getView().getmenuRectangle().setSelected(true);
+        getView().getmenuLine().setSelected(false);
+    }
+
+    public void menuLine(ActionEvent evt) {
+        guiOptions.setEntityTypeSelected(Entity.EntityType.LINE);
+        getView().getmenuTriangle().setSelected(false);
+        getView().getmenuOval().setSelected(false);
+        getView().getmenuRectangle().setSelected(false);
+        getView().getmenuLine().setSelected(true);
     }
 
     private void reset(ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -267,19 +239,11 @@ public class DrawingOptionsController {
     }
 
     public void reset() {
-        getView().getScrollBlue().setValue(0);
-        getView().getScrollGreen().setValue(0);
-        getView().getScrollRed().setValue(0);
         clearDisplay();
-        getView().getDrawingPanel().setBackground(Color.white);
-        getView().getlblBrightness().setBackground(new java.awt.Color(126, 126, 126));
-        getView().getLblColor().setBackground(new java.awt.Color(0, 0, 0));
+        guiOptions.setBackground(Color.white);
+        guiOptions.setCurrentColor(new java.awt.Color(0, 0, 0));
         getView().getTxtThickness().setText("5");
-        getView().getRadRectangleShape().doClick();
-        getView().getScrollBrightness().setValue(50);
-        getView().getTxtBlue().setText("0");
-        getView().getTxtRed().setText("0");
-        getView().getTxtGreen().setText("0");
+        getView().getmenuRectangle().doClick();
     }
 
     public int getCurrentRotation() {
