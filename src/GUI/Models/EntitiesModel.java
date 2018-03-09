@@ -14,7 +14,7 @@ public class EntitiesModel {
 
     private DrawableI selected;
     private List<DrawableI> entityList;
-    //saves the last 100 changes
+    // Saves the last 100 changes
     private HashMap<Integer, List<DrawableI>> entityListHistory;
     private Integer indexSelect;
 
@@ -22,7 +22,6 @@ public class EntitiesModel {
         this.entityList = new ArrayList<DrawableI>();
         this.entityListHistory = new HashMap<>();
     }
-
 
     /**
      * @return entityList to be drawn
@@ -32,12 +31,11 @@ public class EntitiesModel {
     }
 
     /**
-     *
      * @param entity to add to currentList
      */
     public void addEntityToList(DrawableI entity) {
-        if(getEntityList()==null){
-           this.entityList=new ArrayList<DrawableI>();
+        if (getEntityList() == null) {
+            this.entityList = new ArrayList<DrawableI>();
         }
         getEntityList().add(entity);
     }
@@ -50,7 +48,6 @@ public class EntitiesModel {
     }
 
     /**
-     *
      * @param et the entity you want to make selected
      */
     public void setSelected(DrawableI et, Integer i) {
@@ -61,14 +58,13 @@ public class EntitiesModel {
     private void setIndexSelect(Integer index) {
         this.indexSelect = index;
     }
-    
+
     @Deprecated
     public int getIndexSelect() {
         return this.indexSelect;
     }
 
     /**
-     *
      * @return the entity that it is currently selected
      */
     public DrawableI getSelected() {

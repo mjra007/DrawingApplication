@@ -1,12 +1,3 @@
-/*
- * Canvas.java
- *
- * @author Gill Windall
- *
- * A specialised JPanel used as the canvas for simple drawings.
- *
- * NOT created using the NetBeans GUI builder
- */
 package GUI.Views;
 
 import GUI.Controllers.CanvasController;

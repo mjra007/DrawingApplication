@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package GUI;
 
 import GUI.Models.EntitiesModel;
@@ -13,10 +8,6 @@ import GUI.Views.Canvas;
 import GUI.Views.DrawingOptions;
 import javax.swing.UIManager;
 
-/**
- *
- * @author micae
- */
 public class SimpleDrawer {
 
     public static void main(String args[]) {
@@ -30,13 +21,13 @@ public class SimpleDrawer {
         } catch (Exception e) {
             // If Nimbus is not available, you can set the GUI to another look and feel.
         }
-        //starting models
+        // Starting models
         EntitiesModel entitiesModel = new EntitiesModel();
         OptionsModel optionsModel = new OptionsModel();
-        //starting controllers
+        // Starting controllers
         CanvasController canvasController = new CanvasController(entitiesModel, optionsModel);
-        DrawingOptionsController drawingOptionsController = new DrawingOptionsController(entitiesModel,optionsModel);
-        //now views
+        DrawingOptionsController drawingOptionsController = new DrawingOptionsController(entitiesModel, optionsModel);
+        // Now views
         Canvas canvas = new Canvas();
         canvas.addController(canvasController);
         canvasController.addView(canvas);

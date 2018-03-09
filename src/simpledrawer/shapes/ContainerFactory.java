@@ -1,18 +1,9 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package simpledrawer.shapes;
 
 import java.awt.Color;
 import java.awt.Point;
 import java.util.List;
 
-/**
- *
- * @author ma8521e
- */
 public class ContainerFactory {
 
     public static Container createEntity(List<Point> list, Color c, int t, Entity.EntityType et) {

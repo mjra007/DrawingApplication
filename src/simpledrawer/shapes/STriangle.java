@@ -1,11 +1,3 @@
-/*
- * SimpleTriangle.java
- *
- * @author Gill Windall
- *
- * Represents a triangle that can be drawn on a drawing area
- *
- */
 package simpledrawer.shapes;
 
 import java.awt.BasicStroke;
@@ -40,8 +32,7 @@ public class STriangle extends SShape {
         int finalwidth = 0;
         for (int i = 0; i < this.getStructuralPoints().size(); i++) {
             Point point1 = getStructuralPoints().get(i);
-            //Point point2
-            int calculate = finalwidth-point1.x;
+            int calculate = finalwidth - point1.x;
             if (finalwidth > calculate) {
                 finalwidth = point1.x;
             }
@@ -53,7 +44,6 @@ public class STriangle extends SShape {
         int finalHeight = 0;
         for (int i = 0; i < this.getStructuralPoints().size(); i++) {
             Point point1 = getStructuralPoints().get(i);
-            //Point point2
             if (finalHeight < point1.y) {
                 finalHeight = point1.y;
             }
@@ -65,13 +55,13 @@ public class STriangle extends SShape {
     public void drawShape(Graphics2D g2d) {
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
                 RenderingHints.VALUE_ANTIALIAS_ON);
-        // scale the brightness of the colour
+        // Scale the brightness of the colour
         // Color c = scaleColour(getColor());
         g2d.setColor(super.getColor());
-        // set the thickness of the line
+        // Set the thickness of the line
         g2d.setStroke(new BasicStroke(getThickness()));
 
-        // draw the triangle
+        // Draw the triangle
         g2d.drawLine(this.getVertices().get(0).x, this.getVertices().get(0).y, this.getVertices().get(1).x, this.getVertices().get(1).y);
         g2d.drawLine(this.getVertices().get(2).x, this.getVertices().get(2).y, this.getVertices().get(1).x, this.getVertices().get(1).y);
         g2d.drawLine(this.getVertices().get(2).x, this.getVertices().get(2).y, this.getVertices().get(0).x, this.getVertices().get(0).y);

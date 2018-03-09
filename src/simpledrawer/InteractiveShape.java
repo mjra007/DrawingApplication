@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package simpledrawer;
 
 import simpledrawer.shapes.Container;
@@ -11,10 +6,9 @@ import java.awt.Rectangle;
 import java.util.List;
 
 /**
- *
- * @author micael The classes implementing this interface will be able to me
- * modified much easier by the user. This interface will allow us to know when
- * user has clicked a shape If Shape is overlaping another rshape etc.
+ * The classes implementing this interface will be able to me modified much
+ * easier by the user. This interface will allow us to know when user has
+ * clicked a shape If Shape is overlaping another rshape etc.
  *
  */
 public interface InteractiveShape {
@@ -34,6 +28,6 @@ public interface InteractiveShape {
     public Container resize(float amount);
 
     public Container rotate(List<Point> old, Point offset);
-    
+
     public List<Point> getStructuralPoints();
 }

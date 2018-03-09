@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package GUI.Controllers;
 
 import GUI.Models.EntitiesModel;
@@ -23,10 +18,6 @@ import java.beans.PropertyChangeListener;
 import simpledrawer.shapes.Entity;
 import simpledrawer.Readers.JSONShapeReader;
 
-/**
- *
- * @author micae
- */
 public class DrawingOptionsController {
 
     private View view;
@@ -302,7 +293,7 @@ public class DrawingOptionsController {
             public void mouseExited(MouseEvent e) {
             }
         });
-                getView().getWhiteLabel().addMouseListener(new MouseListener() {
+        getView().getWhiteLabel().addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 whiteLabelClicked(e);
