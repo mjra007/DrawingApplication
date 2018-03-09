@@ -9,7 +9,6 @@ import GUI.Models.EntitiesModel;
 import GUI.Controllers.DrawingOptionsController;
 import GUI.Controllers.CanvasController;
 import GUI.Models.OptionsModel;
-import GUI.Views.DrawerMainView;
 import GUI.Views.Canvas;
 import GUI.Views.DrawingOptions;
 import javax.swing.UIManager;

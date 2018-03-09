@@ -46,7 +46,7 @@ public class SLine extends SShape {
         // set the thickness of the line
         g2d.setStroke(new BasicStroke(this.getThickness()));
         // draw the line
-        g2d.drawLine(getX(), getY(), this.getXEnd(), this.getYEnd());
+        g2d.drawLine(getX(), getY(), this.getX()+getWidth(), this.getY()+getHeight());
     }
 
     @Override

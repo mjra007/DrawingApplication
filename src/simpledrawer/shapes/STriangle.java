@@ -36,6 +36,31 @@ public class STriangle extends SShape {
         return this.getStructuralPoints();
     }
 
+    public int getWidth() {
+        int finalwidth = 0;
+        for (int i = 0; i < this.getStructuralPoints().size(); i++) {
+            Point point1 = getStructuralPoints().get(i);
+            //Point point2
+            int calculate = finalwidth-point1.x;
+            if (finalwidth > calculate) {
+                finalwidth = point1.x;
+            }
+        }
+        return finalwidth;
+    }
+
+    public int getHeight() {
+        int finalHeight = 0;
+        for (int i = 0; i < this.getStructuralPoints().size(); i++) {
+            Point point1 = getStructuralPoints().get(i);
+            //Point point2
+            if (finalHeight < point1.y) {
+                finalHeight = point1.y;
+            }
+        }
+        return finalHeight;
+    }
+
     @Override
     public void drawShape(Graphics2D g2d) {
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,

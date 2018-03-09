@@ -63,6 +63,9 @@ public class CanvasController implements MouseListener, MouseMotionListener, Mou
     public int getCurrentRotation() {
         return guiOptions.getCurrentRotation();
     }
+   public int getThickness() {
+        return guiOptions.getCurrentThickness();
+    }
 
     @Override
     public void mousePressed(MouseEvent e) {

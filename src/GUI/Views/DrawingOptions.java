@@ -181,7 +181,7 @@ public class DrawingOptions extends javax.swing.JFrame implements View {
 
         txtThickness.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
         txtThickness.setText("5");
-        txtThickness.setBorder(javax.swing.BorderFactory.createCompoundBorder());
+        txtThickness.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         txtThickness.setMaximumSize(new java.awt.Dimension(20, 16));
         txtThickness.setMinimumSize(new java.awt.Dimension(20, 16));
         txtThickness.setPreferredSize(new java.awt.Dimension(20, 16));
@@ -238,6 +238,11 @@ public class DrawingOptions extends javax.swing.JFrame implements View {
         Brush1.setLayout(new java.awt.GridBagLayout());
 
         btnBackground.setText("Change Background");
+        btnBackground.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBackgroundActionPerformed(evt);
+            }
+        });
         Brush1.add(btnBackground, new java.awt.GridBagConstraints());
 
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -355,6 +360,10 @@ public class DrawingOptions extends javax.swing.JFrame implements View {
     private void txtThicknessActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtThicknessActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtThicknessActionPerformed
+
+    private void btnBackgroundActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackgroundActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnBackgroundActionPerformed
 
     public JMenuBar getmenuBar() {
         return this.jMenuBar1;

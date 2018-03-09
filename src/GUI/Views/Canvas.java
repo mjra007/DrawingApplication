@@ -57,7 +57,6 @@ public class Canvas extends JPanel implements View {
         double rotateTheta;
         rotateTheta = controller.getCurrentRotation() * Math.PI / 180;
         g2d.rotate(rotateTheta, this.getWidth() / 2, this.getHeight() / 2);
-
         // Loop though the ArrayList drawing
         // all the shapes stored in it
         for (Object aShape : controller.getDrawingList()) {

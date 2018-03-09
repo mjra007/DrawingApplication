@@ -8,7 +8,6 @@ package GUI.Controllers;
 import GUI.Models.EntitiesModel;
 import GUI.Models.OptionsModel;
 import GUI.View;
-import GUI.Views.DrawerMainView;
 import GUI.Views.DrawingOptions;
 import java.awt.Color;
 import java.awt.event.ActionListener;
@@ -17,6 +16,8 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.awt.event.ActionEvent;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import simpledrawer.shapes.Entity;
 import simpledrawer.Readers.JSONShapeReader;
 
@@ -41,6 +42,7 @@ public class DrawingOptionsController {
         setupActionListeners();
         setupFocusListener();
         setupKeyListener();
+       getView().getmenuRectangle().doClick();
     }
 
     public DrawingOptions getView() {
@@ -115,6 +117,13 @@ public class DrawingOptionsController {
                 btnChangeBackground(evt);
             }
         });
+        getView().getColorMixer().addPropertyChangeListener("mix", new PropertyChangeListener(){
+            public void propertyChange(PropertyChangeEvent evt){
+                colorMixerMenu(evt);
+            }
+
+        });
+        
     }
 
     public void setupFocusListener() {
@@ -141,7 +150,7 @@ public class DrawingOptionsController {
             //entitiesModel.setEntityList(listOfShapes);
             view.refresh();
         } catch (FileNotFoundException ex) {
-            Logger.getLogger(DrawerMainView.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DrawingOptions.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -163,6 +172,8 @@ public class DrawingOptionsController {
 
     public void clearDisplay() {
         // Empty the ArrayList and clear the display.
+                guiOptions.setBackground(Color.white);
+        getView().getCanvas().setBackground(Color.white);
         entitiesModel.getEntityList().clear();
         view.refresh();
     }
@@ -200,6 +211,11 @@ public class DrawingOptionsController {
 
     }
 
+    private void colorMixerMenu(PropertyChangeEvent evt){
+        System.out.println("sds");
+        guiOptions.setCurrentColor((Color) evt.getNewValue());
+    }
+    
     public void menuTriangle(ActionEvent evt) {
         guiOptions.setEntityTypeSelected(Entity.EntityType.TRIANGLE);
         getView().getmenuTriangle().setSelected(true);
@@ -243,6 +259,7 @@ public class DrawingOptionsController {
     public void reset() {
         clearDisplay();
         guiOptions.setBackground(Color.white);
+        getView().getCanvas().setBackground(Color.white);
         guiOptions.setCurrentColor(new java.awt.Color(0, 0, 0));
         getView().getTxtThickness().setText("5");
         getView().getmenuRectangle().doClick();

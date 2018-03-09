@@ -29,7 +29,7 @@ public class OptionsModel {
     private List<Point> oldPoints;
 
     public OptionsModel() {
-        currentEntityType = Entity.EntityType.LINE;
+        currentEntityType = Entity.EntityType.RECTANGLE;
         currentColor = Color.BLACK;
         currentThickness = 5;
         currentRotation = 0;
