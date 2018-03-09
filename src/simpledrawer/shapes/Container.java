@@ -18,7 +18,6 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Rectangle;
-import java.awt.geom.AffineTransform;
 import java.util.List;
 import simpledrawer.DrawableI;
 import simpledrawer.InteractiveShape;
@@ -151,8 +150,9 @@ public class Container implements DrawableI, InteractiveShape {
         rectangle.setFrameFromDiagonal(getOrigin(), getEndPoint());
         if (rectangle.contains(p)) {
             doesIt = true;
-            contained.Select();
+            getContained().Select();
         }
+        contained.deSelect();
         return doesIt;
     }
 

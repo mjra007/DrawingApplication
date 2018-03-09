@@ -151,7 +151,9 @@ public class CanvasController implements MouseListener, MouseMotionListener, Mou
             if (drawable instanceof InteractiveShape) {
                 intercShape = (InteractiveShape) drawable;
                 if (intercShape.contains(locPoint)) {
-                    entitiesModel.setSelected(drawable, i);
+                   Container container = (Container) drawable;
+                   container.getContained().Select();
+                    entitiesModel.setSelected(container, i);
                     return intercShape;
                 }
             }
