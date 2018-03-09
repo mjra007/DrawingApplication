@@ -16,6 +16,8 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.awt.event.ActionEvent;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import simpledrawer.shapes.Entity;
@@ -42,7 +44,8 @@ public class DrawingOptionsController {
         setupActionListeners();
         setupFocusListener();
         setupKeyListener();
-       getView().getmenuRectangle().doClick();
+        getView().getmenuRectangle().doClick();
+        getView().getFinalColor().setBackground(guiOptions.getCurrentColor());
     }
 
     public DrawingOptions getView() {
@@ -117,13 +120,210 @@ public class DrawingOptionsController {
                 btnChangeBackground(evt);
             }
         });
-        getView().getColorMixer().addPropertyChangeListener("mix", new PropertyChangeListener(){
-            public void propertyChange(PropertyChangeEvent evt){
+        getView().getColorMixer().addPropertyChangeListener("mix", new PropertyChangeListener() {
+            public void propertyChange(PropertyChangeEvent evt) {
                 colorMixerMenu(evt);
             }
 
         });
-        
+        getView().getRedLabel().addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                redLabelClicked(e);
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+            }
+        });
+        getView().getRedLabel().addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                redLabelClicked(e);
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+            }
+        });
+        getView().getYellowLabel().addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                yellowLabelClicked(e);
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+            }
+        });
+        getView().getOrangeLabel().addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                orangeLabelClicked(e);
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+            }
+        });
+        getView().getBlueLabel().addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                blueLabelClicked(e);
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+            }
+        });
+        getView().getGreenLabel().addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                greenLabelClicked(e);
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+            }
+        });
+        getView().getPinkLabel().addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                pinkLabelClicked(e);
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+            }
+        });
+        getView().getBlackLabel().addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                blackLabelClicked(e);
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+            }
+        });
+                getView().getWhiteLabel().addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                whiteLabelClicked(e);
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+            }
+        });
     }
 
     public void setupFocusListener() {
@@ -142,6 +342,43 @@ public class DrawingOptionsController {
         });
     }
 
+    public void redLabelClicked(MouseEvent evt) {
+        setFinalColor(getView().getRedLabel().getBackground());
+    }
+
+    public void yellowLabelClicked(MouseEvent evt) {
+        setFinalColor(getView().getYellowLabel().getBackground());
+    }
+
+    public void orangeLabelClicked(MouseEvent evt) {
+        setFinalColor(getView().getOrangeLabel().getBackground());
+    }
+
+    public void blueLabelClicked(MouseEvent evt) {
+        setFinalColor(getView().getBlueLabel().getBackground());
+    }
+
+    public void greenLabelClicked(MouseEvent evt) {
+        setFinalColor(getView().getGreenLabel().getBackground());
+    }
+
+    public void pinkLabelClicked(MouseEvent evt) {
+        setFinalColor(getView().getPinkLabel().getBackground());
+    }
+
+    public void blackLabelClicked(MouseEvent evt) {
+        setFinalColor(getView().getBlackLabel().getBackground());
+    }
+
+    public void whiteLabelClicked(MouseEvent evt) {
+        setFinalColor(getView().getWhiteLabel().getBackground());
+    }
+
+    public void setFinalColor(Color c) {
+        guiOptions.setCurrentColor(c);
+        getView().getFinalColor().setBackground(c);
+    }
+
     public void importJSON(ActionEvent evt) {
         try {
             JSONShapeReader shapeReader = new JSONShapeReader();
@@ -154,8 +391,8 @@ public class DrawingOptionsController {
         }
     }
 
-    public void getColor() {
-        this.getView().getColorMixer().getMix();
+    public Color getCurrentColor() {
+        return guiOptions.getCurrentColor();
     }
 
     public void importXML(ActionEvent evt) {
@@ -172,7 +409,7 @@ public class DrawingOptionsController {
 
     public void clearDisplay() {
         // Empty the ArrayList and clear the display.
-                guiOptions.setBackground(Color.white);
+        guiOptions.setBackground(Color.white);
         getView().getCanvas().setBackground(Color.white);
         entitiesModel.getEntityList().clear();
         view.refresh();
@@ -211,11 +448,11 @@ public class DrawingOptionsController {
 
     }
 
-    private void colorMixerMenu(PropertyChangeEvent evt){
+    private void colorMixerMenu(PropertyChangeEvent evt) {
         System.out.println("sds");
         guiOptions.setCurrentColor((Color) evt.getNewValue());
     }
-    
+
     public void menuTriangle(ActionEvent evt) {
         guiOptions.setEntityTypeSelected(Entity.EntityType.TRIANGLE);
         getView().getmenuTriangle().setSelected(true);
