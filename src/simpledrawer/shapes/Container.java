@@ -27,8 +27,8 @@ public class Container implements DrawableI, InteractiveShape {
 
     //Points required to draw the shape contained
     Entity contained = null;
-    final static float dash1[] = {10.0f};
-    final static BasicStroke dashed = new BasicStroke(2.0f,
+    final static float dash1[] = {8.0f};
+    final static BasicStroke dashed = new BasicStroke(1.0f,
             BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 10.0f, dash1, 0.0f);
 
     public Container(Entity contained) {
@@ -231,7 +231,10 @@ public class Container implements DrawableI, InteractiveShape {
     @Override
     public Container resize(float amount) {
         this.contained.setHeight((int) (contained.getHeight() + amount));
+        Point origin = contained.getStructuralPoints().get(0);
+
         this.contained.setWidth((int) (contained.getWidth() + amount));
+        getStructuralPoints().set(1, new Point(origin.x+contained.getWidth()+(int)amount,origin.y+contained.getHeight()+(int)amount));
         return this;
     }
 
@@ -290,7 +293,7 @@ public class Container implements DrawableI, InteractiveShape {
     @Override
     public void drawShape(Graphics2D g2d) {
         g2d.setStroke(dashed);
-        g2d.setColor(Color.blue);
+        g2d.setColor(Color.gray);
         if (contained.isSelected()) {
             g2d.draw(getDrawableContainer());
         }
