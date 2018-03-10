@@ -33,8 +33,6 @@ public class SRectangle extends Shape {
 
     @Override
     public void drawShape(Graphics2D g2d) {
-        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
-                RenderingHints.VALUE_ANTIALIAS_ON);
         // Scale the brightness of the colour
         // Color c = scaleColour(getColor(), currentBrightness);
         g2d.setColor(super.getColor());

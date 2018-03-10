@@ -315,6 +315,11 @@ public class DrawingOptionsController {
             public void mouseExited(MouseEvent e) {
             }
         });
+        getView().getBetterGraphicsButton().addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                betterGraphicsClicked(evt);
+            }
+        });
     }
 
     public void setupFocusListener() {
@@ -332,7 +337,11 @@ public class DrawingOptionsController {
             }
         });
     }
-
+    public void betterGraphicsClicked(ActionEvent evt) {
+        guiOptions.setbetterGraphics(getView().getBetterGraphicsButton().isSelected());
+    }
+    
+    
     public void redLabelClicked(MouseEvent evt) {
         setFinalColor(getView().getRedLabel().getBackground());
     }

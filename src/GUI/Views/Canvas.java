@@ -5,6 +5,7 @@ import GUI.View;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.RenderingHints;
 import java.awt.Stroke;
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
@@ -41,6 +42,10 @@ public class Canvas extends JPanel implements View {
 
         // Graphics2D needed to set line thickness
         Graphics2D g2d = (Graphics2D) g;
+        
+                if(controller.isBetterGraphicsSelected())
+                    g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+                            RenderingHints.VALUE_ANTIALIAS_ON); 
 
         Stroke s = g2d.getStroke(); // save stroke to restore later
 

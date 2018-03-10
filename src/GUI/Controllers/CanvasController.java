@@ -57,6 +57,9 @@ public class CanvasController implements MouseListener, MouseMotionListener, Mou
     public int getCurrentRotation() {
         return guiOptions.getCurrentRotation();
     }
+    public boolean isBetterGraphicsSelected(){
+        return guiOptions.getbetterGraphics();
+    }
 
     public int getThickness() {
         return guiOptions.getCurrentThickness();

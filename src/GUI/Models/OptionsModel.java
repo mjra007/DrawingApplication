@@ -27,7 +27,7 @@ public class OptionsModel {
     private DrawingState state;
     private List<Point> currentPoints;
     private List<Point> oldPoints;
-
+    private boolean betterGraphics;
     public OptionsModel() {
         currentEntityType = Entity.EntityType.LINE;
         currentColor = Color.BLACK;
@@ -119,6 +119,13 @@ public class OptionsModel {
 
     public void setCurrentBrightness(float c) {
         this.currentBrightness = c;
+    }
+    
+    public void setbetterGraphics(boolean bG) {
+        this.betterGraphics = bG;
+    }
+    public boolean getbetterGraphics() {
+        return this.betterGraphics;
     }
 
     /* The whole drawing area can be rotated left or right.
