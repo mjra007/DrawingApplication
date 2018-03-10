@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package simpledrawer.shapes;
 
 import java.awt.BasicStroke;
@@ -45,12 +40,12 @@ public class SRectangle extends Shape {
     public void drawShape(Graphics2D g2d) {
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
                 RenderingHints.VALUE_ANTIALIAS_ON);
-        // scale the brightness of the colour
-        //Color c = scaleColour(getColor(), currentBrightness);
+        // Scale the brightness of the colour
+        // Color c = scaleColour(getColor(), currentBrightness);
         g2d.setColor(super.getColor());
-        // get start point
-        // draw the line
-        // set the thickness of the line                
+        // Get start point
+        // Draw the line
+        // Set the thickness of the line                
         g2d.setStroke(new BasicStroke(this.getThickness()));
         g2d.drawRect(getX(), getY(), getWidth(), getHeight());
     }

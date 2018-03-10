@@ -1,7 +1,4 @@
 /**
- *
- * @author ma8521e
- *
  * The container object is of a rectangular shape and holds the different
  * entities that can be drawn. The container hooks into the different entities
  * (which is basically a rectangle) and makes it easier to
@@ -36,8 +33,6 @@ public class Container implements DrawableI, InteractiveShape {
     /**
      * would probably be better not to do these claculations at runtime, and
      * just change the origin and other points when there is a change.
-     */
-    /**
      *
      * @return the origin point of the rectangle
      */
@@ -46,7 +41,6 @@ public class Container implements DrawableI, InteractiveShape {
     }
 
     /**
-     *
      * @return the width of this container
      */
     public int getWidth() {
@@ -54,7 +48,6 @@ public class Container implements DrawableI, InteractiveShape {
     }
 
     /**
-     *
      * @return the height of the container which is 10 more than the actual
      * shape it is containing
      */
@@ -63,7 +56,6 @@ public class Container implements DrawableI, InteractiveShape {
     }
 
     /**
-     *
      * @return the end point (opposite to the origin )
      */
     public Point getEndPoint() {
@@ -71,7 +63,6 @@ public class Container implements DrawableI, InteractiveShape {
     }
 
     /**
-     *
      * @param p point that this method checks
      * @return true if point is within the rectangle and false if it is not
      */
@@ -79,9 +70,9 @@ public class Container implements DrawableI, InteractiveShape {
     public boolean contains(Point p) {
         boolean doesIt = false;
         Rectangle rectangle = new Rectangle();
-        /*setting the rectangle with this method prevents the endX to be lower than
-        the originX and the endY to be lower than the originY. Sometimes users
-        can select the end point first.
+        /* Setting the rectangle with this method prevents the endX to be lower than
+         * the originX and the endY to be lower than the originY. Sometimes users
+         * can select the end point first.
          */
         rectangle.setFrameFromDiagonal(getOrigin(), getEndPoint());
         if (contains(p, rectangle)) {
@@ -91,7 +82,6 @@ public class Container implements DrawableI, InteractiveShape {
     }
 
     /**
-     *
      * @param old set of points before the movement occured
      * @param offset offset to add to the old points
      * @return returns a container with the entity in the new location
@@ -112,7 +102,6 @@ public class Container implements DrawableI, InteractiveShape {
     }
 
     /**
-     *
      * @param p point that this method checks
      * @param r rectangle that the method refers to to check if the point is
      * inside
@@ -122,9 +111,10 @@ public class Container implements DrawableI, InteractiveShape {
     public boolean contains(Point p, Rectangle r) {
         boolean doesIt = false;
         Rectangle rectangle = r;
-        /*setting the rectangle with this method prevents the endX to be lower than
-        the originX and the endY to be lower than the originY. Sometimes users
-        can select the end point first.*/
+        /* Setting the rectangle with this method prevents the endX to be lower than
+         * the originX and the endY to be lower than the originY. Sometimes users
+         * can select the end point first.
+         */
         rectangle.setFrameFromDiagonal(getOrigin(), getEndPoint());
         if (rectangle.contains(p)) {
             doesIt = true;
@@ -211,14 +201,13 @@ public class Container implements DrawableI, InteractiveShape {
 
 
     /*
-    All the current DrawableI Types that our program holds should be here
+     * All the current DrawableI Types that our program holds should be here
      */
     public static enum EntityTypes {
         LINE, OVAL, TRIANGLE, RECTANGLE;
     }
 
     /**
-     *
      * @return the contained SHAPE
      */
     public ContainerI getContained() {
@@ -226,19 +215,15 @@ public class Container implements DrawableI, InteractiveShape {
     }
 
     /**
-     *
      * @param g2d
-     * @param point
-     *
-     * draws the indicator for the resize functionality so the user knows that
-     * he can resize the shape
+     * @param point Draws the indicator for the resize functionality so the user
+     * knows that he can resize the shape
      */
     public void drawResizeIndicator(Graphics2D g2d, Point point) {
         g2d.drawOval(point.x - 5, point.y - 5, 10, 10);
     }
 
     /**
-     *
      * @return returns teh rectangle to be drawn that represents the container
      */
     public Rectangle getDrawableContainer() {
@@ -249,11 +234,7 @@ public class Container implements DrawableI, InteractiveShape {
         return rect;
     }
 
-    /*  public  getDrawableCorner(Point origin){
-        
-    }*/
     /**
-     *
      * @param g2d
      * @param currentBrightness Draws the container if shape is selected
      */
@@ -263,11 +244,11 @@ public class Container implements DrawableI, InteractiveShape {
         g2d.setColor(Color.gray);
         g2d.draw(getDrawableContainer());
         g2d.setColor(Color.MAGENTA);
-        /*    if (contained.areCornersSelected()) {
-            drawResizeIndicator(g2d, new Point(getOrigin()));
-            drawResizeIndicator(g2d, new Point(getEndPoint()));
-            drawResizeIndicator(g2d, new Point(getEndPoint().x, getOrigin().y));
-            drawResizeIndicator(g2d, new Point(getOrigin().x, getEndPoint().y));
+        /*   if (contained.areCornersSelected()) {
+         *   drawResizeIndicator(g2d, new Point(getOrigin()));
+         *   drawResizeIndicator(g2d, new Point(getEndPoint()));
+         *   drawResizeIndicator(g2d, new Point(getEndPoint().x, getOrigin().y));
+         *   drawResizeIndicator(g2d, new Point(getOrigin().x, getEndPoint().y));
         }*/
     }
 

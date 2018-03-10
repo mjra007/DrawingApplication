@@ -55,7 +55,7 @@ public abstract class Entity {
 
 
     /*
-    All the current DrawableI Types that our program holds should be here
+     * All the current DrawableI Types that our program holds should be here
      */
     public static enum EntityType {
         LINE, OVAL, TRIANGLE, RECTANGLE;

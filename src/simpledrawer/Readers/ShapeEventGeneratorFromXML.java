@@ -1,26 +1,13 @@
-/**
- * ShapeEventGeneratorFromXML reads and parses an XML file which holds a script
- * of shapes. It generates ShapeEvents which listeners can register to receive.
- *
- * @author Gill Windall
- * @version 3.0
- */
-
 package simpledrawer.Readers;
 
-import java.awt.Point;
 import javax.xml.parsers.*;
 import org.xml.sax.*;
 import org.xml.sax.helpers.*;
-
-import java.util.*;
 import java.io.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import simpledrawer.DrawableI;
-import simpledrawer.shapes.Container;
 import simpledrawer.shapes.Entity;
-
 
 public class ShapeEventGeneratorFromXML extends DefaultHandler {
 
@@ -62,19 +49,18 @@ public class ShapeEventGeneratorFromXML extends DefaultHandler {
 
     private String currentTag = ""; // current tag being processed
 
-    // list of listeners registered to receive dashboard events
+    // List of listeners registered to receive dashboard events
     private final ShapeEventList shapeListeners;
 
-    // the xml parser object
+    // The xml parser object
     private final XMLReader xmlReader;
 
-    // details of current shape being read
+    // Details of current shape being read
     private Entity currentShape;
 
     /**
-     * 
      * @throws ParserConfigurationException
-     * @throws SAXException 
+     * @throws SAXException
      */
     public ShapeEventGeneratorFromXML() throws ParserConfigurationException, SAXException {
         shapeListeners = new ShapeEventList();
@@ -94,7 +80,6 @@ public class ShapeEventGeneratorFromXML extends DefaultHandler {
     }
 
     /**
-     *
      * @param filename - filename of the XML file to be processed
      * @throws IOException - problem reading the file
      * @throws SAXException - problem parsing the file
@@ -129,8 +114,8 @@ public class ShapeEventGeneratorFromXML extends DefaultHandler {
 
         switch (currentTag) {
             case SHAPE_TAG:
-//                currentShape = new DrawableI(); // starting a new shape so create object
-          //      currentShape.setEventType("SHAPE");
+                //      currentShape = new DrawableI(); // starting a new shape so create object
+                //      currentShape.setEventType("SHAPE");
                 break;
         }
     }
@@ -159,20 +144,20 @@ public class ShapeEventGeneratorFromXML extends DefaultHandler {
         // process the characters based on what type of tag we are currently dealing with.
         switch (currentTag) {
             case TYPE_TAG:
-               // currentShape.setShapeType(ShapeType.valueOf(val.toUpperCase()));
+                // currentShape.setShapeType(ShapeType.valueOf(val.toUpperCase()));
                 break;
             case X_TAG: // an x tag can either be for the start or end
-                 //   currentShape.getVertices().add(new Point(Integer.parseInt(val),0));
+                //   currentShape.getVertices().add(new Point(Integer.parseInt(val),0));
                 break;
             case Y_TAG: // an y tag can either be for the start or end 
-              //   int x = currentShape.getVertice(currentShape.getVertices().size()-1).x;
-             //    currentShape.setVertice(currentShape.getVertices().size()-1,new Point(x,Integer.parseInt(val)));
+                //   int x = currentShape.getVertice(currentShape.getVertices().size()-1).x;
+                //    currentShape.setVertice(currentShape.getVertices().size()-1,new Point(x,Integer.parseInt(val)));
                 break;
             case COLOUR_TAG:
                 //currentShape.setColourByString(val);
                 break;
             case THICK_TAG:
-              //  currentShape.setThickness(Integer.parseInt(val));
+                //  currentShape.setThickness(Integer.parseInt(val));
                 break;
         }
     }
@@ -189,7 +174,7 @@ public class ShapeEventGeneratorFromXML extends DefaultHandler {
      * @param qName
      * @throws SAXException
      */
-  /*  @Override
+    /*  @Override
     public void endElement(String uri, String localName, String qName)
             throws SAXException {
 
@@ -206,7 +191,6 @@ public class ShapeEventGeneratorFromXML extends DefaultHandler {
         }
         currentTag = "";
     }*/
-
     /**
      * registerShapeEventListener() is called by objects that want to be
      * notified when an event occurs,
@@ -294,5 +278,5 @@ public class ShapeEventGeneratorFromXML extends DefaultHandler {
         me.processScriptFile(filename);
         me.removeShapeEventListener("SHAPE", sel);
         me.processScriptFile(filename);
-    } 
+    }
 }

@@ -1,13 +1,10 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package GUI.Views;
 
 import GUI.Controllers.DrawingOptionsController;
 import GUI.View;
 import colormixerbean.ColorMixer;
+import java.awt.Color;
+import java.awt.event.MouseEvent;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
@@ -334,9 +331,19 @@ public class DrawingOptions extends javax.swing.JFrame implements View {
 
         menuColorMixer.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GUI/Images/paint-palette.png"))); // NOI18N
         menuColorMixer.setText("     Colour Mixer     ");
+        menuColorMixer.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         menuColorMixer.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                menuColorMixerMouseEntered(evt);
+            }
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 menuColorMixerMousePressed(evt);
+            }
+        });
+
+        colorMixerBean1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                colorMixerBean1ActionPerformed(evt);
             }
         });
         menuColorMixer.add(colorMixerBean1);
@@ -354,8 +361,16 @@ public class DrawingOptions extends javax.swing.JFrame implements View {
     }//GEN-LAST:event_menuColorMixerMousePressed
 
     private void btnBackgroundActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackgroundActionPerformed
-        // TODO add your handling code here:
+
     }//GEN-LAST:event_btnBackgroundActionPerformed
+
+    private void colorMixerBean1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_colorMixerBean1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_colorMixerBean1ActionPerformed
+
+    private void menuColorMixerMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuColorMixerMouseEntered
+
+    }//GEN-LAST:event_menuColorMixerMouseEntered
 
     public JMenuBar getmenuBar() {
         return this.jMenuBar1;
@@ -476,11 +491,11 @@ public class DrawingOptions extends javax.swing.JFrame implements View {
     public JLabel getWhiteLabel() {
         return white;
     }
-   
-    public JLabel getFinalColor(){
+
+    public JLabel getFinalColor() {
         return this.finalColor;
     }
-    
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel Brush;
     private javax.swing.JPanel Brush1;

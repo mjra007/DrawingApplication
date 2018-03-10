@@ -1,11 +1,3 @@
-/*
- * SimpleLine.java
- *
- * @author Gill Windall
- *
- * Represents a line that can be drawn on a drawing area
- *
- */
 package simpledrawer.shapes;
 
 import java.awt.BasicStroke;
@@ -44,13 +36,13 @@ public class SLine extends Shape {
     public void drawShape(Graphics2D g2d) {
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
                 RenderingHints.VALUE_ANTIALIAS_ON);
-        // scale the brightness of the colour
-        //Color c = scaleColour(getColor(), currentBrightness);
+        // Scale the brightness of the colour
+        // Color c = scaleColour(getColor(), currentBrightness);
         g2d.setColor(super.getColor());
-        // set the thickness of the line
+        // Set the thickness of the line
         g2d.setStroke(new BasicStroke(this.getThickness()));
-        // draw the line
-        g2d.drawLine(getX(), getY(), this.getX()+getWidth(), this.getY()+getHeight());
+        // Draw the line
+        g2d.drawLine(getX(), getY(), this.getX() + getWidth(), this.getY() + getHeight());
     }
 
     @Override

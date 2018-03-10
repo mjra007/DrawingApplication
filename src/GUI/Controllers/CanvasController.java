@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package GUI.Controllers;
 
 import GUI.DrawingState;
@@ -22,10 +17,6 @@ import simpledrawer.InteractiveShape;
 import simpledrawer.shapes.Container;
 import simpledrawer.shapes.EntityFactory;
 
-/**
- *
- * @author ma8521e
- */
 public class CanvasController implements MouseListener, MouseMotionListener, MouseWheelListener {
 
     private View view;

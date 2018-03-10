@@ -5,12 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-/**
- * Holds a Map the keys of which are types of Shape (e.g type "SHAPE")
- * the values are the list of Listeners registered for that type of event.
- *
- * @author Gill
- */
 public class ShapeEventList {
 
     // key is event type, value is list of listeners for that type
