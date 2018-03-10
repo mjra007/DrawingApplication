@@ -77,10 +77,10 @@ public class OptionsModel {
         this.oldPoints = null;
     }
 
-    /**
-     *
-     * @return list of current clicks
-     */
+   /**
+    * 
+    * @return list of current clicks 
+    */
     public List<Point> getClicks() {
         return this.currentPoints;
     }

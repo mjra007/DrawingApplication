@@ -9,12 +9,12 @@ import java.awt.RenderingHints;
 
 public class SOval extends Shape {
 
-    public SOval(Point origin, int width, int height, Color c, int t, int pR, Entity.EntityType et) {
-        super(origin,width,height, c, t, 2, Entity.EntityType.LINE);
+    public SOval(Point origin, int width, int height, Color c, int t, Entity.EntityType et) {
+        super(origin,width,height, c, t, Entity.EntityType.LINE);
     }
 
     public SOval(){
-        super(new Point(1,0),100,100,Color.black,5,2,Entity.EntityType.OVAL);
+        super(new Point(1,0),100,100,Color.black,5,Entity.EntityType.OVAL);
     }
     /**
      * @return an int that is the y of the opposite point of the origin

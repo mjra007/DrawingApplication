@@ -53,7 +53,6 @@ public class Canvas extends JPanel implements View {
         // all the shapes stored in it
         for (Object aShape : controller.getDrawingList()) {
             // draw the correct sort of shape: line or oval or triangle
-            DrawableI shape = (DrawableI) aShape;
             //   System.out.println(shape.getContained().toString());
             if (aShape instanceof DrawableI) {
                 DrawableI ld = (DrawableI) aShape;

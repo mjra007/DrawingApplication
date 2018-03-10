@@ -5,20 +5,20 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.RenderingHints;
+import java.util.Arrays;
 import java.util.List;
 
 public class STriangle extends Shape {
 
-    public STriangle(Point origin, int width, int height, Color c, int t, int pR, Entity.EntityType et) {
-        super(origin,width,height, c, t, 2, Entity.EntityType.TRIANGLE);
+    public STriangle(Point origin, int width, int height, Color c, int t,  Entity.EntityType et) {
+        super(origin,width,height, c, t,  Entity.EntityType.TRIANGLE);
     }
 
     public STriangle() {
-        super(new Point(1, 0),100,100, Color.GRAY, 5, 3, Entity.EntityType.TRIANGLE);
+        super(new Point(1, 0),100,100, Color.GRAY, 5, Entity.EntityType.TRIANGLE);
     }
 
     /**
-     *
      * @return the area in pixels of the triangle. Does this work okay?
      */
     public double getArea() {
@@ -32,29 +32,6 @@ public class STriangle extends Shape {
         return this.getStructuralPoints();
     }
 
-    public int getWidth() {
-        int finalwidth = 0;
-        for (int i = 0; i < this.getStructuralPoints().size(); i++) {
-            Point point1 = getStructuralPoints().get(i);
-            int calculate = finalwidth - point1.x;
-            if (finalwidth > calculate) {
-                finalwidth = point1.x;
-            }
-        }
-        return finalwidth;
-    }
-
-    public int getHeight() {
-        int finalHeight = 0;
-        for (int i = 0; i < this.getStructuralPoints().size(); i++) {
-            Point point1 = getStructuralPoints().get(i);
-            if (finalHeight < point1.y) {
-                finalHeight = point1.y;
-            }
-        }
-        return finalHeight;
-    }
-
     @Override
     public void drawShape(Graphics2D g2d) {
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
@@ -65,10 +42,16 @@ public class STriangle extends Shape {
         // Set the thickness of the line
         g2d.setStroke(new BasicStroke(getThickness()));
 
+        Point top = new Point(getOrigin().x + getWidth()/2, getOrigin().y);
+        System.out.println(top.toString());
+        Point right = new Point(getOrigin().x, getOrigin().y + getHeight());
+        Point left = new Point(getOrigin().x + getWidth(), getOrigin().y + getHeight());
         // Draw the triangle
-        g2d.drawLine(this.getVertices().get(0).x, this.getVertices().get(0).y, this.getVertices().get(1).x, this.getVertices().get(1).y);
-        g2d.drawLine(this.getVertices().get(2).x, this.getVertices().get(2).y, this.getVertices().get(1).x, this.getVertices().get(1).y);
-        g2d.drawLine(this.getVertices().get(2).x, this.getVertices().get(2).y, this.getVertices().get(0).x, this.getVertices().get(0).y);
+        int[] xx = new int[]{top.x,right.x,left.x};
+        int[] yy = new int[]{top.y,right.y,left.y};
+        g2d.drawLine(top.x, top.y, right.x, right.y);
+        g2d.drawLine(top.x, top.y, left.x, left.y);
+        g2d.drawLine(right.x, right.y, left.x, left.y);
     }
 
     @Override

@@ -14,7 +14,10 @@ import java.awt.event.MouseWheelListener;
 import java.util.List;
 import simpledrawer.DrawableI;
 import simpledrawer.InteractiveShape;
+import simpledrawer.Utils;
 import simpledrawer.shapes.Container;
+import simpledrawer.shapes.ContainerI;
+import simpledrawer.shapes.Entity;
 import simpledrawer.shapes.EntityFactory;
 
 public class CanvasController implements MouseListener, MouseMotionListener, MouseWheelListener {
@@ -54,22 +57,26 @@ public class CanvasController implements MouseListener, MouseMotionListener, Mou
     public int getCurrentRotation() {
         return guiOptions.getCurrentRotation();
     }
-   public int getThickness() {
+
+    public int getThickness() {
         return guiOptions.getCurrentThickness();
     }
 
     @Override
     public void mousePressed(MouseEvent e) {
-        System.out.println("" + guiOptions.getState());
+        //System.out.println("" + guiOptions.getState());
 
         xy = e.getPoint();
         if (guiOptions.getState().equals(DrawingState.MOVING)) {
             guiOptions.resetOldClicks();
             DrawableI drawable = this.entitiesModel.getSelected();
-            if (drawable instanceof InteractiveShape) {
-                InteractiveShape intercShape = (InteractiveShape) drawable;
-                for (Point coords : intercShape.getStructuralPoints()) {
-                    guiOptions.addMouseClicktoOldPoints(coords);
+            if (drawable instanceof Container) {
+                Container container = (Container) drawable;
+                if (container.getContained() instanceof Entity) {
+                    Entity entity = (Entity) container.getContained();
+                    for (Point coords : entity.getStructuralPoints()) {
+                        guiOptions.addMouseClicktoOldPoints(coords);
+                    }
                 }
             }
             view.refresh();
@@ -84,12 +91,23 @@ public class CanvasController implements MouseListener, MouseMotionListener, Mou
                 guiOptions.addMouseClick(e.getPoint());
                 //and check wehther we meet the amount of required points for the shape selected
                 System.out.print("" + this.guiOptions.getEntityTypeSelected());
-                if (guiOptions.getClicks().size() == EntityFactory.getRequiredPoints(guiOptions.getClicks(), guiOptions.getCurrentColor(), guiOptions.getCurrentThickness(), guiOptions.getEntityTypeSelected())) {
+                if (guiOptions.getClicks().size() == 2) {
+                    System.out.println("2 points requirement met");
                     //Cool, we met the requirement of points, now we can call the factory and get the Container with tghe shape easily
                     // dont you love design patterns :p
-                    Container container = EntityFactory.createEntity(guiOptions.getClicks(), guiOptions.getCurrentColor(), guiOptions.getCurrentThickness(), guiOptions.getEntityTypeSelected());
+                    List<Point> reorganizedCoords = Utils.getReorganizedCoords(guiOptions.getClicks().get(0), guiOptions.getClicks().get(1));
+                    int width = reorganizedCoords.get(1).x - reorganizedCoords.get(0).x;
+                    int height = reorganizedCoords.get(1).y - reorganizedCoords.get(0).y;
+                    Entity entity = EntityFactory.createEntity(reorganizedCoords.get(0), width, height, guiOptions.getCurrentColor(), guiOptions.getCurrentThickness(), guiOptions.getEntityTypeSelected());
                     //adding container to the list of containers to be drawn
-                    entitiesModel.getEntityList().add(container);
+                    if (entity instanceof ContainerI) {
+                        ContainerI entityContainerI = (ContainerI) entity;
+                        Container container = new Container(entityContainerI);
+                        entitiesModel.getEntityList().add(container);
+
+                    } else {
+                        entitiesModel.getEntityList().add(entity);
+                    }
                     //reseting the cpoints selected
                     guiOptions.resetClicks();
                 }
@@ -126,7 +144,7 @@ public class CanvasController implements MouseListener, MouseMotionListener, Mou
 
     @Override
     public void mouseMoved(MouseEvent e) {
-        System.out.println("" + guiOptions.getState());
+        //    System.out.println("" + guiOptions.getState());
         InteractiveShape intercShape = checkLocforDrawables(e.getPoint());
         if (intercShape == null) {
             guiOptions.setDrawingState(DrawingState.DRAWING);
@@ -142,8 +160,7 @@ public class CanvasController implements MouseListener, MouseMotionListener, Mou
             if (drawable instanceof InteractiveShape) {
                 intercShape = (InteractiveShape) drawable;
                 if (intercShape.contains(locPoint)) {
-                   Container container = (Container) drawable;
-                   container.getContained().setSelect();
+                    Container container = (Container) drawable;
                     entitiesModel.setSelected(container, i);
                     return intercShape;
                 }

@@ -4,13 +4,9 @@ package simpledrawer.shapes;
 import java.awt.Point;
 
 /**
- *
- * @author ma8521e
- * 
  * Every class that implement this can be contained 
  * and use a container. The advatanges of using a container are many
  * as it allows you to resize, move and rotate your shape
- * 
  */
 public interface ContainerI{
     

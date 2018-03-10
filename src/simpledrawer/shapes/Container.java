@@ -4,7 +4,6 @@
  * (which is basically a rectangle) and makes it easier to
  * resize them and move them around. Any entity that only requires an origin point, width and height
  * can be contained in a container
- *
  */
 package simpledrawer.shapes;
 
@@ -24,11 +23,21 @@ public class Container implements DrawableI, InteractiveShape {
     final static float dash1[] = {8.0f};
     final static BasicStroke dashed = new BasicStroke(1.0f,
             BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 10.0f, dash1, 0.0f);
+    /**
+     * just hold whether the shape is selected by the user or not but the actual
+     * method is not included in this class
+     */
+
+    private boolean selected = false;
+
+    /**
+     * indicates whether the user is selecting corners or not
+     */
+    private boolean selectedCorners = false;
 
     public Container(ContainerI contained) {
         this.contained = contained;
     }
-
 
     /**
      * would probably be better not to do these claculations at runtime, and
@@ -37,7 +46,7 @@ public class Container implements DrawableI, InteractiveShape {
      * @return the origin point of the rectangle
      */
     public Point getOrigin() {
-        return new Point(contained.getOrigin().x- 5, contained.getOrigin().y - 5);
+        return new Point(contained.getOrigin().x - 5, contained.getOrigin().y - 5);
     }
 
     /**
@@ -78,6 +87,7 @@ public class Container implements DrawableI, InteractiveShape {
         if (contains(p, rectangle)) {
             doesIt = true;
         }
+        setSelect(doesIt);
         return doesIt;
     }
 
@@ -119,6 +129,7 @@ public class Container implements DrawableI, InteractiveShape {
         if (rectangle.contains(p)) {
             doesIt = true;
         }
+        setSelect(doesIt);
         return doesIt;
     }
 
@@ -193,7 +204,6 @@ public class Container implements DrawableI, InteractiveShape {
         return this;
     }
 
-
     @Override
     public Container resize(List<Point> old, Point offset) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
@@ -228,6 +238,45 @@ public class Container implements DrawableI, InteractiveShape {
         g2d.drawOval(point.x - 5, point.y - 5, 10, 10);
     }
 
+    public void setSelect(Boolean b) {
+        selected = b;
+    }
+
+    /**
+     * Deselect the shape shoubl be use to unselect the shape
+     */
+    public void deSelect() {
+        selected = false;
+    }
+
+    /**
+     * Used to select the corners
+     */
+    public void SelectCorners() {
+        selectedCorners = true;
+    }
+
+    /**
+     * Unselect corners
+     */
+    public void deSelectCorners() {
+        selectedCorners = false;
+    }
+
+    /**
+     * @return whether the shape is selected
+     */
+    public boolean isSelected() {
+        return this.selected;
+    }
+
+    /**
+     * @return whether the corners are selected
+     */
+    public boolean areCornersSelected() {
+        return this.selectedCorners;
+    }
+
     /**
      * @return returns teh rectangle to be drawn that represents the container
      */
@@ -247,8 +296,12 @@ public class Container implements DrawableI, InteractiveShape {
     public void drawShape(Graphics2D g2d) {
         g2d.setStroke(dashed);
         g2d.setColor(Color.gray);
-        g2d.draw(getDrawableContainer());
-        g2d.setColor(Color.MAGENTA);
+        if(this.isSelected())g2d.draw(getDrawableContainer());
+        if(contained instanceof DrawableI){
+            System.out.println("drawable");
+            DrawableI drawable = (DrawableI) getContained();
+            drawable.drawShape(g2d);
+        }
     }
 
 }
