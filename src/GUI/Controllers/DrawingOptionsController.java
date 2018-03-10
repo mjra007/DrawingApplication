@@ -449,7 +449,6 @@ public class DrawingOptionsController {
     }
 
     private void colorMixerMenu(PropertyChangeEvent evt) {
-        System.out.println("sds");
         guiOptions.setCurrentColor((Color) evt.getNewValue());
     }
 

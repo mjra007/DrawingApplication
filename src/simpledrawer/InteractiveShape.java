@@ -21,9 +21,9 @@ public interface InteractiveShape {
 
     public boolean contains(Point p, Rectangle r);
 
-    public Container updateLocation(List<Point> old, Point origin);
+    public Container updateLocation(Point old, Point origin);
 
-    public Container resize(List<Point> old, Point offset);
+    public Container resize(Point old, Point offset);
 
     public Container resize(float amount);
 

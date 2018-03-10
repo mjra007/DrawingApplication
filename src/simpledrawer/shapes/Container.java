@@ -97,11 +97,10 @@ public class Container implements DrawableI, InteractiveShape {
      * @return returns a container with the entity in the new location
      */
     @Override
-    public Container updateLocation(List<Point> old, Point offset) {
-        for (int i = 0; i < old.size(); i++) {
-            Point oldPoint = old.get(i);
-            contained.setOrigin(new Point(oldPoint.x + offset.x, oldPoint.y + offset.y));
-        }
+    public Container updateLocation(Point old, Point offset) {
+     
+            contained.setOrigin(new Point(old.x + offset.x, old.y + offset.y));
+        
         return this;
 
     }
@@ -205,7 +204,7 @@ public class Container implements DrawableI, InteractiveShape {
     }
 
     @Override
-    public Container resize(List<Point> old, Point offset) {
+    public Container resize(Point old, Point offset) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
@@ -298,7 +297,6 @@ public class Container implements DrawableI, InteractiveShape {
         g2d.setColor(Color.gray);
         if(this.isSelected())g2d.draw(getDrawableContainer());
         if(contained instanceof DrawableI){
-            System.out.println("drawable");
             DrawableI drawable = (DrawableI) getContained();
             drawable.drawShape(g2d);
         }

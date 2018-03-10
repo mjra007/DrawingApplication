@@ -67,7 +67,6 @@ public class Canvas extends JPanel implements View {
         g2d.setStroke(s);  // restore saved stroke
         if (controller.getClicks() != null && controller.getClicks().size() >= 1) { // draw dot where line started
             for (int i = 0; i < controller.getClicks().size(); i++) {
-                System.out.print(i);
                 g2d.setColor(Color.BLACK);
                 g2d.fillOval(controller.getClicks().get(i).x, controller.getClicks().get(i).y, 3, 3);
             }

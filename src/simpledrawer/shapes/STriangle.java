@@ -41,7 +41,6 @@ public class STriangle extends Shape {
         g2d.setStroke(new BasicStroke(getThickness()));
 
         Point top = new Point(getOrigin().x + getWidth()/2, getOrigin().y);
-        System.out.println(top.toString());
         Point right = new Point(getOrigin().x, getOrigin().y + getHeight());
         Point left = new Point(getOrigin().x + getWidth(), getOrigin().y + getHeight());
         // Draw the triangle
