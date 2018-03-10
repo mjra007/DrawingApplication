@@ -199,6 +199,11 @@ public class Container implements DrawableI, InteractiveShape {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    @Override
+    public List<Point> getStructuralPoints() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
 
     /*
      * All the current DrawableI Types that our program holds should be here
@@ -244,12 +249,6 @@ public class Container implements DrawableI, InteractiveShape {
         g2d.setColor(Color.gray);
         g2d.draw(getDrawableContainer());
         g2d.setColor(Color.MAGENTA);
-        /*   if (contained.areCornersSelected()) {
-         *   drawResizeIndicator(g2d, new Point(getOrigin()));
-         *   drawResizeIndicator(g2d, new Point(getEndPoint()));
-         *   drawResizeIndicator(g2d, new Point(getEndPoint().x, getOrigin().y));
-         *   drawResizeIndicator(g2d, new Point(getOrigin().x, getEndPoint().y));
-        }*/
     }
 
 }
