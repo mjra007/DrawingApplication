@@ -1,42 +1,58 @@
 package simpledrawer.shapes;
 
+import java.awt.Color;
+import java.awt.Graphics2D;
 import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
-import simpledrawer.DrawableI;
 
 /**
  *
- * @author micael
+ * @author micael#
+ *
+ * This class aims to represent the most basic and abstract behaviours of
+ * anything you wish to draw. Therefore we are keeping details such as the width
+ * and weight, color, whether it is selected or not and structural points for
+ * the
+ *
  */
-public abstract class Entity implements DrawableI {
+public abstract class Entity {
 
     // Type of shape e.g. line or oval
-    private final EntityType type; // currently always SHAPE
-    private final int pointsRequired;
-    private int width;
-    private int height;
+    private final EntityType type;
+    /**
+     * just hold whether the shape is selected by the user or not but the actual
+     * method is not included in this class
+     */
+    
     private boolean selected = false;
+    
+    /**
+     * indicates whether the user is selecting corners or not
+     */
     private boolean selectedCorners = false;
-
-    //These points are crucical points that the shapes depend on
+    /**
+     * Structure points are the ones that hold the points that 
+     *allow the drawing of the entity
+     */
     private List<Point> structuralPoints = new ArrayList<Point>();
 
-    public Entity(List<Point> list, int pointsRequired, EntityType et) {
-        structuralPoints = list;
-        type = et;
-        this.pointsRequired = pointsRequired;
-        //This might not always be the case if not it should be overriden 
-        this.width = list.get(1).x - list.get(0).x;
-        this.height = list.get(1).y - list.get(0).y;
+    /**
+     * Everything you draw has a color
+     */
+    private Color color;
+
+    public Entity(List<Point> structuralPoints, Color newColor, EntityType et) {
+        structuralPoints = structuralPoints;
+        setColor(newColor);
+        type =et;
     }
 
     public Entity() {
         this.type = EntityType.LINE;
-        this.height = 5;
-        this.width = 5;
-        pointsRequired = 0;
+        color = Color.black;
     }
+
 
     /*
     All the current DrawableI Types that our program holds should be here
@@ -46,134 +62,87 @@ public abstract class Entity implements DrawableI {
     }
 
     /**
+     *
+     * @return the color for the entity
+     */
+    public Color getColor() {
+        return this.color;
+    }
+
+    /**
      * 
+     * @param newColor sets the entityt color
+     */
+    public void setColor(Color newColor) {
+        this.color = newColor;
+    }
+
+    /**
+     *
      * @param list
-     * 
-     * Every entity holds some points that are crucial to draw it,
-     * move it, resize it. They are held in this list
+     *
+     * Every entity holds some points that are crucial to draw it, move it,
+     * resize it. They are held in this list
      */
     public void setStructuralPoints(List<Point> list) {
         this.structuralPoints = list;
     }
 
     /**
-     * 
+     *
      * @return List of key points
      */
     public List<Point> getStructuralPoints() {
         return this.structuralPoints;
     }
 
-    /**
-     * 
-     * @return an integer
-     * that represents the no of points that entity requires.
-     * Rectangle 2, Triangle 3 etc
-     * 
-     */
-    public int getPointsRequired() {
-        return pointsRequired;
-    }
 
     public Entity.EntityType getEventType() {
         return this.type;
     }
 
-    /**
-     * 
-     * @return endPointX - origiPointX
-     * you might want to override the method depending on what shape 
-     * your entity takes
-     * 
-     */
-    public int getWidth() {
-        return width;
-    }
-    
-    /**
-     * 
-     * @return endPointY - origiPointY
-     * you might want to override the method depending on what shape 
-     * your entity takes
-     * 
-     */
-    public int getHeight() {
-        return height;
-    }
-    /**
-     * 
-     * @return endPointX - origiPointX
-     * you might want to override the method depending on what shape 
-     * your entity takes
-     * 
-     */
-    public void setWidth(int width) {
-        this.width=width;
-    }
-    
-    /**
-     * 
-     * @return endPointY - origiPointY
-     * you might want to override the method depending on what shape 
-     * your entity takes
-     * 
-     */
-    public void setHeight(int height) {
-        this.height=height;
-    }
-    /**
-     *  Select the shape should be set the shape
-     *  to selected
-     */ 
-    public void Select() {
-         selected = true;
+    public void setSelect(Boolean b) {
+        selected = b;
     }
 
     /**
-     * 
+     *
      * Deselect the shape shoubl be use to unselect the shape
-     * 
+     *
      */
     public void deSelect() {
-         selected = false;
+        selected = false;
     }
 
     /**
      * Used to select the corners
      */
     public void SelectCorners() {
-         selectedCorners = true;
+        selectedCorners = true;
     }
 
     /**
      * Unselect corners
      */
     public void deSelectCorners() {
-         selectedCorners = false;
-    }
-    
-    /**
-     * 
-     * @return whether the shape is selected
-     */
-    public boolean isSelected(){
-        return this.selected;
-    }
-    
-    /**
-     * 
-     * @return whether the corners are selected
-     */
-    public boolean areCornersSelected(){
-        return this.selectedCorners;
+        selectedCorners = false;
     }
 
     /**
-     * 
-     * @return a container with the shape
+     *
+     * @return whether the shape is selected
      */
-    public Container containShape(){
-        return new Container(this);
+    public boolean isSelected() {
+        return this.selected;
     }
+
+    /**
+     *
+     * @return whether the corners are selected
+     */
+    public boolean areCornersSelected() {
+        return this.selectedCorners;
+    }
+
 
 }

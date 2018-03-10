@@ -13,16 +13,17 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.RenderingHints;
-import java.util.List;
 
-import simpledrawer.Utils;
 
-public class SOval extends SShape {
+public class SOval extends Shape {
 
-    public SOval(List<Point> p, Color c, int t) {
-        super(Utils.getReorganizedCoords(p.get(0), p.get(1)), c, t, 2, Entity.EntityType.OVAL);
+    public SOval(Point origin, int width, int height, Color c, int t, int pR, Entity.EntityType et) {
+        super(origin,width,height, c, t, 2, Entity.EntityType.LINE);
     }
 
+    public SOval(){
+        super(new Point(1,0),100,100,Color.black,5,2,Entity.EntityType.OVAL);
+    }
     /**
      * @return an int that is the y of the opposite point of the origin
      */
@@ -67,6 +68,11 @@ public class SOval extends SShape {
     @Override
     public String toString() {
         return "Color: " + super.getColor() + " Thick: " + super.getThickness() + " Points: " + super.getStructuralPoints().toString() + " width: " + super.getWidth() + " height: " + super.getHeight() + "  " + super.getX() + " , " + super.getX() + "Last " + this.getXEnd() + ", " + this.getYEnd();
+    }
+
+    @Override
+    public void setOrigin(Point newPoint) {
+        super.getStructuralPoints().set(0, newPoint);
     }
 
 }

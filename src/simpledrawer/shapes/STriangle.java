@@ -15,10 +15,14 @@ import java.awt.Point;
 import java.awt.RenderingHints;
 import java.util.List;
 
-public class STriangle extends SShape {
+public class STriangle extends Shape {
 
-    public STriangle(List<Point> p, Color c, int t) {
-        super(p, c, t, 3, Entity.EntityType.TRIANGLE);
+    public STriangle(Point origin, int width, int height, Color c, int t, int pR, Entity.EntityType et) {
+        super(origin,width,height, c, t, 2, Entity.EntityType.TRIANGLE);
+    }
+
+    public STriangle() {
+        super(new Point(1, 0),100,100, Color.GRAY, 5, 3, Entity.EntityType.TRIANGLE);
     }
 
     /**
@@ -41,7 +45,7 @@ public class STriangle extends SShape {
         for (int i = 0; i < this.getStructuralPoints().size(); i++) {
             Point point1 = getStructuralPoints().get(i);
             //Point point2
-            int calculate = finalwidth-point1.x;
+            int calculate = finalwidth - point1.x;
             if (finalwidth > calculate) {
                 finalwidth = point1.x;
             }
@@ -80,5 +84,10 @@ public class STriangle extends SShape {
     @Override
     public String toString() {
         return "Color: " + super.getColor() + " Thick: " + super.getThickness() + " Points: " + super.getStructuralPoints().toString() + " width: " + super.getWidth() + " height: " + super.getHeight() + "  " + super.getX() + " , " + super.getX();
+    }
+
+    @Override
+    public void setOrigin(Point newPoint) {
+        super.getStructuralPoints().set(0, newPoint);
     }
 }

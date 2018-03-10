@@ -20,7 +20,7 @@ import java.util.List;
 import simpledrawer.DrawableI;
 import simpledrawer.InteractiveShape;
 import simpledrawer.shapes.Container;
-import simpledrawer.shapes.ContainerFactory;
+import simpledrawer.shapes.EntityFactory;
 
 /**
  *
@@ -93,10 +93,10 @@ public class CanvasController implements MouseListener, MouseMotionListener, Mou
                 guiOptions.addMouseClick(e.getPoint());
                 //and check wehther we meet the amount of required points for the shape selected
                 System.out.print("" + this.guiOptions.getEntityTypeSelected());
-                if (guiOptions.getClicks().size() == ContainerFactory.getRequiredPoints(guiOptions.getClicks(), guiOptions.getCurrentColor(), guiOptions.getCurrentThickness(), guiOptions.getEntityTypeSelected())) {
+                if (guiOptions.getClicks().size() == EntityFactory.getRequiredPoints(guiOptions.getClicks(), guiOptions.getCurrentColor(), guiOptions.getCurrentThickness(), guiOptions.getEntityTypeSelected())) {
                     //Cool, we met the requirement of points, now we can call the factory and get the Container with tghe shape easily
                     // dont you love design patterns :p
-                    Container container = ContainerFactory.createEntity(guiOptions.getClicks(), guiOptions.getCurrentColor(), guiOptions.getCurrentThickness(), guiOptions.getEntityTypeSelected());
+                    Container container = EntityFactory.createEntity(guiOptions.getClicks(), guiOptions.getCurrentColor(), guiOptions.getCurrentThickness(), guiOptions.getEntityTypeSelected());
                     //adding container to the list of containers to be drawn
                     entitiesModel.getEntityList().add(container);
                     //reseting the cpoints selected
@@ -152,7 +152,7 @@ public class CanvasController implements MouseListener, MouseMotionListener, Mou
                 intercShape = (InteractiveShape) drawable;
                 if (intercShape.contains(locPoint)) {
                    Container container = (Container) drawable;
-                   container.getContained().Select();
+                   container.getContained().setSelect();
                     entitiesModel.setSelected(container, i);
                     return intercShape;
                 }

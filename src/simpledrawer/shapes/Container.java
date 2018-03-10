@@ -3,16 +3,14 @@
  * @author ma8521e
  *
  * The container object is of a rectangular shape and holds the different
- * entities that can be drawn. The different entities hook into the the
- * container object (which is basically a rectangle) and makes it easier to
- * resize them and move them around. Any shape can be contained in a container
- * if it is drawable. This container will avoid having to implement
- * moving/resizing/rotating methods for every single entity
+ * entities that can be drawn. The container hooks into the different entities
+ * (which is basically a rectangle) and makes it easier to
+ * resize them and move them around. Any entity that only requires an origin point, width and height
+ * can be contained in a container
  *
  */
 package simpledrawer.shapes;
 
-import simpledrawer.shapes.Entity;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
@@ -21,24 +19,19 @@ import java.awt.Rectangle;
 import java.util.List;
 import simpledrawer.DrawableI;
 import simpledrawer.InteractiveShape;
-import simpledrawer.Utils;
 
 public class Container implements DrawableI, InteractiveShape {
 
     //Points required to draw the shape contained
-    Entity contained = null;
+    ContainerI contained = null;
     final static float dash1[] = {8.0f};
     final static BasicStroke dashed = new BasicStroke(1.0f,
             BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 10.0f, dash1, 0.0f);
 
-    public Container(Entity contained) {
+    public Container(ContainerI contained) {
         this.contained = contained;
     }
 
-    //returns the reorganized coords for the container
-    public List<Point> getReorganizedCoords() {
-        return Utils.getReorganizedCoords(contained.getStructuralPoints().get(0), contained.getStructuralPoints().get(1));
-    }
 
     /**
      * would probably be better not to do these claculations at runtime, and
@@ -49,7 +42,7 @@ public class Container implements DrawableI, InteractiveShape {
      * @return the origin point of the rectangle
      */
     public Point getOrigin() {
-        return new Point(getReorganizedCoords().get(0).x - 5, getReorganizedCoords().get(0).y - 5);
+        return new Point(contained.getOrigin().x- 5, contained.getOrigin().y - 5);
     }
 
     /**
@@ -57,7 +50,7 @@ public class Container implements DrawableI, InteractiveShape {
      * @return the width of this container
      */
     public int getWidth() {
-        return (getReorganizedCoords().get(1).x - getReorganizedCoords().get(0).x) + 10;
+        return (contained.getWidth()) + 10;
     }
 
     /**
@@ -66,7 +59,7 @@ public class Container implements DrawableI, InteractiveShape {
      * shape it is containing
      */
     public int getHeight() {
-        return (getReorganizedCoords().get(1).y - getReorganizedCoords().get(0).y) + 10;
+        return (contained.getHeight()) + 10;
     }
 
     /**
@@ -94,7 +87,6 @@ public class Container implements DrawableI, InteractiveShape {
         if (contains(p, rectangle)) {
             doesIt = true;
         }
-        getContained().deSelect();
         return doesIt;
     }
 
@@ -108,24 +100,10 @@ public class Container implements DrawableI, InteractiveShape {
     public Container updateLocation(List<Point> old, Point offset) {
         for (int i = 0; i < old.size(); i++) {
             Point oldPoint = old.get(i);
-            contained.getStructuralPoints().set(i, new Point(oldPoint.x + offset.x, oldPoint.y + offset.y));
+            contained.setOrigin(new Point(oldPoint.x + offset.x, oldPoint.y + offset.y));
         }
         return this;
 
-    }
-
-    /**
-     * DOESNT REALLY WORK YET
-     *
-     * @param old set of points before the movement occured
-     * @param offset
-     * @return returns a container with the entity in the new location
-     */
-    @Override
-    public Container resize(List<Point> old, Point offSet) {
-        Point oldPoint = old.get(1);
-        this.contained.getStructuralPoints().set(1, new Point(offSet.x, offSet.y));
-        return this;
     }
 
     @Override
@@ -150,9 +128,7 @@ public class Container implements DrawableI, InteractiveShape {
         rectangle.setFrameFromDiagonal(getOrigin(), getEndPoint());
         if (rectangle.contains(p)) {
             doesIt = true;
-            getContained().Select();
         }
-        contained.deSelect();
         return doesIt;
     }
 
@@ -190,9 +166,7 @@ public class Container implements DrawableI, InteractiveShape {
         if (contains(p, getTopRightCorner())) {
             doesIt = true;
             System.out.println("topright");
-            getContained().SelectCorners();
         }
-        getContained().deSelectCorners();;
         return doesIt;
     }
 
@@ -201,9 +175,7 @@ public class Container implements DrawableI, InteractiveShape {
         if (contains(p, getTopLeftCorner())) {
             doesIt = true;
             System.out.println("topleft");
-            getContained().SelectCorners();
         }
-        getContained().deSelectCorners();;
         return doesIt;
     }
 
@@ -212,9 +184,7 @@ public class Container implements DrawableI, InteractiveShape {
         if (contains(p, getBottomRightCorner())) {
             doesIt = true;
             System.out.println("bottomright");
-            getContained().SelectCorners();
         }
-        getContained().deSelectCorners();;
         return doesIt;
     }
 
@@ -222,26 +192,23 @@ public class Container implements DrawableI, InteractiveShape {
         boolean doesIt = false;
         if (contains(p, getBottomLeftCorner())) {
             doesIt = true;
-            getContained().SelectCorners();
         }
-        getContained().deSelectCorners();;
         return doesIt;
     }
 
     @Override
     public Container resize(float amount) {
-        this.contained.setHeight((int) (contained.getHeight() + amount));
-        Point origin = contained.getStructuralPoints().get(0);
-
-        this.contained.setWidth((int) (contained.getWidth() + amount));
-        getStructuralPoints().set(1, new Point(origin.x+contained.getWidth()+(int)amount,origin.y+contained.getHeight()+(int)amount));
+        getContained().setHeight((int) (contained.getHeight() + amount));
+        getContained().setWidth((int) (contained.getWidth() + amount));
         return this;
     }
 
+
     @Override
-    public List<Point> getStructuralPoints() {
-        return this.getContained().getStructuralPoints();
+    public Container resize(List<Point> old, Point offset) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
 
     /*
     All the current DrawableI Types that our program holds should be here
@@ -254,7 +221,7 @@ public class Container implements DrawableI, InteractiveShape {
      *
      * @return the contained SHAPE
      */
-    public Entity getContained() {
+    public ContainerI getContained() {
         return this.contained;
     }
 
@@ -294,10 +261,7 @@ public class Container implements DrawableI, InteractiveShape {
     public void drawShape(Graphics2D g2d) {
         g2d.setStroke(dashed);
         g2d.setColor(Color.gray);
-        if (contained.isSelected()) {
-            g2d.draw(getDrawableContainer());
-        }
-        contained.drawShape(g2d);
+        g2d.draw(getDrawableContainer());
         g2d.setColor(Color.MAGENTA);
         /*    if (contained.areCornersSelected()) {
             drawResizeIndicator(g2d, new Point(getOrigin()));
