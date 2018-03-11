@@ -27,7 +27,7 @@ public interface InteractiveShape {
 
     public Container resize(float amount);
 
-    public Container rotate(List<Point> old, Point offset);
+    public Container rotate(float amount);
 
     public List<Point> getStructuralPoints();
 }
