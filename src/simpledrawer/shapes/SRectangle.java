@@ -39,7 +39,6 @@ public class SRectangle extends Shape {
         // Set the thickness of the line                
         g2d.setStroke(new BasicStroke(this.getThickness()));
         g2d.drawRect(getX(), getY(), getWidth(), getHeight());
-        g2d.rotate(0.5);
     }
 
     @Override

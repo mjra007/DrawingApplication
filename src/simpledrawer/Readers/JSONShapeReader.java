@@ -1,5 +1,6 @@
 package simpledrawer.Readers;
 
+import GUI.SimpleDrawer;
 import com.google.gson.*;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -8,6 +9,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import simpledrawer.DrawableI;
+import simpledrawer.shapes.Container;
 import simpledrawer.shapes.Entity;
 import simpledrawer.shapes.ShapeFactory;
 import simpledrawer.shapes.Shape;
@@ -69,17 +72,20 @@ public class JSONShapeReader {
      *
      * @param file the file into which to write the JSON
      */
-    private static void generateTestJSON(String file) {
-        List<Entity> list = new ArrayList<>();
-        /*  load in some hard-coded shapes
-         *   list.add(new DrawableI(new Point(20, 40),new Point(30, 0), Color.red, 5, ShapeType.LINE));
-         *   list.add(new DrawableI(new Point(20, 40),new Point(70, 90), Color.blue, 5, ShapeType.OVAL));
-         *   list.add(new DrawableI(new Point(80, 95),new Point(70, 45), Color.green, 5, ShapeType.LINE));
-         *   listOfShape lS= new listOfShape();
-         *   lS.listOfShape = list;
-         */
+    public void saveJSON(String file,List<DrawableI> drawings) {
+        List<ShapeEvent> list = new ArrayList<>();
+        System.out.println(""+drawings.size());
+        for(int i=0;i< drawings.size(); i++){
+            if(drawings.get(i) instanceof Container){
+                Container container = (Container) drawings.get(i);
+                list.add(new ShapeEvent((Shape) container.getContained()));
+            }
+        }
+         listOfShapes lS= new listOfShapes();
+         lS.listOfShapes = list;
+
         Gson gson = new Gson();
-        String json = gson.toJson(list); // convert the object to a JSON string
+        String json = gson.toJson(lS); // convert the object to a JSON string
 
         try {
             FileWriter writer = new FileWriter(file);

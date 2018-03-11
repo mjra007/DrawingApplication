@@ -3,6 +3,7 @@ package simpledrawer.Readers;
 import java.awt.Color;
 import java.awt.Point;
 import simpledrawer.shapes.Entity;
+import simpledrawer.shapes.Shape;
 
 public class ShapeEvent {
 
@@ -22,9 +23,19 @@ public class ShapeEvent {
         this.filled = f;
         this.filledColor = fC;
         this.type = t;
-
     }
 
+    public ShapeEvent(Shape shape){
+        this.origin=shape.getOrigin();
+        this.height=shape.getHeight();
+        this.width=shape.getWidth();
+        this.borderThickness=shape.getThickness();
+        this.filled = shape.isItFilled();
+        this.filledColor=shape.getFilledColor();
+        this.type=shape.getEventType();
+    }
+    
+    
     public Point getOrigin() {
         return this.origin;
     }

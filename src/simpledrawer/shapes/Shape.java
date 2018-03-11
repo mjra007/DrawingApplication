@@ -37,6 +37,7 @@ public abstract class Shape extends Entity implements ContainerI {
         return super.getStructuralPoints().get(0).y;
     }
 
+    @Override
     public Point getOrigin() {
         return super.getStructuralPoints().get(0);
     }
@@ -54,6 +55,22 @@ public abstract class Shape extends Entity implements ContainerI {
         return this.width;
     }
 
+    public boolean isItFilled(){
+        return this.filled;
+    }
+    
+    public void setFilled(boolean b){
+        this.filled = b;
+    }
+    
+    public Color getFilledColor(){
+        return this.filledColor;
+    }
+    
+    public void setFilledColor(Color c){
+        this.filledColor=c;
+    }
+    
     /**
      * @return endPointY - origiPointY you might want to override the method
      * depending on what shape your entity takes
@@ -64,6 +81,7 @@ public abstract class Shape extends Entity implements ContainerI {
     }
 
     /**
+     * @param newWidth
      * @return endPointX - origiPointX you might want to override the method
      * depending on what shape your entity takes
      */

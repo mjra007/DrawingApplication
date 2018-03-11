@@ -5,6 +5,7 @@ import GUI.Models.OptionsModel;
 import GUI.View;
 import GUI.Views.DrawingOptions;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
 import java.util.List;
@@ -19,6 +20,7 @@ import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import simpledrawer.DrawableI;
 import simpledrawer.shapes.Entity;
 import simpledrawer.Readers.JSONShapeReader;
 import simpledrawer.shapes.Container;
@@ -64,7 +66,7 @@ public class DrawingOptionsController {
 
         getView().getmenuExportJSON().addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
-                importXML(evt);
+                exportJSON(evt);
             }
         });
         getView().getmenuLeft().addActionListener(new ActionListener() {
@@ -326,11 +328,7 @@ public class DrawingOptionsController {
                 betterGraphicsClicked(evt);
             }
         });
-          getView().getFileChooser().addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent evt) {
-                fileChooser(evt);
-            }
-        });
+
     }
 
     public void setupFocusListener() {
@@ -348,11 +346,11 @@ public class DrawingOptionsController {
             }
         });
     }
+
     public void betterGraphicsClicked(ActionEvent evt) {
         guiOptions.setbetterGraphics(getView().getBetterGraphicsButton().isSelected());
     }
-    
-    
+
     public void redLabelClicked(MouseEvent evt) {
         setFinalColor(getView().getRedLabel().getBackground());
     }
@@ -389,22 +387,13 @@ public class DrawingOptionsController {
         guiOptions.setCurrentColor(c);
         getView().getFinalColor().setBackground(c);
     }
-public void fileChooser(ActionEvent evt) {
-        JFileChooser fileChooser = getView().getFileChooser();
-        int state = fileChooser.showOpenDialog(dialog);
-        if (state == -1) {
-            System.out.println("sdsd");
-            getShapesFromJSON(fileChooser.getSelectedFile().getAbsolutePath());
-        } else if (state == JFileChooser.CANCEL_OPTION) {
-
-        }
-    }
 
     public void getShapesFromJSON(String path) {
         try {
             JSONShapeReader shapeReader = new JSONShapeReader();
             shapeReader.getShapesFromFile(path);
             List listOfShapes = shapeReader.getShapes();
+            entitiesModel.getEntityList().clear();
             for (Object shape : listOfShapes) {
                 if (shape instanceof Shape) {
                     Shape actualShape = (Shape) shape;
@@ -416,16 +405,25 @@ public void fileChooser(ActionEvent evt) {
             Logger.getLogger(DrawingOptions.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    JDialog dialog = null;
 
     public void importJSON(ActionEvent evt) {
+        JFileChooser fileChooser = getView().getFileChooser();
         FileFilter JSON = new FileNameExtensionFilter("JSON FILE", "JSON");
-        getView().getFileChooser().setFileFilter(JSON);
-        getView().getFileChooser().showOpenDialog(dialog);
+        fileChooser.setFileFilter(JSON);
+        int state = fileChooser.showOpenDialog(getView().getmenuImportJSON());
+        System.out.println("state" + state);
+        if (state == JFileChooser.APPROVE_OPTION) {
+            System.out.println("sdsd");
+            getShapesFromJSON(fileChooser.getSelectedFile().getAbsolutePath());
+        }
         view.refresh();
 
     }
 
+    public void saveShapesJSON(String path, List<DrawableI> drawings) {
+        JSONShapeReader shapeReader = new JSONShapeReader();
+        shapeReader.saveJSON(path, drawings);
+    }
 
     public Color getCurrentColor() {
         return guiOptions.getCurrentColor();
@@ -436,7 +434,14 @@ public void fileChooser(ActionEvent evt) {
     }
 
     public void exportJSON(ActionEvent evt) {
-
+        JFileChooser fileChooser = getView().getFileChooser();
+        FileFilter JSON = new FileNameExtensionFilter("JSON FILE", "JSON");
+        fileChooser.setFileFilter(JSON);
+        int state = fileChooser.showOpenDialog(getView().getmenuExportJSON());
+        if (state == JFileChooser.APPROVE_OPTION) {
+            saveShapesJSON(fileChooser.getSelectedFile().getAbsolutePath(),entitiesModel.getEntityList());
+        }
+        view.refresh();
     }
 
     public void exportXML(ActionEvent evt) {

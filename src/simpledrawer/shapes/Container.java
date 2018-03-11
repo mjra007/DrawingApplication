@@ -134,7 +134,6 @@ public class Container implements DrawableI, InteractiveShape {
         return doesIt;
     }
 
-    @Override
     public Container rotate(List<Point> old, Point offset) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
@@ -212,6 +211,11 @@ public class Container implements DrawableI, InteractiveShape {
 
     @Override
     public List<Point> getStructuralPoints() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public Container rotate(float amount) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
