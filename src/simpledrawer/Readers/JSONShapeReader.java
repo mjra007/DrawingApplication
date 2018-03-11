@@ -1,6 +1,7 @@
 package simpledrawer.Readers;
 
 import com.google.gson.*;
+import java.awt.Color;
 import java.awt.Point;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -9,22 +10,25 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import simpledrawer.DrawableI;
 import simpledrawer.shapes.Entity;
+import simpledrawer.shapes.ShapeFactory;
+import simpledrawer.shapes.Shape;
 
 public class JSONShapeReader {
 
-    private static class listOfShape {
+    private static class listOfShapes {
 
-        List<Entity.EntityType> listOfShape;
+        List<ShapeEvent> listOfShapes;
     }
 
-    private listOfShape shapesList;
-    private List<Entity> lShapes;
+    private listOfShapes shapesList;
+    private List<Shape> lshapes;
     private Gson gson; // gson object used to "parse" the JSON
 
     public JSONShapeReader() {
         gson = new Gson();
-        lShapes = new ArrayList<>();
+        lshapes = new ArrayList<>();
     }
 
     /**
@@ -38,7 +42,7 @@ public class JSONShapeReader {
     public void getShapesFromFile(String file) throws FileNotFoundException {
         BufferedReader br = new BufferedReader(
                 new FileReader(file));
-        shapesList = gson.fromJson(br, listOfShape.class); // load the shapes
+        shapesList = gson.fromJson(br, listOfShapes.class); // load the shapes
         storeShapes(); // store in separate lists according to type
     }
 
@@ -49,40 +53,17 @@ public class JSONShapeReader {
      */
     private void storeShapes() {
 
-        for (Entity.EntityType se : shapesList.listOfShape) {
-            switch (se) {
-                case LINE:  // store the line
-                    //    SLine sl = new SLine(new Point(se.getVertice(0).x, se.getVertice(0).y), new Point(se.getVertice(1).x, se.getVertice(1).y), se.getColour(), se.getThickness(), ShapeType.LINE);
-                    //    lShapes.add(sl);
-                    break;
-                case OVAL:  // store the oval
-                    //    SOval ol = new SOval(new Point(se.getVertice(0).x, se.getVertice(0).y), new Point(se.getVertice(1).x, se.getVertice(1).y), se.getColour(), se.getThickness(), ShapeType.OVAL);
-                    //    lShapes.add(ol); */
-                    break;
-                case TRIANGLE:  // store the Triangle
-                    List<Point> list = new ArrayList<>();
-                    /*            list.add(new Point(se.getVertice(0).x, se.getVertice(0).y));
-                    list.add(new Point(se.getVertice(1).x, se.getVertice(1).y));      
-                    list.add(new Point(se.getVertice(2).x, se.getVertice(2).y));  
-                    STriangle st = new STriangle(list, se.getColour(), se.getThickness(), ShapeType.TRIANGLE);
-                  lShapes.add(st);*/
-                    break;
-                case RECTANGLE:  // store the rECTANGLE
-                    /*    List<Point> list2= new ArrayList<>();
-                    list2.add(new Point(se.getVertice(0).x, se.getVertice(0).y));
-                    list2.add(new Point(se.getVertice(1).x, se.getVertice(1).y));    
-                    SRectangle rec = new SRectangle(list2, se.getColour(), se.getThickness(), ShapeType.RECTANGLE); */
-                    //    lShapes.add(rec);
-                    break;
+        for (ShapeEvent se : shapesList.listOfShapes) {
+             lshapes.add(ShapeFactory.createShape(se.getOrigin(), se.getWidth(), se.getHeight(), se.getFilledColor(), se.getThickness(), se.type()));
             }
-        }
+        
     }
 
     /**
      * @return the list of line shapes
      */
-    public List<Entity> getShapes() {
-        return this.lShapes;
+    public List<Shape> getShapes() {
+        return this.lshapes;
     }
 
     /**
@@ -127,8 +108,8 @@ public class JSONShapeReader {
          */
         JSONShapeReader me = new JSONShapeReader();
         me.getShapesFromFile("stored_shapes.json");
-        System.out.println("Lines loaded = " + me.lShapes.size());
-        System.out.println("Ovals loaded = " + me.lShapes.size());
+        System.out.println("Lines loaded = " + me.lshapes.size());
+        System.out.println("Ovals loaded = " + me.lshapes.size());
 
     }
 
