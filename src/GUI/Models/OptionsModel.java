@@ -23,7 +23,7 @@ public class OptionsModel {
     public OptionsModel() {
         currentEntityType = Entity.EntityType.LINE;
         currentColor = Color.BLACK;
-        currentThickness = 5;
+        currentThickness = 2;
         currentRotation = 0;
         currentBrightness = 1;
     }

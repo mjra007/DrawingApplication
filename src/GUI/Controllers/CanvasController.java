@@ -18,7 +18,7 @@ import simpledrawer.Utils;
 import simpledrawer.shapes.Container;
 import simpledrawer.shapes.ContainerI;
 import simpledrawer.shapes.Entity;
-import simpledrawer.shapes.EntityFactory;
+import simpledrawer.shapes.ShapeFactory;
 
 public class CanvasController implements MouseListener, MouseMotionListener, MouseWheelListener {
 
@@ -97,7 +97,7 @@ public class CanvasController implements MouseListener, MouseMotionListener, Mou
                     List<Point> reorganizedCoords = Utils.getReorganizedCoords(guiOptions.getClicks().get(0), guiOptions.getClicks().get(1));
                     int width = reorganizedCoords.get(1).x - reorganizedCoords.get(0).x;
                     int height = reorganizedCoords.get(1).y - reorganizedCoords.get(0).y;
-                    Entity entity = EntityFactory.createEntity(reorganizedCoords.get(0), width, height, guiOptions.getCurrentColor(), guiOptions.getCurrentThickness(), guiOptions.getEntityTypeSelected());
+                    Entity entity = ShapeFactory.createShape(reorganizedCoords.get(0), width, height, guiOptions.getCurrentColor(), guiOptions.getCurrentThickness(), guiOptions.getEntityTypeSelected());
                     //adding container to the list of containers to be drawn
                     if (entity instanceof ContainerI) {
                         ContainerI entityContainerI = (ContainerI) entity;

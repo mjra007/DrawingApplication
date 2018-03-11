@@ -5,6 +5,7 @@ import GUI.View;
 import colormixerbean.ColorMixer;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
+import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -46,6 +47,7 @@ public class DrawingOptions extends javax.swing.JFrame implements View {
     private void initComponents() {
         java.awt.GridBagConstraints gridBagConstraints;
 
+        jFileChooser1 = new javax.swing.JFileChooser();
         toolbar = new javax.swing.JPanel();
         Colors = new javax.swing.JPanel();
         red = new javax.swing.JLabel();
@@ -89,10 +91,9 @@ public class DrawingOptions extends javax.swing.JFrame implements View {
         colorMixerBean1 = new colormixerbean.ColorMixer();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        getContentPane().setLayout(new java.awt.BorderLayout());
 
         toolbar.setBackground(new java.awt.Color(204, 204, 204));
-        toolbar.setBorder(javax.swing.BorderFactory.createBevelBorder(0, java.awt.Color.lightGray, java.awt.Color.lightGray, java.awt.Color.lightGray, java.awt.Color.lightGray));
+        toolbar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.lightGray, java.awt.Color.lightGray, java.awt.Color.lightGray, java.awt.Color.lightGray));
         toolbar.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
         java.awt.GridBagLayout toolbarLayout = new java.awt.GridBagLayout();
         toolbarLayout.columnWidths = new int[] {0, 5, 0, 5, 0, 5, 0, 5, 0, 5, 0};
@@ -100,7 +101,7 @@ public class DrawingOptions extends javax.swing.JFrame implements View {
         toolbar.setLayout(toolbarLayout);
 
         Colors.setBackground(new java.awt.Color(204, 204, 204));
-        Colors.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 1, 1, new java.awt.Color(204, 204, 204)), "Pick a colour", 0, 0, new java.awt.Font("Segoe UI", 0, 12))); // NOI18N
+        Colors.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 1, 1, new java.awt.Color(204, 204, 204)), "Pick a colour", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 12))); // NOI18N
         Colors.setToolTipText("Brush");
         Colors.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
         Colors.setMaximumSize(new java.awt.Dimension(100, 100));
@@ -163,7 +164,7 @@ public class DrawingOptions extends javax.swing.JFrame implements View {
         toolbar.add(Colors, gridBagConstraints);
 
         Brush.setBackground(new java.awt.Color(204, 204, 204));
-        Brush.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 1, 1, new java.awt.Color(204, 204, 204)), "Brush", 0, 0, new java.awt.Font("Segoe UI", 0, 12))); // NOI18N
+        Brush.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 1, 1, new java.awt.Color(204, 204, 204)), "Brush", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 12))); // NOI18N
         Brush.setToolTipText("Brush");
         Brush.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
         Brush.setMaximumSize(new java.awt.Dimension(100, 70));
@@ -179,8 +180,7 @@ public class DrawingOptions extends javax.swing.JFrame implements View {
         Brush.add(lblThickness, gridBagConstraints);
 
         txtThickness.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
-        txtThickness.setText("5");
-        txtThickness.setBorder(javax.swing.BorderFactory.createBevelBorder(0));
+        txtThickness.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         txtThickness.setMaximumSize(new java.awt.Dimension(20, 16));
         txtThickness.setMinimumSize(new java.awt.Dimension(20, 16));
         txtThickness.setPreferredSize(new java.awt.Dimension(20, 16));
@@ -222,7 +222,7 @@ public class DrawingOptions extends javax.swing.JFrame implements View {
         toolbar.add(jPanel2, gridBagConstraints);
 
         Brush1.setBackground(new java.awt.Color(204, 204, 204));
-        Brush1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 1, 1, new java.awt.Color(204, 204, 204)), "Settings", 0, 0, new java.awt.Font("Segoe UI", 0, 12))); // NOI18N
+        Brush1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 1, 1, new java.awt.Color(204, 204, 204)), "Settings", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 12))); // NOI18N
         Brush1.setToolTipText("Brush");
         Brush1.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
         Brush1.setMaximumSize(new java.awt.Dimension(100, 70));
@@ -507,6 +507,10 @@ public class DrawingOptions extends javax.swing.JFrame implements View {
     public JCheckBox getBetterGraphicsButton() {
         return this.betterGraphicsButton;
     }
+    
+    public JFileChooser getFileChooser(){
+        return this.jFileChooser1;
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel Brush;
@@ -520,6 +524,7 @@ public class DrawingOptions extends javax.swing.JFrame implements View {
     private javax.swing.JLabel currentColor;
     private javax.swing.JLabel finalColor;
     private javax.swing.JLabel green;
+    private javax.swing.JFileChooser jFileChooser1;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JLabel lblThickness;
@@ -556,4 +561,5 @@ public class DrawingOptions extends javax.swing.JFrame implements View {
     public void refresh() {
         repaint();
     }
+
 }

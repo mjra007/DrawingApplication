@@ -15,8 +15,14 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import javax.swing.JDialog;
+import javax.swing.JFileChooser;
+import javax.swing.filechooser.FileFilter;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import simpledrawer.shapes.Entity;
 import simpledrawer.Readers.JSONShapeReader;
+import simpledrawer.shapes.Container;
+import simpledrawer.shapes.Shape;
 
 public class DrawingOptionsController {
 
@@ -320,6 +326,11 @@ public class DrawingOptionsController {
                 betterGraphicsClicked(evt);
             }
         });
+          getView().getFileChooser().addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                fileChooser(evt);
+            }
+        });
     }
 
     public void setupFocusListener() {
@@ -378,18 +389,43 @@ public class DrawingOptionsController {
         guiOptions.setCurrentColor(c);
         getView().getFinalColor().setBackground(c);
     }
+public void fileChooser(ActionEvent evt) {
+        JFileChooser fileChooser = getView().getFileChooser();
+        int state = fileChooser.showOpenDialog(dialog);
+        if (state == -1) {
+            System.out.println("sdsd");
+            getShapesFromJSON(fileChooser.getSelectedFile().getAbsolutePath());
+        } else if (state == JFileChooser.CANCEL_OPTION) {
 
-    public void importJSON(ActionEvent evt) {
+        }
+    }
+
+    public void getShapesFromJSON(String path) {
         try {
             JSONShapeReader shapeReader = new JSONShapeReader();
-            shapeReader.getShapesFromFile("stored_shapes.json");
+            shapeReader.getShapesFromFile(path);
             List listOfShapes = shapeReader.getShapes();
-            //entitiesModel.setEntityList(listOfShapes);
-            view.refresh();
+            for (Object shape : listOfShapes) {
+                if (shape instanceof Shape) {
+                    Shape actualShape = (Shape) shape;
+                    Container containedShape = new Container(actualShape);
+                    entitiesModel.addEntityToList(containedShape);
+                }
+            }
         } catch (FileNotFoundException ex) {
             Logger.getLogger(DrawingOptions.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    JDialog dialog = null;
+
+    public void importJSON(ActionEvent evt) {
+        FileFilter JSON = new FileNameExtensionFilter("JSON FILE", "JSON");
+        getView().getFileChooser().setFileFilter(JSON);
+        getView().getFileChooser().showOpenDialog(dialog);
+        view.refresh();
+
+    }
+
 
     public Color getCurrentColor() {
         return guiOptions.getCurrentColor();
