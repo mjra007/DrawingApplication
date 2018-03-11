@@ -47,7 +47,9 @@ public class ShapeEventList {
 
     /**
      * Return a list of ShapeEventListeners for a specified type of event
-     * @param type - the type of event for which listeners are required (e.g. "SHAPE")
+     *
+     * @param type - the type of event for which listeners are required (e.g.
+     * "SHAPE")
      * @return - the list of listeners of the specified type
      */
     public List<ShapeEventListener> getListeners(String type) {

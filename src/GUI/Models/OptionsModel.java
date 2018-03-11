@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package GUI.Models;
 
 import GUI.DrawingState;
@@ -12,10 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 import simpledrawer.shapes.Entity;
 
-/**
- *
- * @author micae
- */
 public class OptionsModel {
 
     private Entity.EntityType currentEntityType;
@@ -28,6 +19,7 @@ public class OptionsModel {
     private List<Point> currentPoints;
     private List<Point> oldPoints;
     private boolean betterGraphics;
+
     public OptionsModel() {
         currentEntityType = Entity.EntityType.LINE;
         currentColor = Color.BLACK;
@@ -77,10 +69,10 @@ public class OptionsModel {
         this.oldPoints = null;
     }
 
-   /**
-    * 
-    * @return list of current clicks 
-    */
+    /**
+     *
+     * @return list of current clicks
+     */
     public List<Point> getClicks() {
         return this.currentPoints;
     }
@@ -120,10 +112,11 @@ public class OptionsModel {
     public void setCurrentBrightness(float c) {
         this.currentBrightness = c;
     }
-    
+
     public void setbetterGraphics(boolean bG) {
         this.betterGraphics = bG;
     }
+
     public boolean getbetterGraphics() {
         return this.betterGraphics;
     }

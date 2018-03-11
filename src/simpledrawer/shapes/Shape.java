@@ -22,7 +22,7 @@ public abstract class Shape extends Entity implements ContainerI {
      * @param pR points required to draw the shape
      * @param et EntityType of the shape
      */
-    public Shape(Point origin, int width, int height, Color c, int t,Entity.EntityType et) {
+    public Shape(Point origin, int width, int height, Color c, int t, Entity.EntityType et) {
         super(Arrays.asList(origin, new Point(origin.x + width, origin.y + height)), c, et);
         borderThickness = t;
         this.width = width;
@@ -78,7 +78,7 @@ public abstract class Shape extends Entity implements ContainerI {
      * depending on what shape your entity takes
      */
     public void setHeight(int newHeight) {
-        super.getStructuralPoints().set(1, new Point(getOrigin().x, getOrigin().y+newHeight));
+        super.getStructuralPoints().set(1, new Point(getOrigin().x, getOrigin().y + newHeight));
         this.height = newHeight;
     }
 

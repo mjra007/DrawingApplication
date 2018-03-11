@@ -4,22 +4,20 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Point;
-import java.awt.RenderingHints;
-import java.util.Arrays;
 import java.util.List;
 
 public class STriangle extends Shape {
 
-    public STriangle(Point origin, int width, int height, Color c, int t,  Entity.EntityType et) {
-        super(origin,width,height, c, t,  Entity.EntityType.TRIANGLE);
+    public STriangle(Point origin, int width, int height, Color c, int t, Entity.EntityType et) {
+        super(origin, width, height, c, t, Entity.EntityType.TRIANGLE);
     }
 
     public STriangle() {
-        super(new Point(1, 0),100,100, Color.GRAY, 5, Entity.EntityType.TRIANGLE);
+        super(new Point(1, 0), 100, 100, Color.GRAY, 5, Entity.EntityType.TRIANGLE);
     }
 
     /**
-     * @return the area in pixels of the triangle. Does this work okay?
+     * @return The area in pixels of the triangle.
      */
     public double getArea() {
         int term1 = getVertices().get(0).x * (getVertices().get(1).y - getVertices().get(2).y);
@@ -40,12 +38,12 @@ public class STriangle extends Shape {
         // Set the thickness of the line
         g2d.setStroke(new BasicStroke(getThickness()));
 
-        Point top = new Point(getOrigin().x + getWidth()/2, getOrigin().y);
+        Point top = new Point(getOrigin().x + getWidth() / 2, getOrigin().y);
         Point right = new Point(getOrigin().x, getOrigin().y + getHeight());
         Point left = new Point(getOrigin().x + getWidth(), getOrigin().y + getHeight());
         // Draw the triangle
-        int[] xx = new int[]{top.x,right.x,left.x};
-        int[] yy = new int[]{top.y,right.y,left.y};
+        int[] xx = new int[]{top.x, right.x, left.x};
+        int[] yy = new int[]{top.y, right.y, left.y};
         g2d.drawLine(top.x, top.y, right.x, right.y);
         g2d.drawLine(top.x, top.y, left.x, left.y);
         g2d.drawLine(right.x, right.y, left.x, left.y);

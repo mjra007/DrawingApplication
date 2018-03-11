@@ -5,7 +5,7 @@ import java.awt.Graphics2D;
 
 public interface DrawableI {
 
- /*   
+    /*   
     public int getWidth();
     public int getHeight();
     /**
@@ -13,9 +13,9 @@ public interface DrawableI {
     *
     * @param g2d Graphics2D object used for drawing
     * @param currentBrightness the current brightness being used to draw
-    */
+     */
     public void drawShape(Graphics2D g2d);
-    
+
     /* The colour can be made brighter or darker.
      * currentBrightness is a number between 0.75 and 1.25
      * which is used to scale the brightness.  Each of the colours

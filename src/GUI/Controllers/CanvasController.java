@@ -57,7 +57,8 @@ public class CanvasController implements MouseListener, MouseMotionListener, Mou
     public int getCurrentRotation() {
         return guiOptions.getCurrentRotation();
     }
-    public boolean isBetterGraphicsSelected(){
+
+    public boolean isBetterGraphicsSelected() {
         return guiOptions.getbetterGraphics();
     }
 
@@ -77,7 +78,7 @@ public class CanvasController implements MouseListener, MouseMotionListener, Mou
                 Container container = (Container) drawable;
                 if (container.getContained() instanceof Entity) {
                     Entity entity = (Entity) container.getContained();
-                        guiOptions.addMouseClicktoOldPoints(entity.getStructuralPoints().get(0));
+                    guiOptions.addMouseClicktoOldPoints(entity.getStructuralPoints().get(0));
                 }
             }
             view.refresh();
@@ -91,10 +92,8 @@ public class CanvasController implements MouseListener, MouseMotionListener, Mou
                 //add point to the list
                 guiOptions.addMouseClick(e.getPoint());
                 //and check wehther we meet the amount of required points for the shape selected
-             //   System.out.print("" + this.guiOptions.getEntityTypeSelected());
+                //   System.out.print("" + this.guiOptions.getEntityTypeSelected());
                 if (guiOptions.getClicks().size() == 2) {
-                    //Cool, we met the requirement of points, now we can call the factory and get the Container with tghe shape easily
-                    // dont you love design patterns :p
                     List<Point> reorganizedCoords = Utils.getReorganizedCoords(guiOptions.getClicks().get(0), guiOptions.getClicks().get(1));
                     int width = reorganizedCoords.get(1).x - reorganizedCoords.get(0).x;
                     int height = reorganizedCoords.get(1).y - reorganizedCoords.get(0).y;
@@ -144,7 +143,7 @@ public class CanvasController implements MouseListener, MouseMotionListener, Mou
 
     @Override
     public void mouseMoved(MouseEvent e) {
-         //   System.out.println("" + guiOptions.getState());
+        //   System.out.println("" + guiOptions.getState());
         InteractiveShape intercShape = checkLocforDrawables(e.getPoint());
         if (intercShape == null) {
             guiOptions.setDrawingState(DrawingState.DRAWING);

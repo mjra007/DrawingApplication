@@ -28,7 +28,7 @@ public abstract class Entity implements DrawableI {
     public Entity(List<Point> structuralPoints, Color newColor, EntityType et) {
         this.structuralPoints = structuralPoints;
         setColor(newColor);
-        type =et;
+        type = et;
     }
 
     public Entity() {
@@ -57,16 +57,15 @@ public abstract class Entity implements DrawableI {
     }
 
     /**
-     * @param newColor sets the entityt color
+     * @param newColor sets the entity color
      */
     public void setColor(Color newColor) {
         this.color = newColor;
     }
 
     /**
-     * @param list
-     * Every entity holds some points that are crucial to draw it, move it,
-     * resize it. They are held in this list
+     * @param list Every entity holds some points that are crucial to draw it,
+     * move it, resize it. They are held in this list
      */
     public void setStructuralPoints(List<Point> list) {
         this.structuralPoints = list;
@@ -79,11 +78,8 @@ public abstract class Entity implements DrawableI {
         return this.structuralPoints;
     }
 
-
     public Entity.EntityType getEventType() {
         return this.type;
     }
-
-   
 
 }

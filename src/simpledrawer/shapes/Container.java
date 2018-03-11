@@ -79,9 +79,10 @@ public class Container implements DrawableI, InteractiveShape {
     public boolean contains(Point p) {
         boolean doesIt = false;
         Rectangle rectangle = new Rectangle();
-        /* Setting the rectangle with this method prevents the endX to be lower than
-         * the originX and the endY to be lower than the originY. Sometimes users
-         * can select the end point first.
+        /**
+         * Setting the rectangle with this method prevents the endX to be lower
+         * than the originX and the endY to be lower than the originY. Sometimes
+         * users can select the end point first.
          */
         rectangle.setFrameFromDiagonal(getOrigin(), getEndPoint());
         if (contains(p, rectangle)) {
@@ -98,9 +99,9 @@ public class Container implements DrawableI, InteractiveShape {
      */
     @Override
     public Container updateLocation(Point old, Point offset) {
-     
-            contained.setOrigin(new Point(old.x + offset.x, old.y + offset.y));
-        
+
+        contained.setOrigin(new Point(old.x + offset.x, old.y + offset.y));
+
         return this;
 
     }
@@ -120,9 +121,10 @@ public class Container implements DrawableI, InteractiveShape {
     public boolean contains(Point p, Rectangle r) {
         boolean doesIt = false;
         Rectangle rectangle = r;
-        /* Setting the rectangle with this method prevents the endX to be lower than
-         * the originX and the endY to be lower than the originY. Sometimes users
-         * can select the end point first.
+        /**
+         * Setting the rectangle with this method prevents the endX to be lower
+         * than the originX and the endY to be lower than the originY. Sometimes
+         * users can select the end point first.
          */
         rectangle.setFrameFromDiagonal(getOrigin(), getEndPoint());
         if (rectangle.contains(p)) {
@@ -162,38 +164,38 @@ public class Container implements DrawableI, InteractiveShape {
     }
 
     public boolean topRightCornerContains(Point p) {
-        boolean doesIt = false;
+        boolean cornerDetected = false;
         if (contains(p, getTopRightCorner())) {
-            doesIt = true;
+            cornerDetected = true;
             System.out.println("topright");
         }
-        return doesIt;
+        return cornerDetected;
     }
 
     public boolean topLeftCornerContains(Point p) {
-        boolean doesIt = false;
+        boolean cornerDetected = false;
         if (contains(p, getTopLeftCorner())) {
-            doesIt = true;
+            cornerDetected = true;
             System.out.println("topleft");
         }
-        return doesIt;
+        return cornerDetected;
     }
 
     public boolean bottomRightCornerContains(Point p) {
-        boolean doesIt = false;
+        boolean cornerDetected = false;
         if (contains(p, getBottomRightCorner())) {
-            doesIt = true;
+            cornerDetected = true;
             System.out.println("bottomright");
         }
-        return doesIt;
+        return cornerDetected;
     }
 
     public boolean bottomLeftCornerContains(Point p) {
-        boolean doesIt = false;
+        boolean cornerDetected = false;
         if (contains(p, getBottomLeftCorner())) {
-            doesIt = true;
+            cornerDetected = true;
         }
-        return doesIt;
+        return cornerDetected;
     }
 
     @Override
@@ -295,8 +297,10 @@ public class Container implements DrawableI, InteractiveShape {
     public void drawShape(Graphics2D g2d) {
         g2d.setStroke(dashed);
         g2d.setColor(Color.gray);
-        if(this.isSelected())g2d.draw(getDrawableContainer());
-        if(contained instanceof DrawableI){
+        if (this.isSelected()) {
+            g2d.draw(getDrawableContainer());
+        }
+        if (contained instanceof DrawableI) {
             DrawableI drawable = (DrawableI) getContained();
             drawable.drawShape(g2d);
         }

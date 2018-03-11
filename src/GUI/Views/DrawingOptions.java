@@ -3,8 +3,6 @@ package GUI.Views;
 import GUI.Controllers.DrawingOptionsController;
 import GUI.View;
 import colormixerbean.ColorMixer;
-import java.awt.Color;
-import java.awt.event.MouseEvent;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
