@@ -43,6 +43,7 @@ public class DrawingOptionsController {
         setupActionListeners();
         setupFocusListener();
         setupKeyListener();
+        getView().getTxtThickness().setText("2");
         getView().getmenuRectangle().doClick();
         getView().getFinalColor().setBackground(guiOptions.getCurrentColor());
     }
@@ -119,7 +120,7 @@ public class DrawingOptionsController {
                 btnChangeBackground(evt);
             }
         });
-        getView().getColorMixer().addPropertyChangeListener("mix", new PropertyChangeListener() {
+        getView().getColorMixer().addPropertyChangeListener("colormix", new PropertyChangeListener() {
             public void propertyChange(PropertyChangeEvent evt) {
                 colorMixerMenu(evt);
             }
@@ -468,14 +469,14 @@ public class DrawingOptionsController {
     }
 
     /* user pressed return in the thickness field */
-    private void txtThicknessActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtThicknessActionPerformed
+    private void txtThicknessActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtThicknessActionPerformedhandl
         handleThickness();
     }
 
     /* user has clicked away from the thickness field */
     private void txtThicknessFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtThicknessFocusLost
         handleThickness();
-    }//GEN-LAST:event_txtThicknessFocusLost
+    }
 
     /* user has types somethinginto thickness field */
     private void txtThicknessKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtThicknessKeyReleased
@@ -490,7 +491,7 @@ public class DrawingOptionsController {
     }
 
     private void colorMixerMenu(PropertyChangeEvent evt) {
-        guiOptions.setCurrentColor((Color) evt.getNewValue());
+        setFinalColor(getView().getColorMixer().getMix());
     }
 
     public void menuTriangle(ActionEvent evt) {
@@ -548,7 +549,7 @@ public class DrawingOptionsController {
 
     /* action whatever change has been made to the line thickness */
     private void handleThickness() {
-        int thickness = guiOptions.getCurrentThickness();
+        int thickness = Integer.valueOf(getView().getTxtThickness().getText());
         /* only allow thicknesses in the range 1 to 40 */
         thickness = thickness < 1 || thickness > 40 ? 5 : thickness;
         guiOptions.setCurrentThickness(thickness);

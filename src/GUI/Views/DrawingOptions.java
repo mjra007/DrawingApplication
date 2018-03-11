@@ -348,12 +348,6 @@ public class DrawingOptions extends javax.swing.JFrame implements View {
                 menuColorMixerMousePressed(evt);
             }
         });
-
-        colorMixerBean1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                colorMixerBean1ActionPerformed(evt);
-            }
-        });
         menuColorMixer.add(colorMixerBean1);
 
         jMenuBar1.add(menuColorMixer);
@@ -372,14 +366,11 @@ public class DrawingOptions extends javax.swing.JFrame implements View {
 
     }//GEN-LAST:event_btnBackgroundActionPerformed
 
-    private void colorMixerBean1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_colorMixerBean1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_colorMixerBean1ActionPerformed
-
     private void menuColorMixerMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuColorMixerMouseEntered
 
     }//GEN-LAST:event_menuColorMixerMouseEntered
 
+   
     public JMenuBar getmenuBar() {
         return this.jMenuBar1;
     }
