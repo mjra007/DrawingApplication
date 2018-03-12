@@ -69,8 +69,9 @@ public class CanvasController implements MouseListener, MouseMotionListener, Mou
     private void fillShape(ActionEvent evt) {
         Container container =(Container)this.entitiesModel.getSelected();
         Shape shape = (Shape)container.getContained();
-                shape.setFilled(true);
-                view.refresh();
+        shape.setFilled(true);
+        shape.setFilledColor(guiOptions.getCurrentColor());
+        view.refresh();
     }
 
     public List<Point> getClicks() {
