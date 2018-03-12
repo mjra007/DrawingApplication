@@ -11,7 +11,7 @@
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
               <Image iconType="3" name="/GUI/Images/file.png"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="     File     "/>
+            <Property name="text" type="java.lang.String" value="File     "/>
           </Properties>
           <SubComponents>
             <Menu class="javax.swing.JMenu" name="menuImport">
@@ -73,7 +73,8 @@
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
               <Image iconType="3" name="/GUI/Images/ruler.png"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="     Edit     "/>
+            <Property name="text" type="java.lang.String" value="Edit     "/>
+            <Property name="actionCommand" type="java.lang.String" value=" Edit     "/>
           </Properties>
           <SubComponents>
             <Menu class="javax.swing.JMenu" name="menuRotate">
@@ -119,7 +120,7 @@
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
               <Image iconType="3" name="/GUI/Images/Shapes.png"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="     Shapes"/>
+            <Property name="text" type="java.lang.String" value="Shapes"/>
           </Properties>
           <SubComponents>
             <MenuItem class="javax.swing.JCheckBoxMenuItem" name="menuRectangle">
@@ -161,7 +162,8 @@
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
               <Image iconType="3" name="/GUI/Images/paint-palette.png"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="     Colour Mixer     "/>
+            <Property name="text" type="java.lang.String" value="Colour Mixer     "/>
+            <Property name="actionCommand" type="java.lang.String" value="Colour Mixer     "/>
             <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
               <Color id="Default Cursor"/>
             </Property>

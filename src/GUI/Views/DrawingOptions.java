@@ -262,7 +262,7 @@ public class DrawingOptions extends javax.swing.JFrame implements View {
         getContentPane().add(panDrawingArea, java.awt.BorderLayout.CENTER);
 
         menuFile.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GUI/Images/file.png"))); // NOI18N
-        menuFile.setText("     File     ");
+        menuFile.setText("File     ");
 
         menuImport.setText("Import");
 
@@ -293,7 +293,8 @@ public class DrawingOptions extends javax.swing.JFrame implements View {
         jMenuBar1.add(menuFile);
 
         menuEdit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GUI/Images/ruler.png"))); // NOI18N
-        menuEdit.setText("     Edit     ");
+        menuEdit.setText("Edit     ");
+        menuEdit.setActionCommand(" Edit     ");
 
         menuRotate.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GUI/Images/rotate.png"))); // NOI18N
         menuRotate.setText("     Rotate     ");
@@ -317,7 +318,7 @@ public class DrawingOptions extends javax.swing.JFrame implements View {
         jMenuBar1.add(menuEdit);
 
         menuShapes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GUI/Images/Shapes.png"))); // NOI18N
-        menuShapes.setText("     Shapes");
+        menuShapes.setText("Shapes");
 
         menuRectangle.setText("Rectangle");
         menuRectangle.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GUI/Images/square.png"))); // NOI18N
@@ -338,7 +339,8 @@ public class DrawingOptions extends javax.swing.JFrame implements View {
         jMenuBar1.add(menuShapes);
 
         menuColorMixer.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GUI/Images/paint-palette.png"))); // NOI18N
-        menuColorMixer.setText("     Colour Mixer     ");
+        menuColorMixer.setText("Colour Mixer     ");
+        menuColorMixer.setActionCommand("Colour Mixer     ");
         menuColorMixer.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         menuColorMixer.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {

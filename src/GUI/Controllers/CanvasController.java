@@ -4,20 +4,25 @@ import GUI.DrawingState;
 import GUI.Models.EntitiesModel;
 import GUI.Models.OptionsModel;
 import GUI.View;
+import GUI.Views.Canvas;
 import java.awt.Color;
 import java.awt.Point;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
 import java.util.List;
+import javax.swing.SwingUtilities;
 import simpledrawer.DrawableI;
 import simpledrawer.InteractiveShape;
 import simpledrawer.Utils;
 import simpledrawer.shapes.Container;
 import simpledrawer.shapes.ContainerI;
 import simpledrawer.shapes.Entity;
+import simpledrawer.shapes.Shape;
 import simpledrawer.shapes.ShapeFactory;
 
 public class CanvasController implements MouseListener, MouseMotionListener, MouseWheelListener {
@@ -35,11 +40,37 @@ public class CanvasController implements MouseListener, MouseMotionListener, Mou
 
     public void addView(View view) {
         this.view = view;
+                setupListener();
+
     }
 
     @Override
     public void mouseClicked(MouseEvent e) {
+        if (SwingUtilities.isRightMouseButton(e) && checkLocforDrawables(xy)!=null ) {
+            Canvas canvas = (Canvas) view;
+            canvas.getRightMenu().show(canvas, e.getX(), e.getY());
+        }
 
+    }
+
+    public Canvas getView() {
+        return (Canvas) view;
+    }
+
+    public void setupListener() {
+        getView().getFilled().addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                fillShape(evt);
+            }
+
+        });
+    }
+
+    private void fillShape(ActionEvent evt) {
+        Container container =(Container)this.entitiesModel.getSelected();
+        Shape shape = (Shape)container.getContained();
+                shape.setFilled(true);
+                view.refresh();
     }
 
     public List<Point> getClicks() {
@@ -69,7 +100,6 @@ public class CanvasController implements MouseListener, MouseMotionListener, Mou
     @Override
     public void mousePressed(MouseEvent e) {
         //System.out.println("" + guiOptions.getState());
-
         xy = e.getPoint();
         if (guiOptions.getState().equals(DrawingState.MOVING)) {
             guiOptions.resetOldClicks();

@@ -8,18 +8,34 @@ import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.Stroke;
 import javax.swing.BorderFactory;
+import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
 import simpledrawer.DrawableI;
 
 public class Canvas extends JPanel implements View {
 
     private CanvasController controller;
+    private JPopupMenu rightMenu;
+    private JMenuItem fill = new JMenuItem("Fill");
+    private JMenuItem delete = new JMenuItem("Delete");
+    private JMenuItem copy = new JMenuItem("Copy");
+    private JMenuItem cut = new JMenuItem("Cut");
 
     /* Constructor used to create a Canvas with a
      * specified line colour, thickness and shape type
      */
     public Canvas() {
         this.setBorder(BorderFactory.createLoweredBevelBorder());
+        rightMenu = new JPopupMenu();
+        fill = new JMenuItem("Fill");
+        delete = new JMenuItem("Delete");
+        copy = new JMenuItem("Copy");
+        cut = new JMenuItem("Cut");
+        rightMenu.add(fill);
+        rightMenu.add(delete);
+        rightMenu.add(copy);
+        rightMenu.add(cut);
     }
 
     public void addController(CanvasController ct) {
@@ -42,10 +58,11 @@ public class Canvas extends JPanel implements View {
 
         // Graphics2D needed to set line thickness
         Graphics2D g2d = (Graphics2D) g;
-        
-                if(controller.isBetterGraphicsSelected())
-                    g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
-                            RenderingHints.VALUE_ANTIALIAS_ON); 
+
+        if (controller.isBetterGraphicsSelected()) {
+            g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+                    RenderingHints.VALUE_ANTIALIAS_ON);
+        }
 
         Stroke s = g2d.getStroke(); // save stroke to restore later
 
@@ -72,6 +89,18 @@ public class Canvas extends JPanel implements View {
             }
         }
 
+    }
+
+    public JPopupMenu getRightMenu() {
+        return this.rightMenu;
+    }
+
+    public JMenuItem getDelete() {
+        return this.delete;
+    }
+    
+    public JMenuItem getFilled(){
+        return this.fill;
     }
 
     @Override
