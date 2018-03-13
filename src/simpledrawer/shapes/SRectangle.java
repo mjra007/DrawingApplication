@@ -33,16 +33,16 @@ public class SRectangle extends Shape {
     public void drawShape(Graphics2D g2d) {
         // Scale the brightness of the colour
         // Color c = scaleColour(getColor(), currentBrightness);
-        g2d.setColor(super.getColor());
         // Get start point
         // Draw the line
         // Set the thickness of the line                
-        g2d.setStroke(new BasicStroke(this.getThickness()));
-        g2d.drawRect(getX(), getY(), getWidth(), getHeight());
         if (super.isItFilled()) {
             g2d.setColor(filledColor);
             g2d.fillRect(getX(), getY(), getWidth(), getHeight());
         }
+        g2d.setColor(super.getColor());
+        g2d.setStroke(new BasicStroke(this.getThickness()));
+        g2d.drawRect(getX(), getY(), getWidth(), getHeight());
 
     }
 

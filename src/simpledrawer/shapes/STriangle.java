@@ -34,9 +34,6 @@ public class STriangle extends Shape {
     public void drawShape(Graphics2D g2d) {
         // Scale the brightness of the colour
         // Color c = scaleColour(getColor());
-        g2d.setColor(super.getColor());
-        // Set the thickness of the line
-        g2d.setStroke(new BasicStroke(getThickness()));
 
         Point top = new Point(getOrigin().x + getWidth() / 2, getOrigin().y);
         Point right = new Point(getOrigin().x, getOrigin().y + getHeight());
@@ -44,9 +41,14 @@ public class STriangle extends Shape {
         // Draw the triangle
         int[] xx = new int[]{top.x, right.x, left.x};
         int[] yy = new int[]{top.y, right.y, left.y};
-        g2d.drawLine(top.x, top.y, right.x, right.y);
-        g2d.drawLine(top.x, top.y, left.x, left.y);
-        g2d.drawLine(right.x, right.y, left.x, left.y);
+        if (super.isItFilled()) {
+            g2d.setColor(filledColor);
+            g2d.fillPolygon(xx, yy, 3);
+        }
+        g2d.setColor(super.getColor());
+        // Set the thickness of the line
+        g2d.setStroke(new BasicStroke(getThickness()));
+        g2d.drawPolygon(xx, yy, 3);
     }
 
     @Override

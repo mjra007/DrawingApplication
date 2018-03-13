@@ -8,12 +8,13 @@ import java.awt.Point;
 public class SOval extends Shape {
 
     public SOval(Point origin, int width, int height, Color c, int t, Entity.EntityType et) {
-        super(origin,width,height, c, t, Entity.EntityType.LINE);
+        super(origin, width, height, c, t, Entity.EntityType.LINE);
     }
 
-    public SOval(){
-        super(new Point(1,0),100,100,Color.black,5,Entity.EntityType.OVAL);
+    public SOval() {
+        super(new Point(1, 0), 100, 100, Color.black, 5, Entity.EntityType.OVAL);
     }
+
     /**
      * @return an int that is the y of the opposite point of the origin
      */
@@ -42,12 +43,15 @@ public class SOval extends Shape {
     public void drawShape(Graphics2D g2d) {
         //  Scale the brightness of the colour
         //  Color c = scaleColour(super.getColor(), currentBrightness);
-        g2d.setColor(super.getColor());
         //  Set the thickness of the line
+        if (super.isItFilled()) {
+            g2d.setColor(filledColor);
+            g2d.fillOval(getX(), getY(), getWidth(), getHeight());
+        }
+        // Draw the oval    
+        g2d.setColor(super.getColor());
         g2d.setStroke(new BasicStroke(this.getThickness()));
-
-        // Draw the oval        
-        g2d.fillOval(getX(), getY(),
+        g2d.drawOval(getX(), getY(),
                 getWidth(),
                 getHeight());
     }
