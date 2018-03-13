@@ -1,6 +1,6 @@
 package GUI.Controllers;
 
-import GUI.Models.EntitiesModel;
+import GUI.Models.CanvasDrawings;
 import GUI.Models.OptionsModel;
 import GUI.View;
 import GUI.Views.DrawingOptions;
@@ -29,10 +29,10 @@ import simpledrawer.shapes.Shape;
 public class DrawingOptionsController {
 
     private View view;
-    private EntitiesModel entitiesModel;
+    private CanvasDrawings entitiesModel;
     private OptionsModel guiOptions;
 
-    public DrawingOptionsController(EntitiesModel m, OptionsModel guiOptions) {
+    public DrawingOptionsController(CanvasDrawings m, OptionsModel guiOptions) {
         entitiesModel = m;
         this.guiOptions = guiOptions;
 
@@ -394,12 +394,12 @@ public class DrawingOptionsController {
             JSONShapeReader shapeReader = new JSONShapeReader();
             shapeReader.getShapesFromFile(path);
             List listOfShapes = shapeReader.getShapes();
-            entitiesModel.getEntityList().clear();
+            entitiesModel.getDrawings().clear();
             for (Object shape : listOfShapes) {
                 if (shape instanceof Shape) {
                     Shape actualShape = (Shape) shape;
                     Container containedShape = new Container(actualShape);
-                    entitiesModel.addEntityToList(containedShape);
+                    entitiesModel.addDrawing(containedShape);
                 }
             }
         } catch (FileNotFoundException ex) {
@@ -440,7 +440,7 @@ public class DrawingOptionsController {
         fileChooser.setFileFilter(JSON);
         int state = fileChooser.showOpenDialog(getView().getmenuExportJSON());
         if (state == JFileChooser.APPROVE_OPTION) {
-            saveShapesJSON(fileChooser.getSelectedFile().getAbsolutePath(),entitiesModel.getEntityList());
+            saveShapesJSON(fileChooser.getSelectedFile().getAbsolutePath(),entitiesModel.getDrawings());
         }
         view.refresh();
     }
@@ -453,7 +453,7 @@ public class DrawingOptionsController {
         // Empty the ArrayList and clear the display.
         guiOptions.setBackground(Color.white);
         getView().getCanvas().setBackground(Color.white);
-        entitiesModel.getEntityList().clear();
+        entitiesModel.getDrawings().clear();
         view.refresh();
     }
 

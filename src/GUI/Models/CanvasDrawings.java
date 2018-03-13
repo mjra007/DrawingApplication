@@ -10,41 +10,42 @@ import java.util.HashMap;
 import java.util.List;
 import simpledrawer.DrawableI;
 
-public class EntitiesModel {
+public class CanvasDrawings {
 
     private DrawableI selected;
-    private List<DrawableI> entityList;
+    private List<DrawableI> drawingsList;
     // Saves the last 100 changes
-    private HashMap<Integer, List<DrawableI>> entityListHistory;
+    private HashMap<Integer, List<DrawableI>> drawingsHistory;
     private Integer indexSelect;
 
-    public EntitiesModel() {
-        this.entityList = new ArrayList<DrawableI>();
-        this.entityListHistory = new HashMap<>();
+    public CanvasDrawings() {
+        this.drawingsList = new ArrayList<DrawableI>();
+        this.drawingsHistory = new HashMap<>();
     }
 
     /**
-     * @return entityList to be drawn
+     * @return drawingsList to be drawn
      */
-    public List<DrawableI> getEntityList() {
-        return this.entityList;
+    public List<DrawableI> getDrawings() {
+        return this.drawingsList;
     }
 
     /**
      * @param entity to add to currentList
      */
-    public void addEntityToList(DrawableI entity) {
-        if (getEntityList() == null) {
-            this.entityList = new ArrayList<DrawableI>();
+    public void addDrawing(DrawableI entity) {
+        if (getDrawings() == null) {
+            this.drawingsList = new ArrayList<DrawableI>();
         }
-        getEntityList().add(entity);
+        saveHistory();
+        getDrawings().add(entity);
     }
 
     /**
      * @return entityListHistory
      */
     public HashMap<Integer, List<DrawableI>> getHistory() {
-        return entityListHistory;
+        return drawingsHistory;
     }
 
     /**
@@ -69,5 +70,19 @@ public class EntitiesModel {
      */
     public DrawableI getSelected() {
         return this.selected;
+    }
+
+    public void removeSelected() {
+        saveHistory();
+        this.getDrawings().remove(selected);
+    }
+
+    public void saveHistory() {
+        int size = this.drawingsHistory.size();
+        this.drawingsHistory.put(size+1, drawingsList);
+    }
+
+    public void resetList() {
+        getDrawings().clear();
     }
 }

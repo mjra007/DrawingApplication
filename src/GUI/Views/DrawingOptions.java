@@ -67,6 +67,7 @@ public class DrawingOptions extends javax.swing.JFrame implements View {
         Brush1 = new javax.swing.JPanel();
         btnBackground = new javax.swing.JButton();
         betterGraphicsButton = new javax.swing.JCheckBox();
+        jButton1 = new javax.swing.JButton();
         panDrawingArea = this.drawingPanel;
         jMenuBar1 = new javax.swing.JMenuBar();
         menuFile = new javax.swing.JMenu();
@@ -244,6 +245,7 @@ public class DrawingOptions extends javax.swing.JFrame implements View {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 1;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         Brush1.add(betterGraphicsButton, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -251,6 +253,9 @@ public class DrawingOptions extends javax.swing.JFrame implements View {
         gridBagConstraints.gridy = 0;
         gridBagConstraints.ipadx = 52;
         toolbar.add(Brush1, gridBagConstraints);
+
+        jButton1.setText("jButton1");
+        toolbar.add(jButton1, new java.awt.GridBagConstraints());
 
         getContentPane().add(toolbar, java.awt.BorderLayout.PAGE_START);
 
@@ -340,7 +345,6 @@ public class DrawingOptions extends javax.swing.JFrame implements View {
 
         menuColorMixer.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GUI/Images/paint-palette.png"))); // NOI18N
         menuColorMixer.setText("Colour Mixer     ");
-        menuColorMixer.setActionCommand("Colour Mixer     ");
         menuColorMixer.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         menuColorMixer.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
@@ -517,6 +521,7 @@ public class DrawingOptions extends javax.swing.JFrame implements View {
     private javax.swing.JLabel currentColor;
     private javax.swing.JLabel finalColor;
     private javax.swing.JLabel green;
+    private javax.swing.JButton jButton1;
     private javax.swing.JFileChooser jFileChooser1;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPanel jPanel2;

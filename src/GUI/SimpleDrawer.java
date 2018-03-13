@@ -1,6 +1,6 @@
 package GUI;
 
-import GUI.Models.EntitiesModel;
+import GUI.Models.CanvasDrawings;
 import GUI.Controllers.DrawingOptionsController;
 import GUI.Controllers.CanvasController;
 import GUI.Models.OptionsModel;
@@ -22,7 +22,7 @@ public class SimpleDrawer {
             // If Nimbus is not available, you can set the GUI to another look and feel.
         }
         // Starting models
-        EntitiesModel entitiesModel = new EntitiesModel();
+        CanvasDrawings entitiesModel = new CanvasDrawings();
         OptionsModel optionsModel = new OptionsModel();
         // Starting controllers
         CanvasController canvasController = new CanvasController(entitiesModel, optionsModel);

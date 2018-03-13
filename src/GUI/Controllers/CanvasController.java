@@ -1,7 +1,7 @@
 package GUI.Controllers;
 
 import GUI.DrawingState;
-import GUI.Models.EntitiesModel;
+import GUI.Models.CanvasDrawings;
 import GUI.Models.OptionsModel;
 import GUI.View;
 import GUI.Views.Canvas;
@@ -28,25 +28,25 @@ import simpledrawer.shapes.ShapeFactory;
 public class CanvasController implements MouseListener, MouseMotionListener, MouseWheelListener {
 
     private View view;
-    private EntitiesModel entitiesModel;
+    private CanvasDrawings entitiesModel;
     private OptionsModel guiOptions;
 
     private Point xy;
 
-    public CanvasController(EntitiesModel m, OptionsModel guiOptions) {
+    public CanvasController(CanvasDrawings m, OptionsModel guiOptions) {
         entitiesModel = m;
         this.guiOptions = guiOptions;
     }
 
     public void addView(View view) {
         this.view = view;
-                setupListener();
+        setupListener();
 
     }
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        if (SwingUtilities.isRightMouseButton(e) && checkLocforDrawables(xy)!=null ) {
+        if (SwingUtilities.isRightMouseButton(e) && checkLocforDrawables(xy) != null) {
             Canvas canvas = (Canvas) view;
             canvas.getRightMenu().show(canvas, e.getX(), e.getY());
         }
@@ -62,16 +62,25 @@ public class CanvasController implements MouseListener, MouseMotionListener, Mou
             public void actionPerformed(ActionEvent evt) {
                 fillShape(evt);
             }
-
+        });
+        getView().getDelete().addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                delteButton(evt);
+            }
         });
     }
 
+    private void delteButton(ActionEvent evt) {
+       entitiesModel.removeSelected();
+        getView().refresh();
+    }
+
     private void fillShape(ActionEvent evt) {
-        Container container =(Container)this.entitiesModel.getSelected();
-        Shape shape = (Shape)container.getContained();
+        Container container = (Container) this.entitiesModel.getSelected();
+        Shape shape = (Shape) container.getContained();
         shape.setFilled(true);
         shape.setFilledColor(guiOptions.getCurrentColor());
-        view.refresh();
+        getView().refresh();
     }
 
     public List<Point> getClicks() {
@@ -83,7 +92,7 @@ public class CanvasController implements MouseListener, MouseMotionListener, Mou
     }
 
     public List<DrawableI> getDrawingList() {
-        return entitiesModel.getEntityList();
+        return entitiesModel.getDrawings();
     }
 
     public int getCurrentRotation() {
@@ -133,10 +142,10 @@ public class CanvasController implements MouseListener, MouseMotionListener, Mou
                     if (entity instanceof ContainerI) {
                         ContainerI entityContainerI = (ContainerI) entity;
                         Container container = new Container(entityContainerI);
-                        entitiesModel.getEntityList().add(container);
+                        entitiesModel.getDrawings().add(container);
 
                     } else {
-                        entitiesModel.getEntityList().add(entity);
+                        entitiesModel.getDrawings().add(entity);
                     }
                     //reseting the cpoints selected
                     guiOptions.resetClicks();
@@ -158,15 +167,15 @@ public class CanvasController implements MouseListener, MouseMotionListener, Mou
                 //figuring out the offset of our first click and the last done
                 int offsetX = e.getX() - xy.x;
                 int offsetY = e.getY() - xy.y;
-                entitiesModel.getEntityList().add(entitiesModel.getIndexSelect(), interactiveSelected.updateLocation(guiOptions.getOldClicks().get(0), new Point(offsetX, offsetY)));
+                entitiesModel.getDrawings().add(entitiesModel.getIndexSelect(), interactiveSelected.updateLocation(guiOptions.getOldClicks().get(0), new Point(offsetX, offsetY)));
                 view.refresh();
             }
         } else if (DrawingState.RESIZING.equals(guiOptions.getState())) {
-            /*  InteractiveShape interactiveSelected = (InteractiveShape) entitiesModel.getEntityList().get(entitiesModel.getIndexSelect());
+            /*  InteractiveShape interactiveSelected = (InteractiveShape) entitiesModel.getDrawings().get(entitiesModel.getIndexSelect());
             //figuring out the offset of our first click and the last done
             int offsetX = e.getX() + currentPoints.get(currentPoints.size()-1).x;
             int offsetY = e.getY() + currentPoints.get(currentPoints.size()-1).y;
-            entitiesModel.getEntityList().add(entitiesModel.getIndexSelect(), interactiveSelected.resize(oldPoints, new Point(offsetX, offsetY)));
+            entitiesModel.getDrawings().add(entitiesModel.getIndexSelect(), interactiveSelected.resize(oldPoints, new Point(offsetX, offsetY)));
             //shapes.add(indexSelectedShape, selected.translate(translateCoords, new Point(offsetX,offsetY)));
             myView.refresh();*/
         }
@@ -185,8 +194,8 @@ public class CanvasController implements MouseListener, MouseMotionListener, Mou
 
     public InteractiveShape checkLocforDrawables(Point locPoint) {
         InteractiveShape intercShape = null;
-        for (int i = 0; i < entitiesModel.getEntityList().size(); i++) {
-            DrawableI drawable = entitiesModel.getEntityList().get(i);
+        for (int i = 0; i < entitiesModel.getDrawings().size(); i++) {
+            DrawableI drawable = entitiesModel.getDrawings().get(i);
             if (drawable instanceof InteractiveShape) {
                 intercShape = (InteractiveShape) drawable;
                 if (intercShape.contains(locPoint)) {
