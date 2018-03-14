@@ -13,29 +13,38 @@ import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import simpledrawer.DrawableI;
 
-public class Canvas extends JPanel implements View {
+public class CanvasView extends JPanel implements View {
 
     private CanvasController controller;
     private JPopupMenu rightMenu;
     private JMenuItem fill = new JMenuItem("Fill");
     private JMenuItem delete = new JMenuItem("Delete");
     private JMenuItem copy = new JMenuItem("Copy");
+    private JMenuItem paste = new JMenuItem("Paste");
     private JMenuItem cut = new JMenuItem("Cut");
+    private JMenuItem backgroundMenu = new JMenuItem("Change Background");
 
-    /* Constructor used to create a Canvas with a
+    /* Constructor used to create a CanvasView with a
      * specified line colour, thickness and shape type
      */
-    public Canvas() {
+    public CanvasView() {
         this.setBorder(BorderFactory.createLoweredBevelBorder());
-        rightMenu = new JPopupMenu();
-        fill = new JMenuItem("Fill");
-        delete = new JMenuItem("Delete");
-        copy = new JMenuItem("Copy");
-        cut = new JMenuItem("Cut");
-        rightMenu.add(fill);
-        rightMenu.add(delete);
-        rightMenu.add(copy);
-        rightMenu.add(cut);
+    }
+
+    public JPopupMenu changeMenu(boolean shapeSelected) {
+        if (shapeSelected) {
+            rightMenu = new JPopupMenu();
+            rightMenu.add(fill);
+            rightMenu.add(delete);
+            rightMenu.add(copy);
+            rightMenu.add(cut);
+            rightMenu.add(paste);
+        } else {
+            rightMenu = new JPopupMenu();
+            rightMenu.add(backgroundMenu);
+            rightMenu.add(paste);
+        }
+        return rightMenu;
     }
 
     public void addController(CanvasController ct) {
@@ -73,13 +82,13 @@ public class Canvas extends JPanel implements View {
 
         // Loop though the ArrayList drawing
         // all the shapes stored in it
-        for (Object aShape : controller.getDrawingList()) {
+        for (DrawableI aShape : controller.getDrawingList().values()) {
             // draw the correct sort of shape: line or oval or triangle
             //   System.out.println(shape.getContained().toString());
-            if (aShape instanceof DrawableI) {
-                DrawableI ld = (DrawableI) aShape;
-                ld.drawShape(g2d);
-            }
+
+            DrawableI ld = (DrawableI) aShape;
+            ld.drawShape(g2d);
+
         }
         g2d.setStroke(s);  // restore saved stroke
         if (controller.getClicks() != null && controller.getClicks().size() >= 1) { // draw dot where line started
@@ -98,12 +107,29 @@ public class Canvas extends JPanel implements View {
     public JMenuItem getDelete() {
         return this.delete;
     }
-    
-    public JMenuItem getFilled(){
+
+    public JMenuItem getFilled() {
         return this.fill;
     }
 
+    public JMenuItem getCopy() {
+        return this.copy;
+    }
+
+    public JMenuItem getCut() {
+        return this.cut;
+    }
+
+    public JMenuItem getPaste() {
+        return this.paste;
+    }
+    
+    public JMenuItem getBackgroundMenu(){
+        return this.backgroundMenu;
+    }
+    
     @Override
+
     public void refresh() {
         repaint();
     }

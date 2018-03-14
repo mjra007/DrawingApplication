@@ -1,9 +1,9 @@
 package GUI.Controllers;
 
-import GUI.Models.CanvasDrawings;
-import GUI.Models.OptionsModel;
+import GUI.Models.Canvas;
+import GUI.Models.CanvasOptions;
 import GUI.View;
-import GUI.Views.DrawingOptions;
+import GUI.Views.CanvasOptionsView;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.event.ActionListener;
@@ -16,23 +16,24 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.HashMap;
 import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import simpledrawer.DrawableI;
-import simpledrawer.shapes.Entity;
+import simpledrawer.shapes.DrawableEntity;
 import simpledrawer.Readers.JSONShapeReader;
 import simpledrawer.shapes.Container;
 import simpledrawer.shapes.Shape;
 
-public class DrawingOptionsController {
+public class CanvasOptionsController {
 
     private View view;
-    private CanvasDrawings entitiesModel;
-    private OptionsModel guiOptions;
+    private Canvas entitiesModel;
+    private CanvasOptions guiOptions;
 
-    public DrawingOptionsController(CanvasDrawings m, OptionsModel guiOptions) {
+    public CanvasOptionsController(Canvas m, CanvasOptions guiOptions) {
         entitiesModel = m;
         this.guiOptions = guiOptions;
 
@@ -48,20 +49,14 @@ public class DrawingOptionsController {
         getView().getFinalColor().setBackground(guiOptions.getCurrentColor());
     }
 
-    public DrawingOptions getView() {
-        return (DrawingOptions) view;
+    public CanvasOptionsView getView() {
+        return (CanvasOptionsView) view;
     }
 
     public void setupActionListeners() {
         getView().getmenuImportJSON().addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
                 importJSON(evt);
-            }
-        });
-
-        getView().getmenuImportXML().addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent evt) {
-                importXML(evt);
             }
         });
 
@@ -403,7 +398,7 @@ public class DrawingOptionsController {
                 }
             }
         } catch (FileNotFoundException ex) {
-            Logger.getLogger(DrawingOptions.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(CanvasOptionsView.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -421,7 +416,7 @@ public class DrawingOptionsController {
 
     }
 
-    public void saveShapesJSON(String path, List<DrawableI> drawings) {
+    public void saveShapesJSON(String path, HashMap<Integer,DrawableI> drawings) {
         JSONShapeReader shapeReader = new JSONShapeReader();
         shapeReader.saveJSON(path, drawings);
     }
@@ -495,7 +490,7 @@ public class DrawingOptionsController {
     }
 
     public void menuTriangle(ActionEvent evt) {
-        guiOptions.setEntityTypeSelected(Entity.EntityType.TRIANGLE);
+        guiOptions.setEntityTypeSelected(DrawableEntity.EntityType.TRIANGLE);
         getView().getmenuTriangle().setSelected(true);
         getView().getmenuOval().setSelected(false);
         getView().getmenuRectangle().setSelected(false);
@@ -503,7 +498,7 @@ public class DrawingOptionsController {
     }
 
     public void menuOval(ActionEvent evt) {
-        guiOptions.setEntityTypeSelected(Entity.EntityType.OVAL);
+        guiOptions.setEntityTypeSelected(DrawableEntity.EntityType.OVAL);
         getView().getmenuTriangle().setSelected(false);
         getView().getmenuOval().setSelected(true);
         getView().getmenuRectangle().setSelected(false);
@@ -511,7 +506,7 @@ public class DrawingOptionsController {
     }
 
     public void menuRectangle(ActionEvent evt) {
-        guiOptions.setEntityTypeSelected(Entity.EntityType.RECTANGLE);
+        guiOptions.setEntityTypeSelected(DrawableEntity.EntityType.RECTANGLE);
         getView().getmenuTriangle().setSelected(false);
         getView().getmenuOval().setSelected(false);
         getView().getmenuRectangle().setSelected(true);
@@ -519,7 +514,7 @@ public class DrawingOptionsController {
     }
 
     public void menuLine(ActionEvent evt) {
-        guiOptions.setEntityTypeSelected(Entity.EntityType.LINE);
+        guiOptions.setEntityTypeSelected(DrawableEntity.EntityType.LINE);
         getView().getmenuTriangle().setSelected(false);
         getView().getmenuOval().setSelected(false);
         getView().getmenuRectangle().setSelected(false);

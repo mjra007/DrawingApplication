@@ -7,12 +7,12 @@ import java.awt.Point;
 
 public class SOval extends Shape {
 
-    public SOval(Point origin, int width, int height, Color c, int t, Entity.EntityType et) {
-        super(origin, width, height, c, t, Entity.EntityType.LINE);
+    public SOval(Point origin, int width, int height, Color c, int t, DrawableEntity.EntityType et) {
+        super(origin, width, height, c, t, DrawableEntity.EntityType.LINE);
     }
 
     public SOval() {
-        super(new Point(1, 0), 100, 100, Color.black, 5, Entity.EntityType.OVAL);
+        super(new Point(1, 0), 100, 100, Color.black, 5, DrawableEntity.EntityType.OVAL);
     }
 
     /**

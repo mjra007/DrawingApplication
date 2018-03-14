@@ -1,6 +1,5 @@
 package simpledrawer.Readers;
 
-import GUI.SimpleDrawer;
 import com.google.gson.*;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -8,10 +7,10 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import simpledrawer.DrawableI;
 import simpledrawer.shapes.Container;
-import simpledrawer.shapes.Entity;
 import simpledrawer.shapes.ShapeFactory;
 import simpledrawer.shapes.Shape;
 
@@ -72,7 +71,7 @@ public class JSONShapeReader {
      *
      * @param file the file into which to write the JSON
      */
-    public void saveJSON(String file,List<DrawableI> drawings) {
+    public void saveJSON(String file,HashMap<Integer,DrawableI> drawings) {
         List<ShapeEvent> list = new ArrayList<>();
         System.out.println(""+drawings.size());
         for(int i=0;i< drawings.size(); i++){

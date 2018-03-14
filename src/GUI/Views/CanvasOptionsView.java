@@ -1,6 +1,6 @@
 package GUI.Views;
 
-import GUI.Controllers.DrawingOptionsController;
+import GUI.Controllers.CanvasOptionsController;
 import GUI.View;
 import colormixerbean.ColorMixer;
 import javax.swing.JButton;
@@ -13,12 +13,12 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-public class DrawingOptions extends javax.swing.JFrame implements View {
+public class CanvasOptionsView extends javax.swing.JFrame implements View {
 
-    private Canvas drawingPanel; // the drawing panel
-    private DrawingOptionsController controller;
+    private CanvasView drawingPanel; // the drawing panel
+    private CanvasOptionsController controller;
 
-    public DrawingOptions(Canvas dP) {
+    public CanvasOptionsView(CanvasView dP) {
         drawingPanel = dP;
         initComponents();
         setTitle("Drawinit");
@@ -33,7 +33,7 @@ public class DrawingOptions extends javax.swing.JFrame implements View {
         return (View) this;
     }
 
-    public void addController(DrawingOptionsController c) {
+    public void addController(CanvasOptionsController c) {
         this.controller = c;
     }
 
@@ -73,10 +73,8 @@ public class DrawingOptions extends javax.swing.JFrame implements View {
         menuFile = new javax.swing.JMenu();
         menuImport = new javax.swing.JMenu();
         menuImportJSON = new javax.swing.JMenuItem();
-        menuImportXML = new javax.swing.JMenuItem();
         menuExport = new javax.swing.JMenu();
         menuExportJSON = new javax.swing.JMenuItem();
-        menuExportXML = new javax.swing.JMenuItem();
         menuEdit = new javax.swing.JMenu();
         menuRotate = new javax.swing.JMenu();
         menuLeft = new javax.swing.JMenuItem();
@@ -276,10 +274,6 @@ public class DrawingOptions extends javax.swing.JFrame implements View {
         menuImportJSON.setText("JSON");
         menuImport.add(menuImportJSON);
 
-        menuImportXML.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GUI/Images/xml.png"))); // NOI18N
-        menuImportXML.setText("XML");
-        menuImport.add(menuImportXML);
-
         menuFile.add(menuImport);
 
         menuExport.setText("Export");
@@ -288,10 +282,6 @@ public class DrawingOptions extends javax.swing.JFrame implements View {
         menuExportJSON.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GUI/Images/json-file.png"))); // NOI18N
         menuExportJSON.setText("JSON");
         menuExport.add(menuExportJSON);
-
-        menuExportXML.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GUI/Images/xml.png"))); // NOI18N
-        menuExportXML.setText("XML");
-        menuExport.add(menuExportXML);
 
         menuFile.add(menuExport);
 
@@ -413,16 +403,8 @@ public class DrawingOptions extends javax.swing.JFrame implements View {
         return this.menuExportJSON;
     }
 
-    public JMenuItem getmenuExportXML() {
-        return this.menuExportXML;
-    }
-
     public JMenuItem getmenuImportJSON() {
         return this.menuImportJSON;
-    }
-
-    public JMenuItem getmenuImportXML() {
-        return this.menuImportXML;
     }
 
     public JMenuItem getmenuLeft() {
@@ -531,11 +513,9 @@ public class DrawingOptions extends javax.swing.JFrame implements View {
     private javax.swing.JMenu menuEdit;
     private javax.swing.JMenu menuExport;
     private javax.swing.JMenuItem menuExportJSON;
-    private javax.swing.JMenuItem menuExportXML;
     private javax.swing.JMenu menuFile;
     private javax.swing.JMenu menuImport;
     private javax.swing.JMenuItem menuImportJSON;
-    private javax.swing.JMenuItem menuImportXML;
     private javax.swing.JMenuItem menuLeft;
     private javax.swing.JCheckBoxMenuItem menuLine;
     private javax.swing.JCheckBoxMenuItem menuOval;

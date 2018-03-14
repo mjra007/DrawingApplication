@@ -1,5 +1,6 @@
 package simpledrawer.shapes;
 
+import com.rits.cloning.Cloner;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Point;
@@ -13,25 +14,24 @@ import simpledrawer.DrawableI;
  * and weight, color, whether it is selected or not and structural points for
  * the
  */
-public abstract class Entity implements DrawableI {
+public abstract class DrawableEntity implements DrawableI {
 
     // Type of shape e.g. line or oval
     private final EntityType type;
 
     private List<Point> structuralPoints = new ArrayList<Point>();
-
     /**
      * Everything you draw has a color
      */
     private Color color;
 
-    public Entity(List<Point> structuralPoints, Color newColor, EntityType et) {
+    public DrawableEntity(List<Point> structuralPoints, Color newColor, EntityType et) {
         this.structuralPoints = structuralPoints;
         setColor(newColor);
         type = et;
     }
 
-    public Entity() {
+    public DrawableEntity() {
         this.type = EntityType.LINE;
         color = Color.black;
     }
@@ -78,8 +78,12 @@ public abstract class Entity implements DrawableI {
         return this.structuralPoints;
     }
 
-    public Entity.EntityType getEventType() {
+    public DrawableEntity.EntityType getEventType() {
         return this.type;
     }
 
+    @Override
+    public DrawableEntity clone() {
+        return new Cloner().deepClone(this);
+    }
 }

@@ -7,6 +7,7 @@
  */
 package simpledrawer.shapes;
 
+import com.rits.cloning.Cloner;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
@@ -16,7 +17,7 @@ import java.util.List;
 import simpledrawer.DrawableI;
 import simpledrawer.InteractiveShape;
 
-public class Container implements DrawableI, InteractiveShape {
+public class Container implements DrawableI, InteractiveShape, Cloneable {
 
     //Points required to draw the shape contained
     ContainerI contained = null;
@@ -308,6 +309,12 @@ public class Container implements DrawableI, InteractiveShape {
             DrawableI drawable = (DrawableI) getContained();
             drawable.drawShape(g2d);
         }
+    }
+
+
+    @Override
+    public Object clone() {
+        return new Cloner().deepClone(this);
     }
 
 }

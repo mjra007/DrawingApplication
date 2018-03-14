@@ -1,10 +1,15 @@
 package simpledrawer.shapes;
 
+import com.rits.cloning.Cloner;
 import java.awt.Color;
 import java.awt.Point;
 import java.util.Arrays;
 
-public abstract class Shape extends Entity implements ContainerI {
+/**
+ *
+ * @author micae
+ */
+public abstract class Shape extends DrawableEntity implements ContainerI {
 
     private int height;
     private int width;
@@ -22,11 +27,18 @@ public abstract class Shape extends Entity implements ContainerI {
      * @param pR points required to draw the shape
      * @param et EntityType of the shape
      */
-    public Shape(Point origin, int width, int height, Color c, int t, Entity.EntityType et) {
+    public Shape(Point origin, int width, int height, Color c, int t, DrawableEntity.EntityType et) {
         super(Arrays.asList(origin, new Point(origin.x + width, origin.y + height)), c, et);
         borderThickness = t;
         this.width = width;
         this.height = height;
+    }
+
+    public Shape(Shape shape) {
+        super(Arrays.asList(shape.getOrigin(), new Point(shape.getOrigin().x + shape.getWidth(), shape.getOrigin().y + shape.getHeight())), shape.getColor(), shape.getEventType());
+        borderThickness = shape.getThickness();
+        this.width = shape.getWidth();
+        this.height = shape.getHeight();
     }
 
     public int getX() {
@@ -55,22 +67,22 @@ public abstract class Shape extends Entity implements ContainerI {
         return this.width;
     }
 
-    public boolean isItFilled(){
+    public boolean isItFilled() {
         return this.filled;
     }
-    
-    public void setFilled(boolean b){
+
+    public void setFilled(boolean b) {
         this.filled = b;
     }
-    
-    public Color getFilledColor(){
+
+    public Color getFilledColor() {
         return this.filledColor;
     }
-    
-    public void setFilledColor(Color c){
-        this.filledColor=c;
+
+    public void setFilledColor(Color c) {
+        this.filledColor = c;
     }
-    
+
     /**
      * @return endPointY - origiPointY you might want to override the method
      * depending on what shape your entity takes
@@ -99,5 +111,6 @@ public abstract class Shape extends Entity implements ContainerI {
         super.getStructuralPoints().set(1, new Point(getOrigin().x, getOrigin().y + newHeight));
         this.height = newHeight;
     }
+    
 
 }

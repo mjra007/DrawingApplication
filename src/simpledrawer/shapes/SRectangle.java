@@ -7,12 +7,12 @@ import java.awt.Point;
 
 public class SRectangle extends Shape {
 
-    public SRectangle(Point origin, int width, int height, Color c, int t, Entity.EntityType et) {
-        super(origin, width, height, c, t, Entity.EntityType.RECTANGLE);
+    public SRectangle(Point origin, int width, int height, Color c, int t, DrawableEntity.EntityType et) {
+        super(origin, width, height, c, t, DrawableEntity.EntityType.RECTANGLE);
     }
 
     public SRectangle() {
-        super(new Point(1, 0), 100, 100, Color.GRAY, 5, Entity.EntityType.RECTANGLE);
+        super(new Point(1, 0), 100, 100, Color.GRAY, 5, DrawableEntity.EntityType.RECTANGLE);
     }
 
     /**

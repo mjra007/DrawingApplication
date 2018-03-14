@@ -5,7 +5,7 @@ import java.awt.Point;
  
 public class ShapeFactory {
  
-    public static Shape createShape(Point origin, int width, int height, Color c, int t, Entity.EntityType et) {
+    public static Shape createShape(Point origin, int width, int height, Color c, int t, DrawableEntity.EntityType et) {
         Shape shape = null;
         switch (et.toString()) {
             case "RECTANGLE":

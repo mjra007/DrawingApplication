@@ -5,11 +5,11 @@ import java.awt.Color;
 import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
-import simpledrawer.shapes.Entity;
+import simpledrawer.shapes.DrawableEntity;
 
-public class OptionsModel {
+public class CanvasOptions {
 
-    private Entity.EntityType currentEntityType;
+    private DrawableEntity.EntityType currentEntityType;
     private float currentBrightness;
     private int currentRotation;
     private int currentThickness;
@@ -20,8 +20,8 @@ public class OptionsModel {
     private List<Point> oldPoints;
     private boolean betterGraphics;
 
-    public OptionsModel() {
-        currentEntityType = Entity.EntityType.LINE;
+    public CanvasOptions() {
+        currentEntityType = DrawableEntity.EntityType.LINE;
         currentColor = Color.BLACK;
         currentThickness = 2;
         currentRotation = 0;
@@ -32,6 +32,7 @@ public class OptionsModel {
         this.state = s;
     }
 
+    
     public DrawingState getState() {
         return this.state;
     }
@@ -130,12 +131,12 @@ public class OptionsModel {
         currentRotation += amount;
     }
 
-    public void setEntityTypeSelected(Entity.EntityType type) {
+    public void setEntityTypeSelected(DrawableEntity.EntityType type) {
         this.currentEntityType = type;
 
     }
 
-    public Entity.EntityType getEntityTypeSelected() {
+    public DrawableEntity.EntityType getEntityTypeSelected() {
         return this.currentEntityType;
     }
 }

@@ -2,7 +2,7 @@ package simpledrawer.Readers;
 
 import java.awt.Color;
 import java.awt.Point;
-import simpledrawer.shapes.Entity;
+import simpledrawer.shapes.DrawableEntity;
 import simpledrawer.shapes.Shape;
 
 public class ShapeEvent {
@@ -13,9 +13,9 @@ public class ShapeEvent {
     private int borderThickness;
     private boolean filled;
     private Color filledColor;
-    private Entity.EntityType type;
+    private DrawableEntity.EntityType type;
 
-    private ShapeEvent(Point o, int h, int w, int bT, boolean f, Color fC, Entity.EntityType t) {
+    private ShapeEvent(Point o, int h, int w, int bT, boolean f, Color fC, DrawableEntity.EntityType t) {
         this.origin = o;
         this.height = h;
         this.width = w;
@@ -60,7 +60,7 @@ public class ShapeEvent {
         return this.filledColor;
     }
 
-    public Entity.EntityType type() {
+    public DrawableEntity.EntityType type() {
         return this.type;
     }
     

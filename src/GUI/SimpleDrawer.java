@@ -1,11 +1,11 @@
 package GUI;
 
-import GUI.Models.CanvasDrawings;
-import GUI.Controllers.DrawingOptionsController;
+import GUI.Models.Canvas;
+import GUI.Controllers.CanvasOptionsController;
 import GUI.Controllers.CanvasController;
-import GUI.Models.OptionsModel;
-import GUI.Views.Canvas;
-import GUI.Views.DrawingOptions;
+import GUI.Models.CanvasOptions;
+import GUI.Views.CanvasView;
+import GUI.Views.CanvasOptionsView;
 import javax.swing.UIManager;
 
 public class SimpleDrawer {
@@ -22,18 +22,18 @@ public class SimpleDrawer {
             // If Nimbus is not available, you can set the GUI to another look and feel.
         }
         // Starting models
-        CanvasDrawings entitiesModel = new CanvasDrawings();
-        OptionsModel optionsModel = new OptionsModel();
+        CanvasOptions canvasSettings = new CanvasOptions();
+        Canvas canvas = new Canvas(canvasSettings);
         // Starting controllers
-        CanvasController canvasController = new CanvasController(entitiesModel, optionsModel);
-        DrawingOptionsController drawingOptionsController = new DrawingOptionsController(entitiesModel, optionsModel);
+        CanvasController canvasController = new CanvasController(canvas);
+        CanvasOptionsController canvasSettingsController = new CanvasOptionsController(canvas, canvasSettings);
         // Now views
-        Canvas canvas = new Canvas();
-        canvas.addController(canvasController);
-        canvasController.addView(canvas);
-        DrawingOptions drawingOptions = new DrawingOptions(canvas);
-        drawingOptionsController.addView(drawingOptions);
-        drawingOptions.addController(drawingOptionsController);
+        CanvasView canvasView = new CanvasView();
+        canvasView.addController(canvasController);
+        canvasController.addView(canvasView);
+        CanvasOptionsView drawingOptions = new CanvasOptionsView(canvasView);
+        canvasSettingsController.addView(drawingOptions);
+        drawingOptions.addController(canvasSettingsController);
         drawingOptions.setVisible(true);
     }
 }
