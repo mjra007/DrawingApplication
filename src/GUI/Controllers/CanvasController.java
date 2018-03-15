@@ -91,7 +91,6 @@ public class CanvasController implements MouseListener, MouseMotionListener, Mou
     }
 
     private void pasteButton(ActionEvent evt) {
-        System.out.println("s");
         if (canvas.getCopied() != null) {
             canvas.pasteCopy(xy);
             getView().refresh();

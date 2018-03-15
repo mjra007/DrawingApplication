@@ -14,10 +14,11 @@ import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.util.List;
+import simpledrawer.CopyPasteCutI;
 import simpledrawer.DrawableI;
 import simpledrawer.InteractiveShape;
 
-public class Container implements DrawableI, InteractiveShape, Cloneable {
+public class Container implements DrawableI, InteractiveShape, CopyPasteCutI {
 
     //Points required to draw the shape contained
     ContainerI contained = null;
@@ -218,6 +219,12 @@ public class Container implements DrawableI, InteractiveShape, Cloneable {
     @Override
     public Container rotate(float amount) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void setOrigin(Point p) {
+        getContained().setOrigin(new Point(p.x+5,p.y+5));
+        System.out.println("sd");
     }
 
 

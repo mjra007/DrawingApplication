@@ -83,7 +83,7 @@ public abstract class DrawableEntity implements DrawableI {
     }
 
     @Override
-    public DrawableEntity clone() {
+    public Object clone() {
         return new Cloner().deepClone(this);
     }
 }

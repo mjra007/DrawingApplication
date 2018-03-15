@@ -1,10 +1,9 @@
 package simpledrawer;
 
-import com.rits.cloning.Cloner;
 import java.awt.Color;
 import java.awt.Graphics2D;
 
-public interface DrawableI extends Cloneable{
+public interface DrawableI {
 
     /*   
     public int getWidth();
@@ -42,5 +41,5 @@ public interface DrawableI extends Cloneable{
     }
 
   
-    public Object clone();
+ 
 }

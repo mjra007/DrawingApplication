@@ -8,6 +8,7 @@ package GUI.Models;
 import com.rits.cloning.Cloner;
 import java.awt.Point;
 import java.util.HashMap;
+import simpledrawer.CopyPasteCutI;
 import simpledrawer.DrawableI;
 import simpledrawer.shapes.Container;
 
@@ -19,8 +20,8 @@ public class Canvas {
     private HashMap<Integer, HashMap<Integer, DrawableI>> drawingsHistory;
     private Integer indexSelect;
     private int counter = 0;
-    private DrawableI copied;
-    private DrawableI cut;
+    private CopyPasteCutI copied;
+    private boolean cut;
 
     public Canvas(CanvasOptions op) {
         this.options = op;
@@ -28,30 +29,44 @@ public class Canvas {
         this.drawingsHistory = new HashMap<>();
     }
 
-    public DrawableI getCopied() {
+    public CopyPasteCutI getCopied() {
         return copied;
     }
 
-    public DrawableI getCut() {
+    private boolean getCut() {
         return cut;
     }
 
-    public void copy() {
-        copied = (DrawableI) getDrawings().get(getIndexSelect()).clone();
+    private void setCut(boolean b) {
+        this.cut = b;
     }
 
-    public void pasteCopy(Point p) {
-        if (copied instanceof Container) {
-            System.out.println("pasteCopy");
-            Container container = (Container) copied;
-            Container containerCloned = new Cloner().deepClone(container);
-            containerCloned.getContained().setOrigin(p);
-            this.addDrawing(containerCloned);
+    public void copy() {
+        DrawableI drawable = getDrawings().get(getIndexSelect());
+        if (drawable instanceof CopyPasteCutI) {
+            CopyPasteCutI copyIitem = (CopyPasteCutI) drawable;
+            copied = (CopyPasteCutI) copyIitem.clone();
         }
     }
 
+    public void pasteCopy(Point p) {
+        CopyPasteCutI copyIitem = new Cloner().deepClone(copied);
+        copyIitem.setOrigin(p);
+        this.addDrawing((DrawableI) copyIitem);
+        if (getCut()) {
+            this.copied = null;
+            cut = false;
+        }
+
+    }
+
     public void cut() {
-        copied = getDrawings().get(getIndexSelect());
+        DrawableI drawable = getDrawings().get(getIndexSelect());
+        if (drawable instanceof CopyPasteCutI) {
+            CopyPasteCutI copyIitem = (CopyPasteCutI) drawable;
+            copied = (CopyPasteCutI) copyIitem.clone();
+        }
+        setCut(true);
         removeSelected();
     }
 
