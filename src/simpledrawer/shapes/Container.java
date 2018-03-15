@@ -10,6 +10,7 @@ package simpledrawer.shapes;
 import com.rits.cloning.Cloner;
 import java.awt.BasicStroke;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Rectangle;
@@ -73,6 +74,12 @@ public class Container implements DrawableI, InteractiveShape, CopyPasteCutI {
         return new Point(getWidth() + getOrigin().x, getHeight() + getOrigin().y);
     }
 
+    /*  public void setEndPoint(Point p){
+        Rectangle rectangle = new Rectangle();
+        rectangle.setFrameFromDiagonal(getContained().getOrigin(),p);
+     //   this.contained.setHeight(rectangle.height);
+        this.contained.setWidth(rectangle.width);
+    }*/
     /**
      * @param p point that this method checks
      * @return true if point is within the rectangle and false if it is not
@@ -128,7 +135,6 @@ public class Container implements DrawableI, InteractiveShape, CopyPasteCutI {
          * than the originX and the endY to be lower than the originY. Sometimes
          * users can select the end point first.
          */
-        rectangle.setFrameFromDiagonal(getOrigin(), getEndPoint());
         if (rectangle.contains(p)) {
             doesIt = true;
         }
@@ -162,6 +168,34 @@ public class Container implements DrawableI, InteractiveShape, CopyPasteCutI {
         Rectangle rectangle = new Rectangle();
         rectangle.setFrameFromDiagonal(new Point(getEndPoint().x - 10, getOrigin().y - 10), new Point(getEndPoint().x + 10, getOrigin().y + 10));
         return rectangle;
+    }
+
+    private Rectangle getBottomSide() {
+        Rectangle rectangle = new Rectangle();
+        rectangle.setFrameFromDiagonal(new Point(getOrigin().x, getEndPoint().y - 5), new Point(getEndPoint().x, getEndPoint().y));
+        return rectangle;
+    }
+
+    private Rectangle getRightSide() {
+        Rectangle rectangle = new Rectangle();
+        rectangle.setFrameFromDiagonal(new Point(getEndPoint().x - 5, getOrigin().y), new Point(getEndPoint().x, getEndPoint().y));
+        return rectangle;
+    }
+
+    public boolean rightSideContains(Point p) {
+        boolean cornerDetected = false;
+        if (contains(p, getRightSide())) {
+            cornerDetected = true;
+        }
+        return cornerDetected;
+    }
+
+    public boolean bottomSideContains(Point p) {
+        boolean cornerDetected = false;
+        if (contains(p, getBottomSide())) {
+            cornerDetected = true;
+        }
+        return cornerDetected;
     }
 
     public boolean topRightCornerContains(Point p) {
@@ -200,15 +234,22 @@ public class Container implements DrawableI, InteractiveShape, CopyPasteCutI {
     }
 
     @Override
-    public Container resize(float amount) {
-        getContained().setHeight((int) (contained.getHeight() + amount));
-        getContained().setWidth((int) (contained.getWidth() + amount));
+    public Container linearResizing(float amount) {
+        if (contained.getHeight() + amount > 5) {
+            getContained().setHeight((int) (contained.getHeight() + amount));
+            getContained().setWidth((int) (contained.getWidth() + amount));
+        }
         return this;
     }
 
-    @Override
-    public Container resize(Point old, Point offset) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public Container resize(Dimension old, Point offset, InteractiveShape.SelectedPart part) {
+        if (part.equals(InteractiveShape.SelectedPart.BOTTOMSIDE) && old.height + offset.y > 5) {
+            this.getContained().setHeight(old.height + offset.y);
+        } else if (part.equals(InteractiveShape.SelectedPart.RIGHTSIDE) && old.width + offset.x > 5) {
+            this.getContained().setWidth(old.width + offset.x);
+
+        }
+        return this;
     }
 
     @Override
@@ -223,7 +264,7 @@ public class Container implements DrawableI, InteractiveShape, CopyPasteCutI {
 
     @Override
     public void setOrigin(Point p) {
-        getContained().setOrigin(new Point(p.x+5,p.y+5));
+        getContained().setOrigin(new Point(p.x + 5, p.y + 5));
         System.out.println("sd");
     }
 
@@ -244,8 +285,8 @@ public class Container implements DrawableI, InteractiveShape, CopyPasteCutI {
 
     /**
      * @param g2d
-     * @param point Draws the indicator for the resize functionality so the user
-     * knows that he can resize the shape
+     * @param point Draws the indicator for the linearResizing functionality so
+     * the user knows that he can linearResizing the shape
      */
     public void drawResizeIndicator(Graphics2D g2d, Point point) {
         g2d.drawOval(point.x - 5, point.y - 5, 10, 10);
@@ -311,13 +352,15 @@ public class Container implements DrawableI, InteractiveShape, CopyPasteCutI {
         g2d.setColor(Color.gray);
         if (this.isSelected()) {
             g2d.draw(getDrawableContainer());
+
         }
+
         if (contained instanceof DrawableI) {
             DrawableI drawable = (DrawableI) getContained();
             drawable.drawShape(g2d);
         }
-    }
 
+    }
 
     @Override
     public Object clone() {

@@ -1,5 +1,6 @@
 package simpledrawer;
 
+import java.awt.Dimension;
 import simpledrawer.shapes.Container;
 import java.awt.Point;
 import java.awt.Rectangle;
@@ -17,15 +18,23 @@ public interface InteractiveShape {
     * @return true if it does   and false if not
     * @param point to be checked
      */
+    public enum SelectedPart {
+        WHOLE, CORNERS, RIGHTSIDE, LEFTSIDE, BOTTOMSIDE, TOPSIDE;
+    }
+
     public boolean contains(Point p);
 
     public boolean contains(Point p, Rectangle r);
 
+    public boolean rightSideContains(Point p);
+
+    public boolean bottomSideContains(Point p);
+
     public Container updateLocation(Point old, Point origin);
 
-    public Container resize(Point old, Point offset);
+    public Container resize(Dimension oldDimension,Point offset,InteractiveShape.SelectedPart part);
 
-    public Container resize(float amount);
+    public Container linearResizing(float amount);
 
     public Container rotate(float amount);
 

@@ -6,6 +6,8 @@ import GUI.Models.CanvasOptions;
 import GUI.View;
 import GUI.Views.CanvasView;
 import java.awt.Color;
+import java.awt.Cursor;
+import java.awt.Dimension;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -44,7 +46,7 @@ public class CanvasController implements MouseListener, MouseMotionListener, Mou
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        if (SwingUtilities.isRightMouseButton(e) && checkLocforDrawables(xy) != null) {
+        if (SwingUtilities.isRightMouseButton(e) && checkLocforInteractiveShapes(xy) != null) {
             getView().changeMenu(true);
             getView().getRightMenu().show(getView(), e.getX(), e.getY());
         } else if (SwingUtilities.isRightMouseButton(e)) {
@@ -156,6 +158,11 @@ public class CanvasController implements MouseListener, MouseMotionListener, Mou
                 }
                 view.refresh();
             }
+            if(canvas.getSelected() instanceof Container)
+            {
+                Container container = (Container)canvas.getSelected();
+                canvas.getSettings().setSavedDimension(new Dimension(container.getWidth(),container.getHeight()));
+            }
             if (canvas.getSettings().getState().equals(DrawingState.DRAWING)) {
                 if (canvas.getSettings().getClicks() == null) {
                     //as it is let s add the current point clicked to the current points list
@@ -194,48 +201,74 @@ public class CanvasController implements MouseListener, MouseMotionListener, Mou
     public void mouseDragged(MouseEvent e) {
         //System.out.println("" + canvas.getSettings().getState());
         if (SwingUtilities.isLeftMouseButton(e)) {
-            if (DrawingState.MOVING.equals(canvas.getSettings().getState())) {
-
-                DrawableI drawable = canvas.getSelected();
-                if (drawable instanceof InteractiveShape) {
+            if (null != canvas.getSettings().getState()) switch (canvas.getSettings().getState()) {
+                case MOVING:{
+                    DrawableI drawable = canvas.getSelected();
+                    if (drawable instanceof InteractiveShape) {
+                        InteractiveShape interactiveSelected = (InteractiveShape) drawable;
+                        //figuring out the offset of our first click and the last done
+                        int offsetX = e.getX() - xy.x;
+                        int offsetY = e.getY() - xy.y;
+                        canvas.getDrawings().put(canvas.getIndexSelect(), interactiveSelected.updateLocation(canvas.getSettings().getOldClicks().get(0), new Point(offsetX, offsetY)));
+                        view.refresh();
+                    }       break;
+                    }
+                case RESIZING_BOTTOM:{
+                    DrawableI drawable = canvas.getSelected();
                     InteractiveShape interactiveSelected = (InteractiveShape) drawable;
                     //figuring out the offset of our first click and the last done
                     int offsetX = e.getX() - xy.x;
                     int offsetY = e.getY() - xy.y;
-                    canvas.getDrawings().put(canvas.getIndexSelect(), interactiveSelected.updateLocation(canvas.getSettings().getOldClicks().get(0), new Point(offsetX, offsetY)));
+                    canvas.getDrawings().put(canvas.getIndexSelect(), interactiveSelected.resize(canvas.getSettings().getOldDimensions(),new Point(offsetX,offsetY),InteractiveShape.SelectedPart.BOTTOMSIDE));
                     view.refresh();
-                }
-            } else if (DrawingState.RESIZING.equals(canvas.getSettings().getState())) {
-                /*  InteractiveShape interactiveSelected = (InteractiveShape) entitiesModel.getDrawings().get(entitiesModel.getIndexSelect());
-            //figuring out the offset of our first click and the last done
-            int offsetX = e.getX() + currentPoints.get(currentPoints.size()-1).x;
-            int offsetY = e.getY() + currentPoints.get(currentPoints.size()-1).y;
-            entitiesModel.getDrawings().add(entitiesModel.getIndexSelect(), interactiveSelected.resize(oldPoints, new Point(offsetX, offsetY)));
-            //shapes.add(indexSelectedShape, selected.translate(translateCoords, new Point(offsetX,offsetY)));
-            myView.refresh();*/
+                        break;
+                    }
+                case RESIZING_RIGHTSIDE:{
+                    DrawableI drawable = canvas.getSelected();
+                    InteractiveShape interactiveSelected = (InteractiveShape) drawable;
+                    //figuring out the offset of our first click and the last done
+                    int offsetX = e.getX() - xy.x;
+                    int offsetY = e.getY() - xy.y;
+                    canvas.getDrawings().put(canvas.getIndexSelect(), interactiveSelected.resize(canvas.getSettings().getOldDimensions(),new Point(offsetX,offsetY),InteractiveShape.SelectedPart.RIGHTSIDE));
+                    view.refresh();
+                        break;
+                    }
+                default:
+                    break;
             }
         }
     }
 
     @Override
     public void mouseMoved(MouseEvent e) {
-        //   System.out.println("" + canvas.getSettings().getState());
-        InteractiveShape intercShape = checkLocforDrawables(e.getPoint());
-        if (intercShape == null) {
-            canvas.getSettings().setDrawingState(DrawingState.DRAWING);
+        getView().setCursor(Cursor.getDefaultCursor());
+        InteractiveShape intercShape = checkLocforInteractiveShapes(e.getPoint());
+        InteractiveShape.SelectedPart selected = null;
+        if (intercShape != null) {
+
+            selected = checkPartSelected(intercShape, e.getPoint());
+            if (selected.equals(InteractiveShape.SelectedPart.WHOLE)) {
+                getView().setCursor(Cursor.getPredefinedCursor(Cursor.MOVE_CURSOR));
+                canvas.getSettings().setDrawingState(DrawingState.MOVING);
+            } else if (checkPartSelected(intercShape, e.getPoint()).equals(InteractiveShape.SelectedPart.RIGHTSIDE)) {
+                canvas.getSettings().setDrawingState(DrawingState.RESIZING_RIGHTSIDE);
+                getView().setCursor(Cursor.getPredefinedCursor(Cursor.E_RESIZE_CURSOR));
+            } else if (checkPartSelected(intercShape, e.getPoint()).equals(InteractiveShape.SelectedPart.BOTTOMSIDE)) {
+                canvas.getSettings().setDrawingState(DrawingState.RESIZING_BOTTOM);
+                getView().setCursor(Cursor.getPredefinedCursor(Cursor.S_RESIZE_CURSOR));
+            }
         } else {
-            canvas.getSettings().setDrawingState(DrawingState.MOVING);
+            canvas.getSettings().setDrawingState(DrawingState.DRAWING);
         }
     }
 
-    public InteractiveShape checkLocforDrawables(Point locPoint) {
+    public InteractiveShape checkLocforInteractiveShapes(Point locPoint) {
         InteractiveShape intercShape = null;
         for (Integer key : canvas.getDrawings().keySet()) {
             DrawableI drawable = canvas.getDrawings().get(key);
             if (drawable instanceof InteractiveShape) {
                 intercShape = (InteractiveShape) drawable;
                 if (intercShape.contains(locPoint)) {
-                    Container container = (Container) drawable;
                     canvas.setSelected(key);
                     return intercShape;
                 }
@@ -244,6 +277,19 @@ public class CanvasController implements MouseListener, MouseMotionListener, Mou
         }
         canvas.setSelected(null);
         return intercShape;
+    }
+
+    public InteractiveShape.SelectedPart checkPartSelected(InteractiveShape shape, Point p) {
+        InteractiveShape.SelectedPart part = null;
+        if (shape.bottomSideContains(p)) {
+            part = InteractiveShape.SelectedPart.BOTTOMSIDE;
+        } else if (shape.rightSideContains(p)) {
+            part = InteractiveShape.SelectedPart.RIGHTSIDE;
+        } else if (shape.contains(p)) {
+            part = InteractiveShape.SelectedPart.WHOLE;
+        }
+        System.out.println("part" + part);
+        return part;
     }
 
     @Override
@@ -265,11 +311,11 @@ public class CanvasController implements MouseListener, MouseMotionListener, Mou
         int x = e.getX();
         int y = e.getY();
 
-        InteractiveShape intercShape = checkLocforDrawables(e.getPoint());
+        InteractiveShape intercShape = checkLocforInteractiveShapes(e.getPoint());
         if (intercShape != null) {
             if (e.getScrollType() == MouseWheelEvent.WHEEL_UNIT_SCROLL) {
                 float amount = e.getWheelRotation() * 5f;
-                intercShape.resize(amount);
+                intercShape.linearResizing(amount);
                 view.refresh();
             }
         }

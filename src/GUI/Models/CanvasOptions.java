@@ -2,6 +2,7 @@ package GUI.Models;
 
 import GUI.DrawingState;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +18,8 @@ public class CanvasOptions {
     private Color background;
     private DrawingState state;
     private List<Point> currentPoints;
-    private List<Point> oldPoints;
+    private List<Point> savedPoints;
+    private Dimension savedDimension;
     private boolean betterGraphics;
 
     public CanvasOptions() {
@@ -32,6 +34,13 @@ public class CanvasOptions {
         this.state = s;
     }
 
+    public Dimension getOldDimensions() {
+        return this.savedDimension;
+    }
+
+    public void setSavedDimension(Dimension d){
+        this.savedDimension=d;
+    }
     
     public DrawingState getState() {
         return this.state;
@@ -53,10 +62,10 @@ public class CanvasOptions {
     }
 
     public void addMouseClicktoOldPoints(Point point) {
-        if (oldPoints == null) {
-            oldPoints = new ArrayList<>();
+        if (savedPoints == null) {
+            savedPoints = new ArrayList<>();
         }
-        oldPoints.add(point);
+        savedPoints.add(point);
     }
 
     public void resetClicks() {
@@ -67,7 +76,7 @@ public class CanvasOptions {
      * resets old mouse clicks
      */
     public void resetOldClicks() {
-        this.oldPoints = null;
+        this.savedPoints = null;
     }
 
     /**
@@ -83,7 +92,7 @@ public class CanvasOptions {
      * @return old mouse clicks
      */
     public List<Point> getOldClicks() {
-        return this.oldPoints;
+        return this.savedPoints;
     }
 
     public void setCurrentThickness(int currentThickness) {

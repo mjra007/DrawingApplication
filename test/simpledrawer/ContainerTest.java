@@ -152,7 +152,7 @@ public class ContainerTest extends TestCase {
     }
 
     /**
-     * Test of resize method, of class Container.
+     * Test of linearResizing method, of class Container.
      */
     public void testResize() {
         System.out.println("resize");
