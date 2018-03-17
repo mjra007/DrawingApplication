@@ -1,11 +1,13 @@
-package GUI;
+package simpledrawer.GUI;
 
-import GUI.Models.Canvas;
-import GUI.Controllers.CanvasOptionsController;
-import GUI.Controllers.CanvasController;
-import GUI.Models.CanvasOptions;
-import GUI.Views.CanvasView;
-import GUI.Views.CanvasOptionsView;
+import simpledrawer.GUI.Models.Canvas;
+import simpledrawer.GUI.Controllers.CanvasOptionsController;
+import simpledrawer.GUI.Controllers.CanvasController;
+import simpledrawer.GUI.Controllers.RightMenuController;
+import simpledrawer.GUI.Models.CanvasOptions;
+import simpledrawer.GUI.Views.CanvasView;
+import simpledrawer.GUI.Views.CanvasOptionsView;
+import simpledrawer.GUI.Views.RightMenuView;
 import javax.swing.UIManager;
 
 public class SimpleDrawer {
@@ -27,10 +29,13 @@ public class SimpleDrawer {
         // Starting controllers
         CanvasController canvasController = new CanvasController(canvas);
         CanvasOptionsController canvasSettingsController = new CanvasOptionsController(canvas, canvasSettings);
+        RightMenuController rightMenuController = new RightMenuController(canvas);
         // Now views
+        RightMenuView rightMenu = new RightMenuView(rightMenuController);
         CanvasView canvasView = new CanvasView();
+        rightMenuController.addView(rightMenu,canvasView);
         canvasView.addController(canvasController);
-        canvasController.addView(canvasView);
+        canvasController.addView(canvasView,rightMenu);
         CanvasOptionsView drawingOptions = new CanvasOptionsView(canvasView);
         canvasSettingsController.addView(drawingOptions);
         drawingOptions.addController(canvasSettingsController);

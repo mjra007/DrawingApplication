@@ -1,16 +1,12 @@
-package GUI.Models;
+package simpledrawer.GUI.Models;
 
 /**
  * EntitiesModel is the model that provides the entities being drawn on the
  * drawing panel and also stores the last 100 changes. Rolling back to previous
  * versions of the drawing is not an implemented feature as of yet
  */
-import com.rits.cloning.Cloner;
-import java.awt.Point;
 import java.util.HashMap;
-import simpledrawer.CopyPasteCutI;
 import simpledrawer.DrawableI;
-import simpledrawer.shapes.Container;
 
 public class Canvas {
 
@@ -20,8 +16,7 @@ public class Canvas {
     private HashMap<Integer, HashMap<Integer, DrawableI>> drawingsHistory;
     private Integer indexSelect;
     private int counter = 0;
-    private CopyPasteCutI copied;
-    private boolean cut;
+
 
     public Canvas(CanvasOptions op) {
         this.options = op;
@@ -29,46 +24,6 @@ public class Canvas {
         this.drawingsHistory = new HashMap<>();
     }
 
-    public CopyPasteCutI getCopied() {
-        return copied;
-    }
-
-    private boolean getCut() {
-        return cut;
-    }
-
-    private void setCut(boolean b) {
-        this.cut = b;
-    }
-
-    public void copy() {
-        DrawableI drawable = getDrawings().get(getIndexSelect());
-        if (drawable instanceof CopyPasteCutI) {
-            CopyPasteCutI copyIitem = (CopyPasteCutI) drawable;
-            copied = (CopyPasteCutI) copyIitem.clone();
-        }
-    }
-
-    public void pasteCopy(Point p) {
-        CopyPasteCutI copyIitem = new Cloner().deepClone(copied);
-        copyIitem.setOrigin(p);
-        this.addDrawing((DrawableI) copyIitem);
-        if (getCut()) {
-            this.copied = null;
-            cut = false;
-        }
-
-    }
-
-    public void cut() {
-        DrawableI drawable = getDrawings().get(getIndexSelect());
-        if (drawable instanceof CopyPasteCutI) {
-            CopyPasteCutI copyIitem = (CopyPasteCutI) drawable;
-            copied = (CopyPasteCutI) copyIitem.clone();
-        }
-        setCut(true);
-        removeSelected();
-    }
 
     public CanvasOptions getSettings() {
         return this.options;
@@ -100,20 +55,20 @@ public class Canvas {
         return drawingsHistory;
     }
 
-    public int getIndexSelect() {
+    public int getSelectedDrawingIndex() {
         return this.indexSelect;
     }
 
     /**
      * @return the entity that it is currently selected
      */
-    public DrawableI getSelected() {
+    public DrawableI getSelectedDrawing() {
         return this.drawings.get(this.indexSelect);
     }
 
-    public void removeSelected() {
+    public void removeSelectedDrawing() {
         saveHistory();
-        this.getDrawings().remove(getIndexSelect());
+        this.getDrawings().remove(getSelectedDrawingIndex());
     }
 
     public void saveHistory() {
@@ -121,11 +76,11 @@ public class Canvas {
         this.drawingsHistory.put(size + 1, drawings);
     }
 
-    public void resetList() {
+    public void resetDrawingList() {
         getDrawings().clear();
     }
 
-    public void setSelected(Integer key) {
+    public void setDrawingSelected(Integer key) {
         this.indexSelect = key;
     }
 }

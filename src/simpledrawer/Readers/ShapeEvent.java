@@ -32,7 +32,7 @@ public class ShapeEvent {
         this.borderThickness=shape.getThickness();
         this.filled = shape.isItFilled();
         this.filledColor=shape.getFilledColor();
-        this.type=shape.getEventType();
+        this.type=shape.getEntityType();
     }
     
     

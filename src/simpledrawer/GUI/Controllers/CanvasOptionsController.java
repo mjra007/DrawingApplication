@@ -1,9 +1,8 @@
-package GUI.Controllers;
+package simpledrawer.GUI.Controllers;
 
-import GUI.Models.Canvas;
-import GUI.Models.CanvasOptions;
-import GUI.View;
-import GUI.Views.CanvasOptionsView;
+import simpledrawer.GUI.Models.Canvas;
+import simpledrawer.GUI.Models.CanvasOptions;
+import simpledrawer.GUI.Views.CanvasOptionsView;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.event.ActionListener;
@@ -26,6 +25,7 @@ import simpledrawer.shapes.DrawableEntity;
 import simpledrawer.Readers.JSONShapeReader;
 import simpledrawer.shapes.Container;
 import simpledrawer.shapes.Shape;
+import simpledrawer.GUI.View;
 
 public class CanvasOptionsController {
 

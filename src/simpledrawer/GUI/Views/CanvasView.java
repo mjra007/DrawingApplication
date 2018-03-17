@@ -1,28 +1,20 @@
-package GUI.Views;
+package simpledrawer.GUI.Views;
 
-import GUI.Controllers.CanvasController;
-import GUI.View;
+import simpledrawer.GUI.Controllers.CanvasController;
+import simpledrawer.GUI.View;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.Stroke;
 import javax.swing.BorderFactory;
-import javax.swing.JMenuItem;
 import javax.swing.JPanel;
-import javax.swing.JPopupMenu;
 import simpledrawer.DrawableI;
+import simpledrawer.shapes.DrawingIndicator;
 
-public class CanvasView extends JPanel implements View {
+public class CanvasView extends JPanel implements View{
 
     private CanvasController controller;
-    private JPopupMenu rightMenu;
-    private JMenuItem fill = new JMenuItem("Fill");
-    private JMenuItem delete = new JMenuItem("Delete");
-    private JMenuItem copy = new JMenuItem("Copy");
-    private JMenuItem paste = new JMenuItem("Paste");
-    private JMenuItem cut = new JMenuItem("Cut");
-    private JMenuItem backgroundMenu = new JMenuItem("Change Background");
 
     /* Constructor used to create a CanvasView with a
      * specified line colour, thickness and shape type
@@ -31,21 +23,6 @@ public class CanvasView extends JPanel implements View {
         this.setBorder(BorderFactory.createLoweredBevelBorder());
     }
 
-    public JPopupMenu changeMenu(boolean shapeSelected) {
-        if (shapeSelected) {
-            rightMenu = new JPopupMenu();
-            rightMenu.add(fill);
-            rightMenu.add(delete);
-            rightMenu.add(copy);
-            rightMenu.add(cut);
-            rightMenu.add(paste);
-        } else {
-            rightMenu = new JPopupMenu();
-            rightMenu.add(backgroundMenu);
-            rightMenu.add(paste);
-        }
-        return rightMenu;
-    }
 
     public void addController(CanvasController ct) {
         controller = ct;
@@ -93,41 +70,13 @@ public class CanvasView extends JPanel implements View {
         g2d.setStroke(s);  // restore saved stroke
         if (controller.getClicks() != null && controller.getClicks().size() >= 1) { // draw dot where line started
             for (int i = 0; i < controller.getClicks().size(); i++) {
-                g2d.setColor(Color.BLACK);
-                g2d.fillOval(controller.getClicks().get(i).x, controller.getClicks().get(i).y, 3, 3);
+                new DrawingIndicator(controller.getClicks().get(i)).drawShape(g2d);
             }
         }
 
     }
 
-    public JPopupMenu getRightMenu() {
-        return this.rightMenu;
-    }
 
-    public JMenuItem getDelete() {
-        return this.delete;
-    }
-
-    public JMenuItem getFilled() {
-        return this.fill;
-    }
-
-    public JMenuItem getCopy() {
-        return this.copy;
-    }
-
-    public JMenuItem getCut() {
-        return this.cut;
-    }
-
-    public JMenuItem getPaste() {
-        return this.paste;
-    }
-    
-    public JMenuItem getBackgroundMenu(){
-        return this.backgroundMenu;
-    }
-    
     @Override
 
     public void refresh() {

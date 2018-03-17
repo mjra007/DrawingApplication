@@ -1,11 +1,12 @@
-package GUI.Models;
+package simpledrawer.GUI.Models;
 
-import GUI.DrawingState;
+import simpledrawer.GUI.DrawingState;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
+import simpledrawer.CopyPasteCutI;
 import simpledrawer.shapes.DrawableEntity;
 
 public class CanvasOptions {
@@ -21,6 +22,9 @@ public class CanvasOptions {
     private List<Point> savedPoints;
     private Dimension savedDimension;
     private boolean betterGraphics;
+    private CopyPasteCutI copied;
+    private boolean cut;
+    private Point lastClick;
 
     public CanvasOptions() {
         currentEntityType = DrawableEntity.EntityType.LINE;
@@ -28,6 +32,30 @@ public class CanvasOptions {
         currentThickness = 2;
         currentRotation = 0;
         currentBrightness = 1;
+    }
+
+    public CopyPasteCutI getDrawableCopied() {
+        return copied;
+    }
+    
+    public Point getLastClick(){
+        return this.lastClick;
+    }
+    
+    public void addLastClick(Point p){
+        this.lastClick=p;
+    }
+
+    public boolean hasCutBeenPerformed() {
+        return cut;
+    }
+
+    public void setCopy(CopyPasteCutI cutpaste) {
+        this.copied = cutpaste;
+    }
+
+    public void setCut(boolean b) {
+        this.cut = b;
     }
 
     public void setDrawingState(DrawingState s) {
@@ -38,10 +66,10 @@ public class CanvasOptions {
         return this.savedDimension;
     }
 
-    public void setSavedDimension(Dimension d){
-        this.savedDimension=d;
+    public void setSavedDimension(Dimension d) {
+        this.savedDimension = d;
     }
-    
+
     public DrawingState getState() {
         return this.state;
     }

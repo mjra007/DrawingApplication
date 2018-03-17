@@ -1,8 +1,6 @@
-package GUI.Views;
+package simpledrawer.GUI.Views;
 
-import GUI.Controllers.CanvasOptionsController;
-import GUI.View;
-import colormixerbean.ColorMixer;
+import simpledrawer.GUI.Controllers.CanvasOptionsController;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JFileChooser;
@@ -12,13 +10,15 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import simpledrawer.GUI.View;
+import colormixerbean.ColorMixer;
 
 public class CanvasOptionsView extends javax.swing.JFrame implements View {
 
-    private CanvasView drawingPanel; // the drawing panel
+    private View drawingPanel; // the drawing panel
     private CanvasOptionsController controller;
 
-    public CanvasOptionsView(CanvasView dP) {
+    public CanvasOptionsView(View dP) {
         drawingPanel = dP;
         initComponents();
         setTitle("Drawinit");
@@ -68,7 +68,7 @@ public class CanvasOptionsView extends javax.swing.JFrame implements View {
         btnBackground = new javax.swing.JButton();
         betterGraphicsButton = new javax.swing.JCheckBox();
         jButton1 = new javax.swing.JButton();
-        panDrawingArea = this.drawingPanel;
+        panDrawingArea = (JPanel)this.drawingPanel;
         jMenuBar1 = new javax.swing.JMenuBar();
         menuFile = new javax.swing.JMenu();
         menuImport = new javax.swing.JMenu();
@@ -90,9 +90,10 @@ public class CanvasOptionsView extends javax.swing.JFrame implements View {
         colorMixerBean1 = new colormixerbean.ColorMixer();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        getContentPane().setLayout(new java.awt.BorderLayout());
 
         toolbar.setBackground(new java.awt.Color(204, 204, 204));
-        toolbar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.lightGray, java.awt.Color.lightGray, java.awt.Color.lightGray, java.awt.Color.lightGray));
+        toolbar.setBorder(javax.swing.BorderFactory.createBevelBorder(0, java.awt.Color.lightGray, java.awt.Color.lightGray, java.awt.Color.lightGray, java.awt.Color.lightGray));
         toolbar.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
         java.awt.GridBagLayout toolbarLayout = new java.awt.GridBagLayout();
         toolbarLayout.columnWidths = new int[] {0, 5, 0, 5, 0, 5, 0, 5, 0, 5, 0};
@@ -100,7 +101,7 @@ public class CanvasOptionsView extends javax.swing.JFrame implements View {
         toolbar.setLayout(toolbarLayout);
 
         Colors.setBackground(new java.awt.Color(204, 204, 204));
-        Colors.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 1, 1, new java.awt.Color(204, 204, 204)), "Pick a colour", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 12))); // NOI18N
+        Colors.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 1, 1, new java.awt.Color(204, 204, 204)), "Pick a colour", 0, 0, new java.awt.Font("Segoe UI", 0, 12))); // NOI18N
         Colors.setToolTipText("Brush");
         Colors.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
         Colors.setMaximumSize(new java.awt.Dimension(100, 100));
@@ -163,7 +164,7 @@ public class CanvasOptionsView extends javax.swing.JFrame implements View {
         toolbar.add(Colors, gridBagConstraints);
 
         Brush.setBackground(new java.awt.Color(204, 204, 204));
-        Brush.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 1, 1, new java.awt.Color(204, 204, 204)), "Brush", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 12))); // NOI18N
+        Brush.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 1, 1, new java.awt.Color(204, 204, 204)), "Brush", 0, 0, new java.awt.Font("Segoe UI", 0, 12))); // NOI18N
         Brush.setToolTipText("Brush");
         Brush.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
         Brush.setMaximumSize(new java.awt.Dimension(100, 70));
@@ -179,7 +180,7 @@ public class CanvasOptionsView extends javax.swing.JFrame implements View {
         Brush.add(lblThickness, gridBagConstraints);
 
         txtThickness.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
-        txtThickness.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        txtThickness.setBorder(javax.swing.BorderFactory.createBevelBorder(0));
         txtThickness.setMaximumSize(new java.awt.Dimension(20, 16));
         txtThickness.setMinimumSize(new java.awt.Dimension(20, 16));
         txtThickness.setPreferredSize(new java.awt.Dimension(20, 16));
@@ -221,7 +222,7 @@ public class CanvasOptionsView extends javax.swing.JFrame implements View {
         toolbar.add(jPanel2, gridBagConstraints);
 
         Brush1.setBackground(new java.awt.Color(204, 204, 204));
-        Brush1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 1, 1, new java.awt.Color(204, 204, 204)), "Settings", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 12))); // NOI18N
+        Brush1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 1, 1, new java.awt.Color(204, 204, 204)), "Settings", 0, 0, new java.awt.Font("Segoe UI", 0, 12))); // NOI18N
         Brush1.setToolTipText("Brush");
         Brush1.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
         Brush1.setMaximumSize(new java.awt.Dimension(100, 70));
@@ -444,7 +445,7 @@ public class CanvasOptionsView extends javax.swing.JFrame implements View {
     }
 
     public JPanel getDrawingPanel() {
-        return this.drawingPanel;
+        return (JPanel)this.drawingPanel;
     }
 
     public JLabel getRedLabel() {
