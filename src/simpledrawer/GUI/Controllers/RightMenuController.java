@@ -120,7 +120,6 @@ public class RightMenuController {
     private void fillShape(ActionEvent evt) {
         Container container = (Container) this.canvas.getSelectedDrawing();
         Shape shape = (Shape) container.getContained();
-        shape.setFilled(true);
         shape.setFilledColor(canvas.getSettings().getCurrentColor());
         canvasView.refresh();
     }

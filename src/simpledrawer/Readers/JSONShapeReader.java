@@ -70,6 +70,7 @@ public class JSONShapeReader {
      * can then be loaded later
      *
      * @param file the file into which to write the JSON
+     * @param drawings
      */
     public void saveJSON(String file,HashMap<Integer,DrawableI> drawings) {
         List<ShapeEvent> list = new ArrayList<>();

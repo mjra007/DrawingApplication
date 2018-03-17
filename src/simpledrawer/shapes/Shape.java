@@ -1,19 +1,23 @@
 package simpledrawer.shapes;
 
-import com.rits.cloning.Cloner;
 import java.awt.Color;
 import java.awt.Point;
 import java.util.Arrays;
+import java.util.List;
 
 /**
+ * Shape object implements DrawableEntity because this shapes are meant to be
+ * drawn in the canvas and ContainerI because we want to make them interactive
+ * as possible
  *
- * @author micae
+ * Furthermore it holds common variables to almost all shapes like
+ * borderthickness, if the shape is filled insid and the filled color
  */
-public abstract class Shape extends DrawableEntity implements ContainerI {
+public class Shape extends DrawableEntity implements ContainerI {
 
-    private int height;
-    private int width;
+    //border of the shape
     private int borderThickness;
+    //whether the shape is filled with a color
     private boolean filled = false;
     //if not assigned let s just use the same as the border because why not
     public Color filledColor = super.getColor();
@@ -24,93 +28,95 @@ public abstract class Shape extends DrawableEntity implements ContainerI {
      * @param height the height of the shape
      * @param c border color of the shape
      * @param t thickness of the border
-     * @param pR points required to draw the shape
      * @param et EntityType of the shape
      */
     public Shape(Point origin, int width, int height, Color c, int t, DrawableEntity.EntityType et) {
-        super(Arrays.asList(origin, new Point(origin.x + width, origin.y + height)), c, et);
+        super(new DrawableEntity.Builder()
+                .setStructuralPoints(Arrays.asList(origin, new Point(origin.x + width, origin.y + height)))
+                .setColor(c)
+                .setHeight(height)
+                .setWidth(width)
+                .setType(et)
+                .build());
         borderThickness = t;
-        this.width = width;
-        this.height = height;
     }
 
     public Shape(Shape shape) {
-        super(Arrays.asList(shape.getOrigin(), new Point(shape.getOrigin().x + shape.getWidth(), shape.getOrigin().y + shape.getHeight())), shape.getColor(), shape.getEventType());
+        super(new DrawableEntity.Builder()
+                .setStructuralPoints(Arrays.asList(shape.getOrigin(), new Point(shape.getOrigin().x + shape.getWidth(), shape.getOrigin().y + shape.getHeight())))
+                .setColor(shape.getColor())
+                .setHeight(shape.getHeight())
+                .setWidth(shape.getWidth())
+                .setType(shape.getEntityType())
+                .build());
         borderThickness = shape.getThickness();
-        this.width = shape.getWidth();
-        this.height = shape.getHeight();
     }
 
-    public int getX() {
-        return super.getStructuralPoints().get(0).x;
-    }
-
-    public int getY() {
-        return super.getStructuralPoints().get(0).y;
-    }
-
-    @Override
-    public Point getOrigin() {
-        return super.getStructuralPoints().get(0);
-    }
-
+    /**
+     *
+     * @return the thickness of this shape
+     */
     public int getThickness() {
         return this.borderThickness;
     }
 
     /**
-     * @return endPointX - origiPointX you might want to override the method
-     * depending on what shape your entity takes
+     *
+     * @param thickness set a new thickness for the shape
      */
-    @Override
-    public int getWidth() {
-        return this.width;
+    public void setThickness(int thickness) {
+        this.borderThickness = thickness;
     }
 
+    /**
+     *
+     * @return a boolean if shape is filled
+     */
     public boolean isItFilled() {
         return this.filled;
     }
 
-    public void setFilled(boolean b) {
+    /**
+     *
+     * @param b set a shape to filled or not with a boolean
+     */
+    private void setFilled(boolean b) {
         this.filled = b;
     }
 
+    /**
+     *
+     * @return get the color that was used to fill the shape
+     */
     public Color getFilledColor() {
         return this.filledColor;
     }
 
+    /**
+     *
+     * @param c set the color used to fill the shape
+     */
     public void setFilledColor(Color c) {
+        setFilled(true);
         this.filledColor = c;
     }
 
     /**
-     * @return endPointY - origiPointY you might want to override the method
-     * depending on what shape your entity takes
+     *
+     * @param newPoint set the origin of the shape
      */
     @Override
-    public int getHeight() {
-        return height;
+    public void setOrigin(Point newPoint) {
+        this.getStructuralPoints().set(0, newPoint);
     }
 
-    /**
-     * @param newWidth
-     * @return endPointX - origiPointX you might want to override the method
-     * depending on what shape your entity takes
-     */
-    @Override
-    public void setWidth(int newWidth) {
-        super.getStructuralPoints().set(1, new Point(getOrigin().x + newWidth, getOrigin().y));
-        this.width = newWidth;
+    public static class Builder {
+        //border of the shape
+        private int borderThickness;
+        //whether the shape is filled with a color
+        private boolean filled = false;
+        //if not assigned let s just use the same as the border because why not
+        public Color filledColor;
+   
     }
-
-    /**
-     * @return endPointY - origiPointY you might want to override the method
-     * depending on what shape your entity takes
-     */
-    public void setHeight(int newHeight) {
-        super.getStructuralPoints().set(1, new Point(getOrigin().x, getOrigin().y + newHeight));
-        this.height = newHeight;
-    }
-    
-
 }

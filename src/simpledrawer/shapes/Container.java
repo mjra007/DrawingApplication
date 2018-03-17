@@ -115,10 +115,6 @@ public class Container implements DrawableI, InteractiveShape, CopyPasteCutI {
 
     }
 
-    @Override
-    public Color scaleColour(Color c, float currentBrightness) {
-        return DrawableI.super.scaleColour(c, currentBrightness); //To change body of generated methods, choose Tools | Templates.
-    }
 
     /**
      * @param p point that this method checks

@@ -1,4 +1,4 @@
-package GUI;
+package simpledrawer.GUI;
 
 public interface View {
 

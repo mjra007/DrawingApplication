@@ -1,11 +1,10 @@
 package simpledrawer.shapes;
 
-import com.rits.cloning.Cloner;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Point;
-import java.util.List;
+
 
 public class STriangle extends Shape {
 
@@ -21,16 +20,12 @@ public class STriangle extends Shape {
      * @return The area in pixels of the triangle.
      */
     public double getArea() {
-        int term1 = getVertices().get(0).x * (getVertices().get(1).y - getVertices().get(2).y);
-        int term2 = getVertices().get(1).x * (getVertices().get(2).y - getVertices().get(0).y);
-        int term3 = getVertices().get(2).x * (getVertices().get(0).y - getVertices().get(1).y);
+        int term1 = super.getStructuralPoints().get(0).x * (super.getStructuralPoints().get(1).y - super.getStructuralPoints().get(2).y);
+        int term2 = super.getStructuralPoints().get(1).x * (super.getStructuralPoints().get(2).y - super.getStructuralPoints().get(0).y);
+        int term3 = super.getStructuralPoints().get(2).x * (super.getStructuralPoints().get(0).y - super.getStructuralPoints().get(1).y);
         return Math.abs((term1 + term2 + term3) / 2.0);
     }
-
-    public List<Point> getVertices() {
-        return this.getStructuralPoints();
-    }
-
+    
     @Override
     public void drawShape(Graphics2D g2d) {
         // Scale the brightness of the colour
@@ -55,11 +50,6 @@ public class STriangle extends Shape {
     @Override
     public String toString() {
         return "Color: " + super.getColor() + " Thick: " + super.getThickness() + " Points: " + super.getStructuralPoints().toString() + " width: " + super.getWidth() + " height: " + super.getHeight() + "  " + super.getX() + " , " + super.getX();
-    }
-
-    @Override
-    public void setOrigin(Point newPoint) {
-        super.getStructuralPoints().set(0, newPoint);
     }
 
 
