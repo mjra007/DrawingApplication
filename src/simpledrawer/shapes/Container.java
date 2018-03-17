@@ -14,8 +14,6 @@ import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Rectangle;
-import java.awt.geom.AffineTransform;
-import java.awt.geom.Rectangle2D;
 import java.util.List;
 import simpledrawer.CopyPasteCutI;
 import simpledrawer.DrawableI;
@@ -25,7 +23,6 @@ public class Container implements DrawableI, InteractiveShape, CopyPasteCutI {
 
     //Points required to draw the shape contained
     ContainerI contained = null;
-    double rotation;
     final static float dash1[] = {8.0f};
     final static BasicStroke dashed = new BasicStroke(1.0f,
             BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 10.0f, dash1, 0.0f);
@@ -43,16 +40,6 @@ public class Container implements DrawableI, InteractiveShape, CopyPasteCutI {
 
     public Container(ContainerI contained) {
         this.contained = contained;
-    }
-
-    @Override
-    public double getRotation() {
-        return this.rotation;
-    }
-
-    @Override
-    public void setRotation(Double rotation) {
-        this.rotation = rotation;
     }
 
     /**
@@ -87,12 +74,12 @@ public class Container implements DrawableI, InteractiveShape, CopyPasteCutI {
         return new Point(getWidth() + getOrigin().x, getHeight() + getOrigin().y);
     }
 
-      public void setEndPoint(Point p){
+    /*  public void setEndPoint(Point p){
         Rectangle rectangle = new Rectangle();
         rectangle.setFrameFromDiagonal(getContained().getOrigin(),p);
-        this.contained.setHeight(rectangle.height);
+     //   this.contained.setHeight(rectangle.height);
         this.contained.setWidth(rectangle.width);
-    }
+    }*/
     /**
      * @param p point that this method checks
      * @return true if point is within the rectangle and false if it is not
@@ -121,8 +108,11 @@ public class Container implements DrawableI, InteractiveShape, CopyPasteCutI {
      */
     @Override
     public Container updateLocation(Point old, Point offset) {
+
         contained.setOrigin(new Point(old.x + offset.x, old.y + offset.y));
+
         return this;
+
     }
 
 
@@ -132,6 +122,7 @@ public class Container implements DrawableI, InteractiveShape, CopyPasteCutI {
      * inside
      * @return true if point is within the rectangle and false if it is not
      */
+    @Override
     public boolean contains(Point p, Rectangle r) {
         boolean doesIt = false;
         Rectangle rectangle = r;
@@ -177,17 +168,16 @@ public class Container implements DrawableI, InteractiveShape, CopyPasteCutI {
 
     private Rectangle getBottomSide() {
         Rectangle rectangle = new Rectangle();
-        rectangle.setFrameFromDiagonal(new Point(getOrigin().x + 5, getEndPoint().y - 5), new Point(getEndPoint().x - 5, getEndPoint().y));
+        rectangle.setFrameFromDiagonal(new Point(getOrigin().x, getEndPoint().y - 5), new Point(getEndPoint().x, getEndPoint().y));
         return rectangle;
     }
 
     private Rectangle getRightSide() {
         Rectangle rectangle = new Rectangle();
-        rectangle.setFrameFromDiagonal(new Point(getEndPoint().x - 5, getOrigin().y - 5), new Point(getEndPoint().x, getEndPoint().y + 5));
+        rectangle.setFrameFromDiagonal(new Point(getEndPoint().x - 5, getOrigin().y), new Point(getEndPoint().x, getEndPoint().y));
         return rectangle;
     }
 
-    @Override
     public boolean rightSideContains(Point p) {
         boolean cornerDetected = false;
         if (contains(p, getRightSide())) {
@@ -196,7 +186,6 @@ public class Container implements DrawableI, InteractiveShape, CopyPasteCutI {
         return cornerDetected;
     }
 
-    @Override
     public boolean bottomSideContains(Point p) {
         boolean cornerDetected = false;
         if (contains(p, getBottomSide())) {
@@ -209,6 +198,7 @@ public class Container implements DrawableI, InteractiveShape, CopyPasteCutI {
         boolean cornerDetected = false;
         if (contains(p, getTopRightCorner())) {
             cornerDetected = true;
+            System.out.println("topright");
         }
         return cornerDetected;
     }
@@ -217,6 +207,7 @@ public class Container implements DrawableI, InteractiveShape, CopyPasteCutI {
         boolean cornerDetected = false;
         if (contains(p, getTopLeftCorner())) {
             cornerDetected = true;
+            System.out.println("topleft");
         }
         return cornerDetected;
     }
@@ -225,6 +216,7 @@ public class Container implements DrawableI, InteractiveShape, CopyPasteCutI {
         boolean cornerDetected = false;
         if (contains(p, getBottomRightCorner())) {
             cornerDetected = true;
+            System.out.println("bottomright");
         }
         return cornerDetected;
     }
@@ -261,34 +253,17 @@ public class Container implements DrawableI, InteractiveShape, CopyPasteCutI {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    public Point getCenter() {
-        return new Point(getOrigin().x + getWidth() / 2, getOrigin().y + getHeight() / 2);
-    }
-
     @Override
-    public Container rotate(double rotation, Point xy) {
-        AffineTransform transform = new AffineTransform();
-        transform.rotate(rotation, getCenter().x, getCenter().y);
-       
-        return this;
+    public Container rotate(float amount) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
- 
-    
     @Override
     public void setOrigin(Point p) {
         getContained().setOrigin(new Point(p.x + 5, p.y + 5));
         System.out.println("sd");
     }
 
-    @Override
-    public boolean cornersContain(Point p) {
-        boolean cornerDetected = false;
-        if (this.bottomLeftCornerContains(p) || this.bottomRightCornerContains(p) || this.topLeftCornerContains(p) || this.topRightCornerContains(p)) {
-            cornerDetected = true;
-        }
-        return cornerDetected;
-    }
 
     /*
      * All the current DrawableI Types that our program holds should be here
@@ -304,6 +279,15 @@ public class Container implements DrawableI, InteractiveShape, CopyPasteCutI {
         return this.contained;
     }
 
+    /**
+     * @param g2d
+     * @param point Draws the indicator for the linearResizing functionality so
+     * the user knows that he can linearResizing the shape
+     */
+    public void drawResizeIndicator(Graphics2D g2d, Point point) {
+        g2d.drawOval(point.x - 5, point.y - 5, 10, 10);
+    }
+
     public void setSelect(Boolean b) {
         selected = b;
     }
@@ -316,10 +300,31 @@ public class Container implements DrawableI, InteractiveShape, CopyPasteCutI {
     }
 
     /**
+     * Used to select the corners
+     */
+    public void SelectCorners() {
+        selectedCorners = true;
+    }
+
+    /**
+     * Unselect corners
+     */
+    public void deSelectCorners() {
+        selectedCorners = false;
+    }
+
+    /**
      * @return whether the shape is selected
      */
     public boolean isSelected() {
         return this.selected;
+    }
+
+    /**
+     * @return whether the corners are selected
+     */
+    public boolean areCornersSelected() {
+        return this.selectedCorners;
     }
 
     /**
@@ -341,12 +346,11 @@ public class Container implements DrawableI, InteractiveShape, CopyPasteCutI {
     public void drawShape(Graphics2D g2d) {
         g2d.setStroke(dashed);
         g2d.setColor(Color.gray);
-        
-
         if (this.isSelected()) {
             g2d.draw(getDrawableContainer());
+
         }
-    
+
         if (contained instanceof DrawableI) {
             DrawableI drawable = (DrawableI) getContained();
             drawable.drawShape(g2d);

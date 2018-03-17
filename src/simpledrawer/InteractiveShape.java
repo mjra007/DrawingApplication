@@ -22,39 +22,21 @@ public interface InteractiveShape {
         WHOLE, CORNERS, RIGHTSIDE, LEFTSIDE, BOTTOMSIDE, TOPSIDE;
     }
 
-    /**
-     * Checks if the shape if p is inside the object where you are calling this
-     * method
-     *
-     * @param p point that needs to be checked
-     * @return true if point is indeed inside the shape
-     */
     public boolean contains(Point p);
 
-    /**
-     * Checks if the shape if p is inside the object where you are calling this
-     * method
-     *
-     * @param p point that needs to be checked
-     * @return true if point is indeed inside the shape
-     */
+    public boolean contains(Point p, Rectangle r);
+
     public boolean rightSideContains(Point p);
 
     public boolean bottomSideContains(Point p);
 
-    public boolean cornersContain(Point p);
-
     public Container updateLocation(Point old, Point origin);
 
-    public Container resize(Dimension oldDimension, Point offset, InteractiveShape.SelectedPart part);
+    public Container resize(Dimension oldDimension,Point offset,InteractiveShape.SelectedPart part);
 
     public Container linearResizing(float amount);
 
-    public Container rotate(double rotation,Point xy);
+    public Container rotate(float amount);
 
     public List<Point> getStructuralPoints();
-
-    public double getRotation();
-
-    public void setRotation(Double rotation);
 }

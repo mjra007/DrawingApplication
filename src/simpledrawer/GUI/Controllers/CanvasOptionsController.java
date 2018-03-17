@@ -548,10 +548,6 @@ public class CanvasOptionsController {
         /* only allow thicknesses in the range 1 to 40 */
         thickness = thickness < 1 || thickness > 40 ? 5 : thickness;
         guiOptions.setCurrentThickness(thickness);
-
-                   guiOptions.setCurrentThickness(1);
-
-       
     }
 
 }
