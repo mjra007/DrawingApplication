@@ -5,7 +5,7 @@
  * resize them and move them around. Any entity that only requires an origin point, width and height
  * can be contained in a container
  */
-package simpledrawer.shapes;
+package simpledrawer.shapes.Container;
 
 import com.rits.cloning.Cloner;
 import java.awt.BasicStroke;
@@ -14,15 +14,17 @@ import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Rectangle;
+import java.util.Arrays;
 import java.util.List;
 import simpledrawer.CopyPasteCutI;
 import simpledrawer.DrawableI;
 import simpledrawer.InteractiveShape;
+import simpledrawer.shapes.DrawableEntity;
 
-public class Container implements DrawableI, InteractiveShape, CopyPasteCutI {
+public class Container extends DrawableEntity implements InteractiveShape, CopyPasteCutI, ContainerI {
 
     //Points required to draw the shape contained
-    ContainerI contained = null;
+    DrawableEntity contained = null;
     final static float dash1[] = {8.0f};
     final static BasicStroke dashed = new BasicStroke(1.0f,
             BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 10.0f, dash1, 0.0f);
@@ -38,8 +40,15 @@ public class Container implements DrawableI, InteractiveShape, CopyPasteCutI {
      */
     private boolean selectedCorners = false;
 
-    public Container(ContainerI contained) {
-        this.contained = contained;
+    protected Container(DrawableEntity c) {
+        super(new DrawableEntity.Builder()
+                .setColor(Color.gray)
+                .setStructuralPoints(Arrays.asList(new Point(c.getOrigin().x - 5, c.getOrigin().y - 5), new Point(c.getWidth() + c.getOrigin().x, c.getHeight() + c.getOrigin().y)))
+                .setWidth((c.getWidth()) + 10)
+                .setHeight((c.getHeight()) + 10)
+                .setType(EntityType.LINE)
+                .build());
+        this.contained = c;
     }
 
     /**
@@ -114,7 +123,6 @@ public class Container implements DrawableI, InteractiveShape, CopyPasteCutI {
         return this;
 
     }
-
 
     /**
      * @param p point that this method checks
@@ -275,7 +283,7 @@ public class Container implements DrawableI, InteractiveShape, CopyPasteCutI {
     /**
      * @return the contained SHAPE
      */
-    public ContainerI getContained() {
+    public DrawableEntity getContained() {
         return this.contained;
     }
 
@@ -345,7 +353,7 @@ public class Container implements DrawableI, InteractiveShape, CopyPasteCutI {
     @Override
     public void drawShape(Graphics2D g2d) {
         g2d.setStroke(dashed);
-        g2d.setColor(Color.gray);
+        g2d.setColor(this.getColor());
         if (this.isSelected()) {
             g2d.draw(getDrawableContainer());
 

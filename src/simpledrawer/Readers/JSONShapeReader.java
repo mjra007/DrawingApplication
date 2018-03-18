@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import simpledrawer.DrawableI;
-import simpledrawer.shapes.Container;
+import simpledrawer.shapes.Container.Container;
 import simpledrawer.shapes.ShapeFactory;
 import simpledrawer.shapes.Shape;
 

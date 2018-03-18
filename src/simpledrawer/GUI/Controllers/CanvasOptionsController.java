@@ -23,7 +23,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import simpledrawer.DrawableI;
 import simpledrawer.shapes.DrawableEntity;
 import simpledrawer.Readers.JSONShapeReader;
-import simpledrawer.shapes.Container;
+import simpledrawer.shapes.Container.Container;
 import simpledrawer.shapes.Shape;
 import simpledrawer.GUI.View;
 
@@ -110,11 +110,7 @@ public class CanvasOptionsController {
                 txtThicknessActionPerformed(evt);
             }
         });
-        getView().getbtnBackground().addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent evt) {
-                btnChangeBackground(evt);
-            }
-        });
+
         getView().getColorMixer().addPropertyChangeListener("colormix", new PropertyChangeListener() {
             public void propertyChange(PropertyChangeEvent evt) {
                 colorMixerMenu(evt);
@@ -393,8 +389,7 @@ public class CanvasOptionsController {
             for (Object shape : listOfShapes) {
                 if (shape instanceof Shape) {
                     Shape actualShape = (Shape) shape;
-                    Container containedShape = new Container(actualShape);
-                    entitiesModel.addDrawing(containedShape);
+                    entitiesModel.addDrawing(actualShape.contain());
                 }
             }
         } catch (FileNotFoundException ex) {
@@ -525,9 +520,6 @@ public class CanvasOptionsController {
         reset();
     }
 
-    private void btnChangeBackground(java.awt.event.ActionEvent evt) {
-        getView().getCanvas().setBackground(this.guiOptions.getCurrentColor());
-    }
 
     public void reset() {
         clearDisplay();
@@ -542,6 +534,7 @@ public class CanvasOptionsController {
         return guiOptions.getCurrentRotation();
     }
 
+  
     /* action whatever change has been made to the line thickness */
     private void handleThickness() {
         int thickness = Integer.valueOf(getView().getTxtThickness().getText());

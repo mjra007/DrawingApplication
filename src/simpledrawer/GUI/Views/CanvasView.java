@@ -2,7 +2,6 @@ package simpledrawer.GUI.Views;
 
 import simpledrawer.GUI.Controllers.CanvasController;
 import simpledrawer.GUI.View;
-import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
@@ -44,7 +43,7 @@ public class CanvasView extends JPanel implements View{
 
         // Graphics2D needed to set line thickness
         Graphics2D g2d = (Graphics2D) g;
-
+        setBackground(controller.getBackgroundColor());
         if (controller.isBetterGraphicsSelected()) {
             g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
                     RenderingHints.VALUE_ANTIALIAS_ON);

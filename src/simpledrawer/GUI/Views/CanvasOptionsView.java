@@ -65,9 +65,7 @@ public class CanvasOptionsView extends javax.swing.JFrame implements View {
         finalColor = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         Brush1 = new javax.swing.JPanel();
-        btnBackground = new javax.swing.JButton();
         betterGraphicsButton = new javax.swing.JCheckBox();
-        jButton1 = new javax.swing.JButton();
         panDrawingArea = (JPanel)this.drawingPanel;
         jMenuBar1 = new javax.swing.JMenuBar();
         menuFile = new javax.swing.JMenu();
@@ -90,10 +88,9 @@ public class CanvasOptionsView extends javax.swing.JFrame implements View {
         colorMixerBean1 = new colormixerbean.ColorMixer();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        getContentPane().setLayout(new java.awt.BorderLayout());
 
         toolbar.setBackground(new java.awt.Color(204, 204, 204));
-        toolbar.setBorder(javax.swing.BorderFactory.createBevelBorder(0, java.awt.Color.lightGray, java.awt.Color.lightGray, java.awt.Color.lightGray, java.awt.Color.lightGray));
+        toolbar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.lightGray, java.awt.Color.lightGray, java.awt.Color.lightGray, java.awt.Color.lightGray));
         toolbar.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
         java.awt.GridBagLayout toolbarLayout = new java.awt.GridBagLayout();
         toolbarLayout.columnWidths = new int[] {0, 5, 0, 5, 0, 5, 0, 5, 0, 5, 0};
@@ -101,7 +98,7 @@ public class CanvasOptionsView extends javax.swing.JFrame implements View {
         toolbar.setLayout(toolbarLayout);
 
         Colors.setBackground(new java.awt.Color(204, 204, 204));
-        Colors.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 1, 1, new java.awt.Color(204, 204, 204)), "Pick a colour", 0, 0, new java.awt.Font("Segoe UI", 0, 12))); // NOI18N
+        Colors.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 1, 1, new java.awt.Color(204, 204, 204)), "Pick a colour", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 12))); // NOI18N
         Colors.setToolTipText("Brush");
         Colors.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
         Colors.setMaximumSize(new java.awt.Dimension(100, 100));
@@ -164,7 +161,7 @@ public class CanvasOptionsView extends javax.swing.JFrame implements View {
         toolbar.add(Colors, gridBagConstraints);
 
         Brush.setBackground(new java.awt.Color(204, 204, 204));
-        Brush.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 1, 1, new java.awt.Color(204, 204, 204)), "Brush", 0, 0, new java.awt.Font("Segoe UI", 0, 12))); // NOI18N
+        Brush.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 1, 1, new java.awt.Color(204, 204, 204)), "Brush", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 12))); // NOI18N
         Brush.setToolTipText("Brush");
         Brush.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
         Brush.setMaximumSize(new java.awt.Dimension(100, 70));
@@ -180,7 +177,7 @@ public class CanvasOptionsView extends javax.swing.JFrame implements View {
         Brush.add(lblThickness, gridBagConstraints);
 
         txtThickness.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
-        txtThickness.setBorder(javax.swing.BorderFactory.createBevelBorder(0));
+        txtThickness.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         txtThickness.setMaximumSize(new java.awt.Dimension(20, 16));
         txtThickness.setMinimumSize(new java.awt.Dimension(20, 16));
         txtThickness.setPreferredSize(new java.awt.Dimension(20, 16));
@@ -222,7 +219,7 @@ public class CanvasOptionsView extends javax.swing.JFrame implements View {
         toolbar.add(jPanel2, gridBagConstraints);
 
         Brush1.setBackground(new java.awt.Color(204, 204, 204));
-        Brush1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 1, 1, new java.awt.Color(204, 204, 204)), "Settings", 0, 0, new java.awt.Font("Segoe UI", 0, 12))); // NOI18N
+        Brush1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 1, 1, new java.awt.Color(204, 204, 204)), "Settings", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 12))); // NOI18N
         Brush1.setToolTipText("Brush");
         Brush1.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
         Brush1.setMaximumSize(new java.awt.Dimension(100, 70));
@@ -230,14 +227,6 @@ public class CanvasOptionsView extends javax.swing.JFrame implements View {
         Brush1.setOpaque(false);
         Brush1.setPreferredSize(new java.awt.Dimension(100, 70));
         Brush1.setLayout(new java.awt.GridBagLayout());
-
-        btnBackground.setText("Change Background");
-        btnBackground.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnBackgroundActionPerformed(evt);
-            }
-        });
-        Brush1.add(btnBackground, new java.awt.GridBagConstraints());
 
         betterGraphicsButton.setText("Better Graphics");
         betterGraphicsButton.setOpaque(false);
@@ -252,9 +241,6 @@ public class CanvasOptionsView extends javax.swing.JFrame implements View {
         gridBagConstraints.gridy = 0;
         gridBagConstraints.ipadx = 52;
         toolbar.add(Brush1, gridBagConstraints);
-
-        jButton1.setText("jButton1");
-        toolbar.add(jButton1, new java.awt.GridBagConstraints());
 
         getContentPane().add(toolbar, java.awt.BorderLayout.PAGE_START);
 
@@ -359,10 +345,6 @@ public class CanvasOptionsView extends javax.swing.JFrame implements View {
 
     }//GEN-LAST:event_menuColorMixerMousePressed
 
-    private void btnBackgroundActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackgroundActionPerformed
-
-    }//GEN-LAST:event_btnBackgroundActionPerformed
-
     private void menuColorMixerMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuColorMixerMouseEntered
 
     }//GEN-LAST:event_menuColorMixerMouseEntered
@@ -440,9 +422,6 @@ public class CanvasOptionsView extends javax.swing.JFrame implements View {
         return this.menuReset;
     }
 
-    public JButton getbtnBackground() {
-        return this.btnBackground;
-    }
 
     public JPanel getDrawingPanel() {
         return (JPanel)this.drawingPanel;
@@ -499,12 +478,10 @@ public class CanvasOptionsView extends javax.swing.JFrame implements View {
     private javax.swing.JCheckBox betterGraphicsButton;
     private javax.swing.JLabel black;
     private javax.swing.JLabel blue;
-    private javax.swing.JButton btnBackground;
     private colormixerbean.ColorMixer colorMixerBean1;
     private javax.swing.JLabel currentColor;
     private javax.swing.JLabel finalColor;
     private javax.swing.JLabel green;
-    private javax.swing.JButton jButton1;
     private javax.swing.JFileChooser jFileChooser1;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPanel jPanel2;

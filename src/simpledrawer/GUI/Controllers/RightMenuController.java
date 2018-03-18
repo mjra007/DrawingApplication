@@ -15,7 +15,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JPopupMenu;
 import simpledrawer.CopyPasteCutI;
 import simpledrawer.DrawableI;
-import simpledrawer.shapes.Container;
+import simpledrawer.shapes.Container.Container;
 import simpledrawer.shapes.Shape;
 
 /**
@@ -64,6 +64,16 @@ public class RightMenuController {
                 pasteButton(evt);
             }
         });
+        popupMenu.getBackgroundMenu().addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                changeBackground(evt);
+            }
+        });
+    }
+
+    public void changeBackground(ActionEvent evt) {
+        canvas.getSettings().setBackground(canvas.getSettings().getCurrentColor());
+        this.canvasView.refresh();
     }
 
     public void copy() {

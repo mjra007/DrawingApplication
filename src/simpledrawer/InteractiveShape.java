@@ -1,7 +1,7 @@
 package simpledrawer;
 
 import java.awt.Dimension;
-import simpledrawer.shapes.Container;
+import simpledrawer.shapes.Container.Container;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.util.List;

@@ -1,5 +1,6 @@
 package simpledrawer.shapes;
 
+import simpledrawer.shapes.Container.ContainerI;
 import java.awt.Color;
 import java.awt.Point;
 import java.util.Arrays;
@@ -96,15 +97,6 @@ public class Shape extends DrawableEntity implements ContainerI {
     public void setFilledColor(Color c) {
         setFilled(true);
         this.filledColor = c;
-    }
-
-    /**
-     *
-     * @param newPoint set the origin of the shape
-     */
-    @Override
-    public void setOrigin(Point newPoint) {
-        this.getStructuralPoints().set(0, newPoint);
     }
 
     public static final class Builder {

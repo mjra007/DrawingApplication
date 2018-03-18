@@ -100,6 +100,10 @@ public class DrawableEntity implements DrawableI {
         return this.getStructuralPoints().get(0);
     }
 
+    public void setOrigin(Point newPoint) {
+        this.getStructuralPoints().set(0, newPoint);
+    }
+
     /**
      *
      * @return the x of the getOrigin() point
@@ -131,7 +135,7 @@ public class DrawableEntity implements DrawableI {
      *
      */
     public static enum EntityType {
-        LINE, OVAL, TRIANGLE, RECTANGLE;
+        LINE, OVAL, TRIANGLE, RECTANGLE, CONTAINER, INDICATOR;
     }
 
     /**
@@ -210,7 +214,7 @@ public class DrawableEntity implements DrawableI {
         }
 
         public DrawableEntity build() {
-            return new DrawableEntity(structuralPoints,height,width,color,type);
+            return new DrawableEntity(structuralPoints, height, width, color, type);
         }
 
     }

@@ -32,6 +32,7 @@ public class CanvasOptions {
         currentThickness = 2;
         currentRotation = 0;
         currentBrightness = 1;
+        background = Color.WHITE;
     }
 
     public CopyPasteCutI getDrawableCopied() {
