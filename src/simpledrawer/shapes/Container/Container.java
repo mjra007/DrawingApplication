@@ -17,7 +17,6 @@ import java.awt.Rectangle;
 import java.util.Arrays;
 import java.util.List;
 import simpledrawer.CopyPasteCutI;
-import simpledrawer.DrawableI;
 import simpledrawer.InteractiveShape;
 import simpledrawer.shapes.DrawableEntity;
 
@@ -46,10 +45,11 @@ public class Container extends DrawableEntity implements InteractiveShape, CopyP
                 .setStructuralPoints(Arrays.asList(new Point(c.getOrigin().x - 5, c.getOrigin().y - 5), new Point(c.getWidth() + c.getOrigin().x, c.getHeight() + c.getOrigin().y)))
                 .setWidth((c.getWidth()) + 10)
                 .setHeight((c.getHeight()) + 10)
-                .setType(EntityType.LINE)
+                .setType(EntityType.CONTAINER)
                 .build());
         this.contained = c;
     }
+   
 
     /**
      * would probably be better not to do these claculations at runtime, and
@@ -57,6 +57,7 @@ public class Container extends DrawableEntity implements InteractiveShape, CopyP
      *
      * @return the origin point of the rectangle
      */
+    @Override
     public Point getOrigin() {
         return new Point(contained.getOrigin().x - 5, contained.getOrigin().y - 5);
     }
@@ -64,6 +65,7 @@ public class Container extends DrawableEntity implements InteractiveShape, CopyP
     /**
      * @return the width of this container
      */
+    @Override
     public int getWidth() {
         return (contained.getWidth()) + 10;
     }
@@ -72,6 +74,7 @@ public class Container extends DrawableEntity implements InteractiveShape, CopyP
      * @return the height of the container which is 10 more than the actual
      * shape it is containing
      */
+    @Override
     public int getHeight() {
         return (contained.getHeight()) + 10;
     }
@@ -358,11 +361,7 @@ public class Container extends DrawableEntity implements InteractiveShape, CopyP
             g2d.draw(getDrawableContainer());
 
         }
-
-        if (contained instanceof DrawableI) {
-            DrawableI drawable = (DrawableI) getContained();
-            drawable.drawShape(g2d);
-        }
+        getContained().drawShape(g2d);
 
     }
 

@@ -16,16 +16,15 @@ import java.awt.event.MouseListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.HashMap;
-import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import simpledrawer.DrawableI;
 import simpledrawer.shapes.DrawableEntity;
 import simpledrawer.Readers.JSONShapeReader;
-import simpledrawer.shapes.Container.Container;
 import simpledrawer.shapes.Shape;
 import simpledrawer.GUI.View;
+import simpledrawer.shapes.Container.ContainerI;
 
 public class CanvasOptionsController {
 
@@ -36,7 +35,6 @@ public class CanvasOptionsController {
     public CanvasOptionsController(Canvas m, CanvasOptions guiOptions) {
         entitiesModel = m;
         this.guiOptions = guiOptions;
-
     }
 
     public void addView(View view) {
@@ -117,6 +115,8 @@ public class CanvasOptionsController {
             }
 
         });
+        
+        
         getView().getRedLabel().addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -389,7 +389,7 @@ public class CanvasOptionsController {
             for (Object shape : listOfShapes) {
                 if (shape instanceof Shape) {
                     Shape actualShape = (Shape) shape;
-                    entitiesModel.addDrawing(actualShape.contain());
+                    entitiesModel.addDrawing(actualShape.contain((ContainerI) shape));
                 }
             }
         } catch (FileNotFoundException ex) {

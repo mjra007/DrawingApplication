@@ -16,7 +16,7 @@ import simpledrawer.DrawableI;
  * implementation of the draw method to be able to be drawn.
  *
  */
-public class DrawableEntity implements DrawableI {
+public class DrawableEntity implements DrawableI  {
 
     // Type of entity e.g. line or oval
     private final EntityType type;

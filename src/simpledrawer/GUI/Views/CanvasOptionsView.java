@@ -48,6 +48,7 @@ public class CanvasOptionsView extends javax.swing.JFrame implements View {
         java.awt.GridBagConstraints gridBagConstraints;
 
         jFileChooser1 = new javax.swing.JFileChooser();
+        colorMixer1 = new colormixerbean.ColorMixer();
         toolbar = new javax.swing.JPanel();
         Colors = new javax.swing.JPanel();
         red = new javax.swing.JLabel();
@@ -478,6 +479,7 @@ public class CanvasOptionsView extends javax.swing.JFrame implements View {
     private javax.swing.JCheckBox betterGraphicsButton;
     private javax.swing.JLabel black;
     private javax.swing.JLabel blue;
+    private colormixerbean.ColorMixer colorMixer1;
     private colormixerbean.ColorMixer colorMixerBean1;
     private javax.swing.JLabel currentColor;
     private javax.swing.JLabel finalColor;

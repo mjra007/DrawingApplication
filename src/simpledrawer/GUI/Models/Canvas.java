@@ -5,6 +5,7 @@ package simpledrawer.GUI.Models;
  * drawing panel and also stores the last 100 changes. Rolling back to previous
  * versions of the drawing is not an implemented feature as of yet
  */
+import java.beans.PropertyChangeSupport;
 import java.util.HashMap;
 import simpledrawer.DrawableI;
 
@@ -16,14 +17,17 @@ public class Canvas {
     private HashMap<Integer, HashMap<Integer, DrawableI>> drawingsHistory;
     private Integer indexSelect;
     private int counter = 0;
+    public static final String PROP_PUT = "put";
+    public static final String PROP_REMOVE = "remove";
 
+    private PropertyChangeSupport propertySupport;
 
     public Canvas(CanvasOptions op) {
         this.options = op;
         this.drawings = new HashMap<>();
         this.drawingsHistory = new HashMap<>();
+        propertySupport = new PropertyChangeSupport(this);
     }
-
 
     public CanvasOptions getSettings() {
         return this.options;
@@ -44,7 +48,8 @@ public class Canvas {
             this.drawings = new HashMap<Integer, DrawableI>();
         }
         saveHistory();
-        getDrawings().put(counter, entity);
+        Object old = getDrawings().put(counter, entity);
+        propertySupport.firePropertyChange(PROP_PUT, old, entity);
         counter++;
     }
 
@@ -68,7 +73,9 @@ public class Canvas {
 
     public void removeSelectedDrawing() {
         saveHistory();
-        this.getDrawings().remove(getSelectedDrawingIndex());
+        Object old = this.getDrawings().remove(getSelectedDrawingIndex());
+        propertySupport.firePropertyChange(PROP_PUT, old,null);
+
     }
 
     public void saveHistory() {

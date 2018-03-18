@@ -39,6 +39,7 @@ public class SRectangle extends Shape {
         g2d.setColor(super.getColor());
         g2d.setStroke(new BasicStroke(this.getThickness()));
         g2d.drawRect(getX(), getY(), getWidth(), getHeight());
+        System.out.println(""+getEntityType());
 
     }
 
@@ -47,8 +48,5 @@ public class SRectangle extends Shape {
         return "Color: " + super.getColor() + " Thick: " + super.getThickness() + " Points: " + super.getStructuralPoints().toString() + " width: " + super.getWidth() + " height: " + super.getHeight() + "  " + super.getX() + " , " + super.getX() + "Last " + this.getXEnd() + ", " + this.getYEnd();
     }
 
-    @Override
-    public void setOrigin(Point newPoint) {
-        super.getStructuralPoints().set(0, newPoint);
-    }
+
 }

@@ -22,6 +22,7 @@ import simpledrawer.Utils;
 import simpledrawer.shapes.Container.Container;
 import simpledrawer.shapes.Container.ContainerI;
 import simpledrawer.shapes.DrawableEntity;
+import simpledrawer.shapes.DrawableEntity.EntityType;
 import simpledrawer.shapes.Shape;
 import simpledrawer.shapes.ShapeFactory;
 
@@ -141,11 +142,25 @@ public class CanvasController implements MouseListener, MouseMotionListener, Mou
                                 .setBorderThickness(canvas.getSettings().getCurrentThickness())
                                 .setType(canvas.getSettings().getEntityTypeSelected())
                                 .build());
-
-                        //adding container to the list of containers to be drawn
+                        DrawableEntity entityTriangle = ShapeFactory.createShape(
+                                new Shape.Builder()
+                                .setOrigin(reorganizedCoords.get(0))
+                                .setWidth(width)
+                                .setHeight(height)
+                                .setColor(canvas.getSettings().getCurrentColor())
+                                .setBorderThickness(canvas.getSettings().getCurrentThickness())
+                                .setType(EntityType.TRIANGLE)
+                                .build());
+                        
                         if (entity instanceof ContainerI) {
                             ContainerI entityContainerI = (ContainerI) entity;
-                            canvas.addDrawing(entityContainerI.contain());
+                            ContainerI entityTriangleI = (ContainerI) entityTriangle;
+                            Container containerTriangle = entityTriangleI.contain(entityTriangleI);
+                            Container container = entityContainerI.contain(entityContainerI);
+                            container.contain(containerTriangle);
+                           // System.out.println(""+container.getContained().toString());
+                            canvas.addDrawing(container);
+                        
                         } else {
                             canvas.addDrawing(entity);
                         }

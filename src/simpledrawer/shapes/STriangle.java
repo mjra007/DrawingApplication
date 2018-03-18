@@ -10,16 +10,6 @@ public class STriangle extends Shape {
     public STriangle(Shape shape) {
         super(shape);    
     }
-
-    /**
-     * @return The area in pixels of the triangle.
-     */
-    public double getArea() {
-        int term1 = super.getStructuralPoints().get(0).x * (super.getStructuralPoints().get(1).y - super.getStructuralPoints().get(2).y);
-        int term2 = super.getStructuralPoints().get(1).x * (super.getStructuralPoints().get(2).y - super.getStructuralPoints().get(0).y);
-        int term3 = super.getStructuralPoints().get(2).x * (super.getStructuralPoints().get(0).y - super.getStructuralPoints().get(1).y);
-        return Math.abs((term1 + term2 + term3) / 2.0);
-    }
     
     @Override
     public void drawShape(Graphics2D g2d) {
@@ -40,6 +30,8 @@ public class STriangle extends Shape {
         // Set the thickness of the line
         g2d.setStroke(new BasicStroke(getThickness()));
         g2d.drawPolygon(xx, yy, 3);
+                System.out.println(""+getEntityType());
+
     }
 
     @Override
