@@ -53,9 +53,17 @@ public class JSONShapeReader {
     private void storeShapes() {
         //add a null pointer try an catch !!!!URGENT!!!!!!
         for (ShapeEvent se : shapesList.listOfShapes) {
-             lshapes.add(ShapeFactory.createShape(se.getOrigin(), se.getWidth(), se.getHeight(), se.getFilledColor(), se.getThickness(), se.type()));
-            }
-        
+            lshapes.add(ShapeFactory.createShape(
+                    new Shape.Builder()
+                    .setOrigin(se.getOrigin())
+                    .setHeight(se.getHeight())
+                    .setWidth(se.getWidth())
+                    .setFilledColor(se.getFilledColor())
+                    .setBorderThickness(se.getThickness())
+                    .setType(se.type())
+                    .build()));
+
+        }
     }
 
     /**
@@ -72,17 +80,17 @@ public class JSONShapeReader {
      * @param file the file into which to write the JSON
      * @param drawings
      */
-    public void saveJSON(String file,HashMap<Integer,DrawableI> drawings) {
+    public void saveJSON(String file, HashMap<Integer, DrawableI> drawings) {
         List<ShapeEvent> list = new ArrayList<>();
-        System.out.println(""+drawings.size());
-        for(int i=0;i< drawings.size(); i++){
-            if(drawings.get(i) instanceof Container){
+        System.out.println("" + drawings.size());
+        for (int i = 0; i < drawings.size(); i++) {
+            if (drawings.get(i) instanceof Container) {
                 Container container = (Container) drawings.get(i);
                 list.add(new ShapeEvent((Shape) container.getContained()));
             }
         }
-         listOfShapes lS= new listOfShapes();
-         lS.listOfShapes = list;
+        listOfShapes lS = new listOfShapes();
+        lS.listOfShapes = list;
 
         Gson gson = new Gson();
         String json = gson.toJson(lS); // convert the object to a JSON string

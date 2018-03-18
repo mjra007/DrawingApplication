@@ -1,19 +1,14 @@
 package simpledrawer.shapes;
 
 import java.awt.BasicStroke;
-import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Point;
 
 
 public class STriangle extends Shape {
 
-    public STriangle(Point origin, int width, int height, Color c, int t, DrawableEntity.EntityType et) {
-        super(origin, width, height, c, t, DrawableEntity.EntityType.TRIANGLE);
-    }
-
-    public STriangle() {
-        super(new Point(1, 0), 100, 100, Color.GRAY, 5, DrawableEntity.EntityType.TRIANGLE);
+    public STriangle(Shape shape) {
+        super(shape);    
     }
 
     /**

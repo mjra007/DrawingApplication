@@ -8,12 +8,8 @@ import java.awt.Point;
 public class SLine extends Shape {
 
     //To draw a line you only need a starting point and end point
-    public SLine(Point origin, int width, int height, Color c, int t, DrawableEntity.EntityType et) {
-        super(origin, width, height, c, t, DrawableEntity.EntityType.LINE);
-    }
-
-    public SLine() {
-        super(new Point(1, 0), 100, 100, Color.black, 5, DrawableEntity.EntityType.LINE);
+    public SLine(Shape shape) {
+        super(shape);
     }
 
     /**

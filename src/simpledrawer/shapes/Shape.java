@@ -3,7 +3,6 @@ package simpledrawer.shapes;
 import java.awt.Color;
 import java.awt.Point;
 import java.util.Arrays;
-import java.util.List;
 
 /**
  * Shape object implements DrawableEntity because this shapes are meant to be
@@ -23,34 +22,32 @@ public class Shape extends DrawableEntity implements ContainerI {
     public Color filledColor = super.getColor();
 
     /**
-     * @param origin origin of the shape - point where the user clicked first
-     * @param width the width of the shape
-     * @param height the height of the shape
-     * @param c border color of the shape
-     * @param t thickness of the border
-     * @param et EntityType of the shape
+     * @param b
      */
-    public Shape(Point origin, int width, int height, Color c, int t, DrawableEntity.EntityType et) {
+    public Shape(Shape b) {
         super(new DrawableEntity.Builder()
-                .setStructuralPoints(Arrays.asList(origin, new Point(origin.x + width, origin.y + height)))
-                .setColor(c)
-                .setHeight(height)
-                .setWidth(width)
-                .setType(et)
+                .setStructuralPoints(Arrays.asList(b.getOrigin(), new Point(b.getOrigin().x + b.getWidth(), b.getOrigin().y + b.getHeight())))
+                .setColor(b.getColor())
+                .setHeight(b.getHeight())
+                .setWidth(b.getWidth())
+                .setType(b.getEntityType())
                 .build());
-        borderThickness = t;
+        borderThickness = b.borderThickness;
+        filled = b.filled;
+        filledColor = b.filledColor;
     }
 
-    public Shape(Shape shape) {
+    private Shape(Point origin,int width,int height,Color color,int borderThickness,EntityType type) {
         super(new DrawableEntity.Builder()
-                .setStructuralPoints(Arrays.asList(shape.getOrigin(), new Point(shape.getOrigin().x + shape.getWidth(), shape.getOrigin().y + shape.getHeight())))
-                .setColor(shape.getColor())
-                .setHeight(shape.getHeight())
-                .setWidth(shape.getWidth())
-                .setType(shape.getEntityType())
+                .setStructuralPoints(Arrays.asList(origin, new Point(origin.x + width, origin.y +height)))
+                .setColor(color)
+                .setHeight(height)
+                .setWidth(width)
+                .setType(type)
                 .build());
-        borderThickness = shape.getThickness();
+        this.borderThickness = borderThickness;
     }
+
 
     /**
      *
@@ -110,13 +107,63 @@ public class Shape extends DrawableEntity implements ContainerI {
         this.getStructuralPoints().set(0, newPoint);
     }
 
-    public static class Builder {
+    public static final class Builder {
+
         //border of the shape
         private int borderThickness;
         //whether the shape is filled with a color
         private boolean filled = false;
         //if not assigned let s just use the same as the border because why not
         public Color filledColor;
-   
+        private EntityType type;
+        private int height;
+        private int width;
+        private Point origin;
+        private Color color;
+
+        public Builder setType(DrawableEntity.EntityType type) {
+            this.type = type;
+            return this;
+        }
+
+        public Builder isShapeFilled(boolean b){
+            this.filled=b;
+            return this;
+        }
+        
+        public Builder setBorderThickness(int t){
+            this.borderThickness=t;
+            return this;
+        }
+        
+        public Builder setColor(Color c){
+            this.color=c;
+            return this;
+        }
+        
+        public Builder setFilledColor(Color c ){
+            this.filledColor=c;
+            return this;
+        }
+        
+        public Builder setHeight(int height) {
+            this.height = height;
+            return this;
+        }
+
+        public Builder setWidth(int width) {
+            this.width = width;
+            return this;
+        }
+
+        public Builder setOrigin(Point origin) {
+            this.origin = origin;
+            return this;
+        }
+        
+        public Shape build(){
+            return new Shape(origin,width,height,color,borderThickness,type);
+        }
+
     }
 }

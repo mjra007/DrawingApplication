@@ -32,12 +32,22 @@ public class DrawableEntity implements DrawableI {
      */
     private Color color;
 
-    private DrawableEntity(Builder d) {
-        this.structuralPoints = d.structuralPoints;
-        this.height = d.height;
-        this.width = d.width;
-        this.color = d.color;
-        type = d.type;
+    /*  public DrawableEntity(Builder b) {
+    }*/
+    public DrawableEntity(DrawableEntity dE) {
+        this.structuralPoints = dE.structuralPoints;
+        this.height = dE.height;
+        this.width = dE.width;
+        this.color = dE.color;
+        this.type = dE.type;
+    }
+
+    private DrawableEntity(List<Point> structuralPoints, int height, int width, Color color, EntityType type) {
+        this.structuralPoints = structuralPoints;
+        this.height = height;
+        this.width = width;
+        this.color = color;
+        this.type = type;
     }
 
     /**
@@ -81,10 +91,7 @@ public class DrawableEntity implements DrawableI {
      *
      * @return the first of the structural points of your shape
      *
-     * X******s
-     *  * *
-     *  * *
-     *  *******
+     * X******s * * * * *******
      *
      * If it was a Rectangle It would returnthe x point in that square
      *
@@ -177,7 +184,6 @@ public class DrawableEntity implements DrawableI {
         private List<Point> structuralPoints = new ArrayList<Point>();
         private Color color;
 
-        
         public Builder setType(DrawableEntity.EntityType type) {
             this.type = type;
             return this;
@@ -204,7 +210,7 @@ public class DrawableEntity implements DrawableI {
         }
 
         public DrawableEntity build() {
-            return new DrawableEntity(this);
+            return new DrawableEntity(structuralPoints,height,width,color,type);
         }
 
     }

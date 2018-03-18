@@ -1,27 +1,24 @@
 package simpledrawer.shapes;
  
-import java.awt.Color;
-import java.awt.Point;
- 
 public class ShapeFactory {
  
-    public static Shape createShape(Point origin, int width, int height, Color c, int t, DrawableEntity.EntityType et) {
+    public static Shape createShape(Shape shapeBuilder) {
         Shape shape = null;
-        switch (et.toString()) {
+        switch (shapeBuilder.getEntityType().toString()) {
             case "RECTANGLE":
-                SRectangle rect = new SRectangle(origin, width, height, c, t, et);
+                SRectangle rect = new SRectangle(shapeBuilder);
                 shape = rect;
                 break;
             case "OVAL":
-                SOval oval = new SOval(origin, width, height, c, t, et);
+                SOval oval = new SOval(shapeBuilder);
                 shape = oval;
                 break;
             case "TRIANGLE":
-                STriangle triangle = new STriangle(origin, width, height, c, t, et);
+                STriangle triangle = new STriangle(shapeBuilder);
                 shape = triangle;
                 break;
             case "LINE":
-                SLine line = new SLine(origin, width, height, c, t, et);
+                SLine line = new SLine(shapeBuilder);
                 shape = line;
                 break;
             default:

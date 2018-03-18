@@ -1,18 +1,13 @@
 package simpledrawer.shapes;
 
 import java.awt.BasicStroke;
-import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Point;
 
 public class SOval extends Shape {
 
-    public SOval(Point origin, int width, int height, Color c, int t, DrawableEntity.EntityType et) {
-        super(origin, width, height, c, t, DrawableEntity.EntityType.LINE);
-    }
-
-    public SOval() {
-        super(new Point(1, 0), 100, 100, Color.black, 5, DrawableEntity.EntityType.OVAL);
+    public SOval(Shape shape) {
+        super(shape);
     }
 
     /**

@@ -24,6 +24,7 @@ import simpledrawer.Utils;
 import simpledrawer.shapes.Container;
 import simpledrawer.shapes.ContainerI;
 import simpledrawer.shapes.DrawableEntity;
+import simpledrawer.shapes.Shape;
 import simpledrawer.shapes.ShapeFactory;
 
 public class CanvasController implements MouseListener, MouseMotionListener, MouseWheelListener {
@@ -44,7 +45,7 @@ public class CanvasController implements MouseListener, MouseMotionListener, Mou
     @Override
     public void mouseClicked(MouseEvent e) {
       //  canvas.getSettings().addMouseClick(e.getPoint());
-        if (isRightClick(e) && checkLocforInteractiveShapes(e.getPoint()) != null) {
+        if (isRightClick(e)) {
             rightMenu.setVisible(true);
             rightMenu.buildPopupMenu().show(getView(), e.getX(), e.getY());
         }
@@ -122,8 +123,18 @@ public class CanvasController implements MouseListener, MouseMotionListener, Mou
                         List<Point> reorganizedCoords = Utils.getReorganizedCoords(canvas.getSettings().getClicks().get(0), canvas.getSettings().getClicks().get(1));
                         int width = reorganizedCoords.get(1).x - reorganizedCoords.get(0).x;
                         int height = reorganizedCoords.get(1).y - reorganizedCoords.get(0).y;
-                        DrawableEntity entity = ShapeFactory.createShape(reorganizedCoords.get(0), width, height, canvas.getSettings().getCurrentColor(), canvas.getSettings().getCurrentThickness(), canvas.getSettings().getEntityTypeSelected());
-                        //adding container to the list of containers to be drawn
+
+                        DrawableEntity entity = ShapeFactory.createShape(
+                                new Shape.Builder()
+                                .setOrigin(reorganizedCoords.get(0))
+                                .setWidth(width)
+                                .setHeight(height)
+                                .setColor(canvas.getSettings().getCurrentColor())
+                                .setBorderThickness(canvas.getSettings().getCurrentThickness())
+                                .setType(canvas.getSettings().getEntityTypeSelected())
+                                .build());
+                                
+                         //adding container to the list of containers to be drawn
                         if (entity instanceof ContainerI) {
                             ContainerI entityContainerI = (ContainerI) entity;
                             Container container = new Container(entityContainerI);
