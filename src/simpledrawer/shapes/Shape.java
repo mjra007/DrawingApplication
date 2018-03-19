@@ -38,7 +38,7 @@ public class Shape extends DrawableEntity implements ContainerI {
         filledColor = b.filledColor;
     }
 
-    private Shape(Point origin,int width,int height,Color color,int borderThickness,EntityType type) {
+    private Shape(Point origin,int width,int height,Color color,Color filledColor,int borderThickness,boolean filled,EntityType type) {
         super(new DrawableEntity.Builder()
                 .setStructuralPoints(Arrays.asList(origin, new Point(origin.x + width, origin.y +height)))
                 .setColor(color)
@@ -47,6 +47,8 @@ public class Shape extends DrawableEntity implements ContainerI {
                 .setType(type)
                 .build());
         this.borderThickness = borderThickness;
+        this.filled=filled;
+        this.filledColor=filledColor;
     }
 
 
@@ -148,13 +150,18 @@ public class Shape extends DrawableEntity implements ContainerI {
             return this;
         }
 
+        public Builder setFilled(boolean b){
+            this.filled=b;
+            return this;
+        }
+        
         public Builder setOrigin(Point origin) {
             this.origin = origin;
             return this;
         }
         
         public Shape build(){
-            return new Shape(origin,width,height,color,borderThickness,type);
+            return new Shape(origin,width,height,color,filledColor,borderThickness,filled,type);
         }
 
     }
