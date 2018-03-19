@@ -16,6 +16,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import simpledrawer.shapes.Container.Container;
+import simpledrawer.shapes.Container.ContainerI;
 import simpledrawer.shapes.DrawableEntity;
 import simpledrawer.shapes.ShapeFactory;
 import simpledrawer.shapes.Shape;
@@ -44,7 +45,7 @@ public class JSONShapeReader {
      * @param file the file from which to read the JSON
      * @throws FileNotFoundException
      */
-    public void getShapesFromFile(String file, DrawingPanel canvas) throws FileNotFoundException {
+    public void getShapesFromFile(String file,DrawingPanel canvas) throws FileNotFoundException {
 
         try {
             BufferedReader br = new BufferedReader(
@@ -67,7 +68,7 @@ public class JSONShapeReader {
     private void storeShapes(DrawingPanel canvas) {
         //add a null pointer try an catch !!!!URGENT!!!!!!
         for (ShapeEvent se : shapesList.listOfShapes) {
-             canvas.addDrawing(ShapeFactory.createShape(
+            Shape shape = ShapeFactory.createShape(
                     new Shape.Builder()
                             .setOrigin(se.getOrigin())
                             .setHeight(se.getHeight())
@@ -77,8 +78,8 @@ public class JSONShapeReader {
                             .setFilledColor(se.getFilledColor())
                             .setBorderThickness(se.getThickness())
                             .setType(se.type())
-                            .build()));
-
+                            .build());
+            canvas.addDrawing(shape.contain(shape));
         }
     }
 
@@ -91,7 +92,7 @@ public class JSONShapeReader {
 
     public void saveJSON(String file, HashMap<Integer, DrawableI> drawings) {
         List<ShapeEvent> list = new ArrayList<>();
-        for (int i = 0; i < drawings.size(); i++) {
+        for (int i = 0; i < drawings.size(); i++) {;
             if (drawings.get(i) instanceof Container) {
                 Container container = (Container) drawings.get(i);
                 DrawableEntity de = (DrawableEntity) container.getContained();
@@ -99,7 +100,6 @@ public class JSONShapeReader {
                 list.add(new ShapeEvent((Shape) de));
             }
         }
-        System.out.println("list:"+list.size());
         listOfShapes lS = new listOfShapes();
         lS.listOfShapes = list;
 

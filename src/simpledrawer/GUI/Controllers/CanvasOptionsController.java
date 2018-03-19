@@ -382,18 +382,7 @@ public class CanvasOptionsController {
     public void getShapesFromJSON(String path) {
         try {
             JSONShapeReader shapeReader = new JSONShapeReader();
-            shapeReader.getShapesFromFile(path);
-            List listOfShapes = shapeReader.getShapes();
-            canvas.getDrawings().clear();
-            for (Object shape : listOfShapes) {
-                if (shape instanceof Shape) {
-                    Shape actualShape = (Shape) shape;
-                    Container container = actualShape.contain((ContainerI) shape);
-                    canvas.addDrawing(container);
-                    ContainerSpawnAnimation t = new ContainerSpawnAnimation(container, canvas);
-                    t.start();
-                }
-            }
+            shapeReader.getShapesFromFile(path,canvas);
         } catch (FileNotFoundException ex) {
             Logger.getLogger(CanvasOptionsView.class.getName()).log(Level.SEVERE, null, ex);
         }
