@@ -6,7 +6,6 @@
 package simpledrawer;
 
 import drawingpanel.DrawingPanel;
-import java.util.concurrent.locks.ReentrantLock;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import simpledrawer.shapes.Container.Container;
@@ -17,36 +16,39 @@ import simpledrawer.shapes.Container.Container;
  */
 public class ContainerSpawnAnimation extends Thread {
 
-    private Container container;
-    private DrawingPanel canvas;
+    private final Container container;
+    private final DrawingPanel canvas;
 
     public ContainerSpawnAnimation(Container cont, DrawingPanel dp) {
         container = cont;
         canvas = dp;
     }
 
-   
-
     @Override
     public void run() {
-        int old = container.getContained().getWidth();
-        int increaseAmount = container.getContained().getWidth() / 2;
-       
-        System.out.println("old :"+old);
-        System.out.println("new: "+increaseAmount);
-        container.getContained().setHeight(container.getContained().getHeight()/ 2);
-        container.getContained().setWidth(increaseAmount);
-   
-        while (container.getContained().getWidth() <= old) {
-            container.linearResizing(2);
+        int oldWidth = container.getWidth();
+        int oldHeight = container.getHeight();
+        int initialWidth = container.getWidth() / 2;
+        int initialHeight = container.getHeight() / 2;
+        container.setHeight(initialHeight);
+        container.setWidth(initialWidth);
+        while (initialWidth <= oldWidth || initialHeight <= oldHeight) {
+            if (initialHeight <= oldHeight) {
+                initialHeight++;
+                container.setHeight(initialHeight);
+            }
+            if (initialWidth <= oldWidth) {
+                initialWidth++;
+                container.setWidth(initialWidth);
+            }
+
             canvas.refresh();
             try {
-                sleep(10);
+                sleep(2);
             } catch (InterruptedException ex) {
                 Logger.getLogger(ContainerSpawnAnimation.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-
     }
 
 }
