@@ -261,7 +261,7 @@ public class Container extends DrawableEntity implements InteractiveShape, CopyP
 
     @Override
     public List<Point> getStructuralPoints() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return super.getStructuralPoints();
     }
 
     @Override

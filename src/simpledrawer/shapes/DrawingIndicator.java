@@ -5,10 +5,10 @@
  */
 package simpledrawer.shapes;
 
+import drawingpanel.DrawableI;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Point;
-import simpledrawer.DrawableI;
 
 /**
  *

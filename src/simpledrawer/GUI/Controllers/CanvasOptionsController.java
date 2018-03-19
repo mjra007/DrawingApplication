@@ -1,10 +1,10 @@
 package simpledrawer.GUI.Controllers;
 
-import simpledrawer.GUI.Models.Canvas;
+import drawingpanel.DrawableI;
+import drawingpanel.DrawingPanel;
 import simpledrawer.GUI.Models.CanvasOptions;
 import simpledrawer.GUI.Views.CanvasOptionsView;
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
 import java.util.List;
@@ -19,36 +19,36 @@ import java.util.HashMap;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
-import simpledrawer.DrawableI;
+import simpledrawer.ContainerSpawnAnimation;
 import simpledrawer.shapes.DrawableEntity;
 import simpledrawer.Readers.JSONShapeReader;
+import simpledrawer.shapes.Container.Container;
 import simpledrawer.shapes.Shape;
-import simpledrawer.GUI.View;
 import simpledrawer.shapes.Container.ContainerI;
 
 public class CanvasOptionsController {
 
-    private View view;
-    private Canvas entitiesModel;
-    private CanvasOptions guiOptions;
+    private CanvasOptionsView canvasOptionsView;
+    private DrawingPanel canvas;
+    private CanvasOptions canvasOptions;
 
-    public CanvasOptionsController(Canvas m, CanvasOptions guiOptions) {
-        entitiesModel = m;
-        this.guiOptions = guiOptions;
+    public CanvasOptionsController(CanvasOptions guiOptions) {
+        this.canvasOptions = guiOptions;
     }
 
-    public void addView(View view) {
-        this.view = view;
+    public void addViews(CanvasOptionsView view, DrawingPanel view2) {
+        this.canvasOptionsView = view;
+        this.canvas = view2;
         setupActionListeners();
         setupFocusListener();
         setupKeyListener();
         getView().getTxtThickness().setText("2");
         getView().getmenuRectangle().doClick();
-        getView().getFinalColor().setBackground(guiOptions.getCurrentColor());
+        getView().getFinalColor().setBackground(canvasOptions.getCurrentColor());
     }
 
     public CanvasOptionsView getView() {
-        return (CanvasOptionsView) view;
+        return canvasOptionsView;
     }
 
     public void setupActionListeners() {
@@ -115,8 +115,7 @@ public class CanvasOptionsController {
             }
 
         });
-        
-        
+
         getView().getRedLabel().addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -340,7 +339,7 @@ public class CanvasOptionsController {
     }
 
     public void betterGraphicsClicked(ActionEvent evt) {
-        guiOptions.setbetterGraphics(getView().getBetterGraphicsButton().isSelected());
+        canvas.setbetterGraphics(getView().getBetterGraphicsButton().isSelected());
     }
 
     public void redLabelClicked(MouseEvent evt) {
@@ -376,7 +375,7 @@ public class CanvasOptionsController {
     }
 
     public void setFinalColor(Color c) {
-        guiOptions.setCurrentColor(c);
+        canvasOptions.setCurrentColor(c);
         getView().getFinalColor().setBackground(c);
     }
 
@@ -385,11 +384,14 @@ public class CanvasOptionsController {
             JSONShapeReader shapeReader = new JSONShapeReader();
             shapeReader.getShapesFromFile(path);
             List listOfShapes = shapeReader.getShapes();
-            entitiesModel.getDrawings().clear();
+            canvas.getDrawings().clear();
             for (Object shape : listOfShapes) {
                 if (shape instanceof Shape) {
                     Shape actualShape = (Shape) shape;
-                    entitiesModel.addDrawing(actualShape.contain((ContainerI) shape));
+                    Container container = actualShape.contain((ContainerI) shape);
+                    canvas.addDrawing(container);
+                    ContainerSpawnAnimation t = new ContainerSpawnAnimation(container, canvas);
+                    t.start();
                 }
             }
         } catch (FileNotFoundException ex) {
@@ -407,17 +409,16 @@ public class CanvasOptionsController {
             System.out.println("sdsd");
             getShapesFromJSON(fileChooser.getSelectedFile().getAbsolutePath());
         }
-        view.refresh();
 
     }
 
-    public void saveShapesJSON(String path, HashMap<Integer,DrawableI> drawings) {
+    public void saveShapesJSON(String path, HashMap<Integer, DrawableI> drawings) {
         JSONShapeReader shapeReader = new JSONShapeReader();
         shapeReader.saveJSON(path, drawings);
     }
 
     public Color getCurrentColor() {
-        return guiOptions.getCurrentColor();
+        return canvasOptions.getCurrentColor();
     }
 
     public void importXML(ActionEvent evt) {
@@ -430,9 +431,8 @@ public class CanvasOptionsController {
         fileChooser.setFileFilter(JSON);
         int state = fileChooser.showOpenDialog(getView().getmenuExportJSON());
         if (state == JFileChooser.APPROVE_OPTION) {
-            saveShapesJSON(fileChooser.getSelectedFile().getAbsolutePath(),entitiesModel.getDrawings());
+            saveShapesJSON(fileChooser.getSelectedFile().getAbsolutePath(), canvas.getDrawings());
         }
-        view.refresh();
     }
 
     public void exportXML(ActionEvent evt) {
@@ -441,17 +441,15 @@ public class CanvasOptionsController {
 
     public void clearDisplay() {
         // Empty the ArrayList and clear the display.
-        guiOptions.setBackground(Color.white);
+        canvas.setBackground(Color.white);
         getView().getCanvas().setBackground(Color.white);
-        entitiesModel.getDrawings().clear();
-        view.refresh();
+        canvas.getDrawings().clear();
     }
 
     /* rotate the drawing 90 degrees to the left */
     private void rotateLeft(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLeftActionPerformed
-        guiOptions.rotate(-90);
-        getView().getCanvas().repaint();
-    }//GEN-LAST:event_btnLeftActionPerformed
+        canvas.setRotation(-90);
+    }
 
     /* clear the drawing */
     private void clear(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearActionPerformed
@@ -475,8 +473,7 @@ public class CanvasOptionsController {
 
     /* rotate the drawing 90 degrees to the right */
     private void rotateRight(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRightActionPerformed
-        guiOptions.rotate(90);
-        getView().getCanvas().repaint();
+        canvas.setRotation(90);
 
     }
 
@@ -485,7 +482,7 @@ public class CanvasOptionsController {
     }
 
     public void menuTriangle(ActionEvent evt) {
-        guiOptions.setEntityTypeSelected(DrawableEntity.EntityType.TRIANGLE);
+        canvasOptions.setEntityTypeSelected(DrawableEntity.EntityType.TRIANGLE);
         getView().getmenuTriangle().setSelected(true);
         getView().getmenuOval().setSelected(false);
         getView().getmenuRectangle().setSelected(false);
@@ -493,7 +490,7 @@ public class CanvasOptionsController {
     }
 
     public void menuOval(ActionEvent evt) {
-        guiOptions.setEntityTypeSelected(DrawableEntity.EntityType.OVAL);
+        canvasOptions.setEntityTypeSelected(DrawableEntity.EntityType.OVAL);
         getView().getmenuTriangle().setSelected(false);
         getView().getmenuOval().setSelected(true);
         getView().getmenuRectangle().setSelected(false);
@@ -501,7 +498,7 @@ public class CanvasOptionsController {
     }
 
     public void menuRectangle(ActionEvent evt) {
-        guiOptions.setEntityTypeSelected(DrawableEntity.EntityType.RECTANGLE);
+        canvasOptions.setEntityTypeSelected(DrawableEntity.EntityType.RECTANGLE);
         getView().getmenuTriangle().setSelected(false);
         getView().getmenuOval().setSelected(false);
         getView().getmenuRectangle().setSelected(true);
@@ -509,7 +506,7 @@ public class CanvasOptionsController {
     }
 
     public void menuLine(ActionEvent evt) {
-        guiOptions.setEntityTypeSelected(DrawableEntity.EntityType.LINE);
+        canvasOptions.setEntityTypeSelected(DrawableEntity.EntityType.LINE);
         getView().getmenuTriangle().setSelected(false);
         getView().getmenuOval().setSelected(false);
         getView().getmenuRectangle().setSelected(false);
@@ -520,27 +517,30 @@ public class CanvasOptionsController {
         reset();
     }
 
-
     public void reset() {
         clearDisplay();
-        guiOptions.setBackground(Color.white);
+        canvas.setBackground(Color.white);
         getView().getCanvas().setBackground(Color.white);
-        guiOptions.setCurrentColor(new java.awt.Color(0, 0, 0));
+        canvasOptions.setCurrentColor(new java.awt.Color(0, 0, 0));
         getView().getTxtThickness().setText("5");
         getView().getmenuRectangle().doClick();
     }
 
     public int getCurrentRotation() {
-        return guiOptions.getCurrentRotation();
+        return canvas.getRotation();
     }
 
-  
     /* action whatever change has been made to the line thickness */
     private void handleThickness() {
-        int thickness = Integer.valueOf(getView().getTxtThickness().getText());
-        /* only allow thicknesses in the range 1 to 40 */
-        thickness = thickness < 1 || thickness > 40 ? 5 : thickness;
-        guiOptions.setCurrentThickness(thickness);
+        try {
+            int thickness = Integer.valueOf(getView().getTxtThickness().getText());
+            /* only allow thicknesses in the range 1 to 40 */
+            thickness = thickness < 1 || thickness > 40 ? 40 : thickness;
+            canvasOptions.setCurrentThickness(thickness);
+            canvasOptionsView.getTxtThickness().setText(canvasOptions.getCurrentThickness() + "");
+        } catch (NumberFormatException ex) {
+            canvasOptionsView.getTxtThickness().setText(canvasOptions.getCurrentThickness() + "");
+        }
     }
 
 }

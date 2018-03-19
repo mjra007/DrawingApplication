@@ -1,13 +1,13 @@
 package simpledrawer.shapes;
 
 import com.rits.cloning.Cloner;
+import drawingpanel.DrawableI;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
 import simpledrawer.shapes.DrawableEntity.Builder;
-import simpledrawer.DrawableI;
 
 /**
  * A drawableEntity is the most basic object you can have. Everything that can

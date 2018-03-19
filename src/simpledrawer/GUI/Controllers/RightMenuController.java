@@ -5,8 +5,6 @@
  */
 package simpledrawer.GUI.Controllers;
 
-import simpledrawer.GUI.Models.Canvas;
-import simpledrawer.GUI.Views.CanvasView;
 import simpledrawer.GUI.Views.RightMenuView;
 import com.rits.cloning.Cloner;
 import java.awt.Point;
@@ -14,7 +12,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JPopupMenu;
 import simpledrawer.CopyPasteCutI;
-import simpledrawer.DrawableI;
+import drawingpanel.DrawableI;
+import drawingpanel.DrawingPanel;
+import simpledrawer.GUI.Models.CanvasOptions;
 import simpledrawer.shapes.Container.Container;
 import simpledrawer.shapes.Shape;
 
@@ -25,16 +25,16 @@ import simpledrawer.shapes.Shape;
 public class RightMenuController {
 
     RightMenuView popupMenu;
-    CanvasView canvasView;
-    Canvas canvas;
+    DrawingPanel canvas;
+    CanvasOptions canvasOptions;
 
-    public RightMenuController(Canvas canvasModel) {
-        canvas = canvasModel;
+    public RightMenuController(CanvasOptions canvasModel) {
+        canvasOptions = canvasModel;
     }
 
-    public void addView(RightMenuView view, CanvasView canvasView) {
+    public void addView(RightMenuView view, DrawingPanel canvas) {
         this.popupMenu = view;
-        this.canvasView = canvasView;
+        this.canvas = canvas;
         setupListener();
     }
 
@@ -72,27 +72,25 @@ public class RightMenuController {
     }
 
     public void changeBackground(ActionEvent evt) {
-        canvas.getSettings().setBackground(canvas.getSettings().getCurrentColor());
-        this.canvasView.refresh();
+        canvas.setBackground(canvasOptions.getCurrentColor());
     }
 
     public void copy() {
         DrawableI drawable = canvas.getDrawings().get(canvas.getSelectedDrawingIndex());
         if (drawable instanceof CopyPasteCutI) {
             CopyPasteCutI copyIitem = (CopyPasteCutI) drawable;
-            canvas.getSettings().setCopy((CopyPasteCutI) copyIitem.clone());
+            canvasOptions.setCopy((CopyPasteCutI) copyIitem.clone());
         }
     }
 
     public void pasteCopy(Point p) {
-        CopyPasteCutI copyIitem = new Cloner().deepClone(canvas.getSettings().getDrawableCopied());
+        CopyPasteCutI copyIitem = new Cloner().deepClone(canvasOptions.getDrawableCopied());
         copyIitem.setOrigin(p);
         canvas.addDrawing((DrawableI) copyIitem);
-        if (canvas.getSettings().hasCutBeenPerformed()) {
-            canvas.getSettings().setCopy(null);
-            canvas.getSettings().setCut(false);
+        if (canvasOptions.hasCutBeenPerformed()) {
+            canvasOptions.setCopy(null);
+            canvasOptions.setCut(false);
         }
-        canvasView.refresh();
     }
 
     public void cut() {
@@ -100,11 +98,10 @@ public class RightMenuController {
         if (drawable instanceof CopyPasteCutI) {
             CopyPasteCutI copyIitem = (CopyPasteCutI) drawable;
             CopyPasteCutI copied = (CopyPasteCutI) copyIitem.clone();
-            canvas.getSettings().setCopy(copied);
+            canvasOptions.setCopy(copied);
         }
-        canvas.getSettings().setCut(true);
+        canvasOptions.setCut(true);
         canvas.removeSelectedDrawing();
-        canvasView.refresh();
 
     }
 
@@ -114,8 +111,8 @@ public class RightMenuController {
     }
 
     private void pasteButton(ActionEvent evt) {
-        if (canvas.getSettings().getDrawableCopied() != null) {
-            pasteCopy(canvas.getSettings().getLastClick());
+        if (canvasOptions.getDrawableCopied() != null) {
+            pasteCopy(canvasOptions.getLastClick());
         }
     }
 
@@ -128,10 +125,10 @@ public class RightMenuController {
     }
 
     private void fillShape(ActionEvent evt) {
-        Container container = (Container) this.canvas.getSelectedDrawing();
+        Container container = (Container) canvas.getSelectedDrawing();
         Shape shape = (Shape) container.getContained();
-        shape.setFilledColor(canvas.getSettings().getCurrentColor());
-        canvasView.refresh();
+        shape.setFilledColor(canvasOptions.getCurrentColor());
+        canvas.refresh();;
     }
 
     public boolean implementsCutCopyPaste(DrawableI drawable) {

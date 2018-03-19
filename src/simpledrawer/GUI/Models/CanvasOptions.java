@@ -1,6 +1,6 @@
 package simpledrawer.GUI.Models;
 
-import simpledrawer.GUI.DrawingState;
+import simpledrawer.DrawingState;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Point;
@@ -13,15 +13,12 @@ public class CanvasOptions {
 
     private DrawableEntity.EntityType currentEntityType;
     private float currentBrightness;
-    private int currentRotation;
     private int currentThickness;
     private Color currentColor;
-    private Color background;
     private DrawingState state;
     private List<Point> currentPoints;
     private List<Point> savedPoints;
     private Dimension savedDimension;
-    private boolean betterGraphics;
     private CopyPasteCutI copied;
     private boolean cut;
     private Point lastClick;
@@ -30,9 +27,7 @@ public class CanvasOptions {
         currentEntityType = DrawableEntity.EntityType.LINE;
         currentColor = Color.BLACK;
         currentThickness = 2;
-        currentRotation = 0;
         currentBrightness = 1;
-        background = Color.WHITE;
     }
 
     public CopyPasteCutI getDrawableCopied() {
@@ -75,13 +70,6 @@ public class CanvasOptions {
         return this.state;
     }
 
-    public Color getBackground() {
-        return this.background;
-    }
-
-    public void setBackground(Color c) {
-        this.background = c;
-    }
 
     public void addMouseClick(Point point) {
         if (currentPoints == null) {
@@ -144,31 +132,10 @@ public class CanvasOptions {
         this.currentColor = currentColor;
     }
 
-    public int getCurrentRotation() {
-        return this.currentRotation;
-    }
 
     public void setCurrentBrightness(float c) {
         this.currentBrightness = c;
     }
-
-    public void setbetterGraphics(boolean bG) {
-        this.betterGraphics = bG;
-    }
-
-    public boolean getbetterGraphics() {
-        return this.betterGraphics;
-    }
-
-    /* The whole drawing area can be rotated left or right.
-     * The amount passed in is the amount in degrees to rotate.
-     * A negative number roates to the left and a positive number to
-     * the right
-     */
-    public void rotate(int amount) {
-        currentRotation += amount;
-    }
-
     public void setEntityTypeSelected(DrawableEntity.EntityType type) {
         this.currentEntityType = type;
 

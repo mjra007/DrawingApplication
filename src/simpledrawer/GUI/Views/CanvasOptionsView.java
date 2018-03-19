@@ -12,14 +12,13 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import simpledrawer.GUI.View;
 import colormixerbean.ColorMixer;
+import drawingpanel.DrawingPanel;
 
 public class CanvasOptionsView extends javax.swing.JFrame implements View {
 
-    private View drawingPanel; // the drawing panel
     private CanvasOptionsController controller;
 
-    public CanvasOptionsView(View dP) {
-        drawingPanel = dP;
+    public CanvasOptionsView() {
         initComponents();
         setTitle("Drawinit");
         menuRectangle.setSelected(false);
@@ -67,7 +66,7 @@ public class CanvasOptionsView extends javax.swing.JFrame implements View {
         jPanel2 = new javax.swing.JPanel();
         Brush1 = new javax.swing.JPanel();
         betterGraphicsButton = new javax.swing.JCheckBox();
-        panDrawingArea = (JPanel)this.drawingPanel;
+        drawingPanel2 = new drawingpanel.DrawingPanel();
         jMenuBar1 = new javax.swing.JMenuBar();
         menuFile = new javax.swing.JMenu();
         menuImport = new javax.swing.JMenu();
@@ -109,49 +108,49 @@ public class CanvasOptionsView extends javax.swing.JFrame implements View {
 
         red.setBackground(new java.awt.Color(255, 0, 0));
         red.setText("      ");
-        red.setBorder(javax.swing.BorderFactory.createMatteBorder(2, 2, 2, 2, new java.awt.Color(102, 102, 102)));
+        red.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         red.setOpaque(true);
         Colors.add(red);
 
         yellow.setBackground(new java.awt.Color(255, 255, 0));
         yellow.setText("      ");
-        yellow.setBorder(javax.swing.BorderFactory.createMatteBorder(2, 2, 2, 2, new java.awt.Color(102, 102, 102)));
+        yellow.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         yellow.setOpaque(true);
         Colors.add(yellow);
 
         orange.setBackground(new java.awt.Color(255, 102, 0));
         orange.setText("      ");
-        orange.setBorder(javax.swing.BorderFactory.createMatteBorder(2, 2, 2, 2, new java.awt.Color(102, 102, 102)));
+        orange.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         orange.setOpaque(true);
         Colors.add(orange);
 
         blue.setBackground(new java.awt.Color(0, 153, 255));
         blue.setText("      ");
-        blue.setBorder(javax.swing.BorderFactory.createMatteBorder(2, 2, 2, 2, new java.awt.Color(102, 102, 102)));
+        blue.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         blue.setOpaque(true);
         Colors.add(blue);
 
         green.setBackground(new java.awt.Color(0, 204, 0));
         green.setText("      ");
-        green.setBorder(javax.swing.BorderFactory.createMatteBorder(2, 2, 2, 2, new java.awt.Color(102, 102, 102)));
+        green.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         green.setOpaque(true);
         Colors.add(green);
 
         pink.setBackground(new java.awt.Color(255, 51, 204));
         pink.setText("      ");
-        pink.setBorder(javax.swing.BorderFactory.createMatteBorder(2, 2, 2, 2, new java.awt.Color(102, 102, 102)));
+        pink.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         pink.setOpaque(true);
         Colors.add(pink);
 
         black.setBackground(new java.awt.Color(0, 0, 0));
         black.setText("      ");
-        black.setBorder(javax.swing.BorderFactory.createMatteBorder(2, 2, 2, 2, new java.awt.Color(102, 102, 102)));
+        black.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         black.setOpaque(true);
         Colors.add(black);
 
         white.setBackground(new java.awt.Color(255, 255, 255));
         white.setText("      ");
-        white.setBorder(javax.swing.BorderFactory.createMatteBorder(2, 2, 2, 2, new java.awt.Color(102, 102, 102)));
+        white.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         white.setOpaque(true);
         Colors.add(white);
 
@@ -178,11 +177,10 @@ public class CanvasOptionsView extends javax.swing.JFrame implements View {
         Brush.add(lblThickness, gridBagConstraints);
 
         txtThickness.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
-        txtThickness.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        txtThickness.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         txtThickness.setMaximumSize(new java.awt.Dimension(20, 16));
         txtThickness.setMinimumSize(new java.awt.Dimension(20, 16));
         txtThickness.setPreferredSize(new java.awt.Dimension(20, 16));
-        txtThickness.setRequestFocusEnabled(false);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
         Brush.add(txtThickness, gridBagConstraints);
@@ -197,7 +195,7 @@ public class CanvasOptionsView extends javax.swing.JFrame implements View {
 
         finalColor.setBackground(new java.awt.Color(255, 0, 0));
         finalColor.setText("      ");
-        finalColor.setBorder(javax.swing.BorderFactory.createMatteBorder(2, 2, 2, 2, new java.awt.Color(102, 102, 102)));
+        finalColor.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         finalColor.setOpaque(true);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
@@ -245,12 +243,10 @@ public class CanvasOptionsView extends javax.swing.JFrame implements View {
 
         getContentPane().add(toolbar, java.awt.BorderLayout.PAGE_START);
 
-        panDrawingArea.setBackground(new java.awt.Color(255, 255, 255));
-        panDrawingArea.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        panDrawingArea.setFocusCycleRoot(true);
-        panDrawingArea.setPreferredSize(new java.awt.Dimension(800, 500));
-        panDrawingArea.setLayout(new java.awt.CardLayout());
-        getContentPane().add(panDrawingArea, java.awt.BorderLayout.CENTER);
+        drawingPanel2.setMaximumSize(new java.awt.Dimension(1920, 1080));
+        drawingPanel2.setMinimumSize(new java.awt.Dimension(1000, 700));
+        drawingPanel2.setPreferredSize(new java.awt.Dimension(1000, 700));
+        getContentPane().add(drawingPanel2, java.awt.BorderLayout.CENTER);
 
         menuFile.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GUI/Images/file.png"))); // NOI18N
         menuFile.setText("File     ");
@@ -350,7 +346,6 @@ public class CanvasOptionsView extends javax.swing.JFrame implements View {
 
     }//GEN-LAST:event_menuColorMixerMouseEntered
 
-   
     public JMenuBar getmenuBar() {
         return this.jMenuBar1;
     }
@@ -415,17 +410,12 @@ public class CanvasOptionsView extends javax.swing.JFrame implements View {
         return this.menuTriangle;
     }
 
-    public JPanel getCanvas() {
-        return this.panDrawingArea;
+    public DrawingPanel getCanvas() {
+        return this.drawingPanel2;
     }
 
     public JMenuItem getmenuReset() {
         return this.menuReset;
-    }
-
-
-    public JPanel getDrawingPanel() {
-        return (JPanel)this.drawingPanel;
     }
 
     public JLabel getRedLabel() {
@@ -467,8 +457,8 @@ public class CanvasOptionsView extends javax.swing.JFrame implements View {
     public JCheckBox getBetterGraphicsButton() {
         return this.betterGraphicsButton;
     }
-    
-    public JFileChooser getFileChooser(){
+
+    public JFileChooser getFileChooser() {
         return this.jFileChooser1;
     }
 
@@ -482,6 +472,7 @@ public class CanvasOptionsView extends javax.swing.JFrame implements View {
     private colormixerbean.ColorMixer colorMixer1;
     private colormixerbean.ColorMixer colorMixerBean1;
     private javax.swing.JLabel currentColor;
+    private drawingpanel.DrawingPanel drawingPanel2;
     private javax.swing.JLabel finalColor;
     private javax.swing.JLabel green;
     private javax.swing.JFileChooser jFileChooser1;
@@ -506,7 +497,6 @@ public class CanvasOptionsView extends javax.swing.JFrame implements View {
     private javax.swing.JMenu menuShapes;
     private javax.swing.JCheckBoxMenuItem menuTriangle;
     private javax.swing.JLabel orange;
-    public javax.swing.JPanel panDrawingArea;
     private javax.swing.JLabel pink;
     private javax.swing.JLabel red;
     private javax.swing.JPanel toolbar;

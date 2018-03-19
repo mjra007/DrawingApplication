@@ -39,7 +39,6 @@ public class SRectangle extends Shape {
         g2d.setColor(super.getColor());
         g2d.setStroke(new BasicStroke(this.getThickness()));
         g2d.drawRect(getX(), getY(), getWidth(), getHeight());
-        System.out.println(""+getEntityType());
 
     }
 

@@ -30,7 +30,6 @@ public class STriangle extends Shape {
         // Set the thickness of the line
         g2d.setStroke(new BasicStroke(getThickness()));
         g2d.drawPolygon(xx, yy, 3);
-                System.out.println(""+getEntityType());
 
     }
 
