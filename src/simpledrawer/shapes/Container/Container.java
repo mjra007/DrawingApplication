@@ -49,7 +49,6 @@ public class Container extends DrawableEntity implements InteractiveShape, CopyP
                 .build());
         this.contained = c;
     }
-   
 
     /**
      * would probably be better not to do these claculations at runtime, and
@@ -77,6 +76,16 @@ public class Container extends DrawableEntity implements InteractiveShape, CopyP
     @Override
     public int getHeight() {
         return (contained.getHeight()) + 10;
+    }
+
+    public void setHeight(int height) {
+        super.setWidth(height);
+        getContained().setHeight(height - 10);
+    }
+
+    public void setWidth(int width) {
+        super.setWidth(width);
+        getContained().setWidth(width - 10);
     }
 
     /**
@@ -258,7 +267,7 @@ public class Container extends DrawableEntity implements InteractiveShape, CopyP
         }
         return this;
     }
-
+    
     @Override
     public List<Point> getStructuralPoints() {
         return super.getStructuralPoints();
