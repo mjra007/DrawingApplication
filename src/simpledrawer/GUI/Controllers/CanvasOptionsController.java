@@ -401,15 +401,13 @@ public class CanvasOptionsController {
 
     public void importJSON(ActionEvent evt) {
         JFileChooser fileChooser = getView().getFileChooser();
+        fileChooser.setDialogTitle("Choose the drawing you wish to import...");
         FileFilter JSON = new FileNameExtensionFilter("JSON FILE", "JSON");
         fileChooser.setFileFilter(JSON);
         int state = fileChooser.showOpenDialog(getView().getmenuImportJSON());
-        System.out.println("state" + state);
         if (state == JFileChooser.APPROVE_OPTION) {
-            System.out.println("sdsd");
             getShapesFromJSON(fileChooser.getSelectedFile().getAbsolutePath());
         }
-
     }
 
     public void saveShapesJSON(String path, HashMap<Integer, DrawableI> drawings) {
@@ -421,22 +419,18 @@ public class CanvasOptionsController {
         return canvasOptions.getCurrentColor();
     }
 
-    public void importXML(ActionEvent evt) {
-
-    }
-
     public void exportJSON(ActionEvent evt) {
         JFileChooser fileChooser = getView().getFileChooser();
+        fileChooser.setDialogTitle("Create a file to export your drawing...");
         FileFilter JSON = new FileNameExtensionFilter("JSON FILE", "JSON");
         fileChooser.setFileFilter(JSON);
         int state = fileChooser.showOpenDialog(getView().getmenuExportJSON());
         if (state == JFileChooser.APPROVE_OPTION) {
+            if(canvas.getDrawings().size()==0){
+                System.out.println("nothing");
+            }
             saveShapesJSON(fileChooser.getSelectedFile().getAbsolutePath(), canvas.getDrawings());
         }
-    }
-
-    public void exportXML(ActionEvent evt) {
-
     }
 
     public void clearDisplay() {
@@ -444,6 +438,7 @@ public class CanvasOptionsController {
         canvas.setBackground(Color.white);
         getView().getCanvas().setBackground(Color.white);
         canvas.getDrawings().clear();
+        canvas.refresh();
     }
 
     /* rotate the drawing 90 degrees to the left */

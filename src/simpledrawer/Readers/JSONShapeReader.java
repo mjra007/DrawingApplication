@@ -2,7 +2,10 @@ package simpledrawer.Readers;
 
 import com.google.gson.*;
 import drawingpanel.DrawableI;
+import drawingpanel.DrawingPanel;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -10,7 +13,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import simpledrawer.shapes.Container.Container;
+import simpledrawer.shapes.DrawableEntity;
 import simpledrawer.shapes.ShapeFactory;
 import simpledrawer.shapes.Shape;
 
@@ -38,11 +44,19 @@ public class JSONShapeReader {
      * @param file the file from which to read the JSON
      * @throws FileNotFoundException
      */
-    public void getShapesFromFile(String file) throws FileNotFoundException {
-        BufferedReader br = new BufferedReader(
-                new FileReader(file));
-        shapesList = gson.fromJson(br, listOfShapes.class); // load the shapes
-        storeShapes(); // store in separate lists according to type
+    public void getShapesFromFile(String file, DrawingPanel canvas) throws FileNotFoundException {
+
+        try {
+            BufferedReader br = new BufferedReader(
+                    new FileReader(file));
+            System.out.println("" + file);
+            shapesList = gson.fromJson(br, listOfShapes.class); // load the shapes
+            br.close();
+            storeShapes(canvas); // store in separate lists according to type
+
+        } catch (IOException ex) {
+            Logger.getLogger(JSONShapeReader.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -50,18 +64,20 @@ public class JSONShapeReader {
      * create an appropriate shape object according to type and store it in the
      * relevant list.
      */
-    private void storeShapes() {
+    private void storeShapes(DrawingPanel canvas) {
         //add a null pointer try an catch !!!!URGENT!!!!!!
         for (ShapeEvent se : shapesList.listOfShapes) {
-            lshapes.add(ShapeFactory.createShape(
+             canvas.addDrawing(ShapeFactory.createShape(
                     new Shape.Builder()
-                    .setOrigin(se.getOrigin())
-                    .setHeight(se.getHeight())
-                    .setWidth(se.getWidth())
-                    .setFilledColor(se.getFilledColor())
-                    .setBorderThickness(se.getThickness())
-                    .setType(se.type())
-                    .build()));
+                            .setOrigin(se.getOrigin())
+                            .setHeight(se.getHeight())
+                            .setWidth(se.getWidth())
+                            .setColor(se.getColor())
+                            .setFilled(se.getFilled())
+                            .setFilledColor(se.getFilledColor())
+                            .setBorderThickness(se.getThickness())
+                            .setType(se.type())
+                            .build()));
 
         }
     }
@@ -73,55 +89,34 @@ public class JSONShapeReader {
         return this.lshapes;
     }
 
-    /**
-     * This method is used to create some initial data in the JSON file which
-     * can then be loaded later
-     *
-     * @param file the file into which to write the JSON
-     * @param drawings
-     */
     public void saveJSON(String file, HashMap<Integer, DrawableI> drawings) {
         List<ShapeEvent> list = new ArrayList<>();
-        System.out.println("" + drawings.size());
         for (int i = 0; i < drawings.size(); i++) {
             if (drawings.get(i) instanceof Container) {
                 Container container = (Container) drawings.get(i);
-                list.add(new ShapeEvent((Shape) container.getContained()));
+                DrawableEntity de = (DrawableEntity) container.getContained();
+                System.out.println("" + i);
+                list.add(new ShapeEvent((Shape) de));
             }
         }
+        System.out.println("list:"+list.size());
         listOfShapes lS = new listOfShapes();
         lS.listOfShapes = list;
 
         Gson gson = new Gson();
         String json = gson.toJson(lS); // convert the object to a JSON string
-
+        //System.out.println(""+json);
         try {
-            FileWriter writer = new FileWriter(file);
+            File filePath = new File(file);
+            filePath.delete();
+            BufferedWriter writer = new BufferedWriter(
+                    new FileWriter(file));
             writer.write(json); // write the JSON string to file
+            writer.flush();
             writer.close();
-
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    /**
-     * Main method is just for testing in standalone mode
-     *
-     * @param args unused
-     */
-    public static void main(String[] args) throws FileNotFoundException {
-        /*
-         * generateTestJSON("stored_shapes.json"); // uncomment if you wish to 
-         * Create a file of JSON
-         * Read the JSON from file and output number of lines and number
-         * of ovals read.
-         */
-        JSONShapeReader me = new JSONShapeReader();
-        me.getShapesFromFile("stored_shapes.json");
-        System.out.println("Lines loaded = " + me.lshapes.size());
-        System.out.println("Ovals loaded = " + me.lshapes.size());
-
     }
 
 }
