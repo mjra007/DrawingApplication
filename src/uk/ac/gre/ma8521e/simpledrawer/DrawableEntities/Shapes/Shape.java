@@ -1,9 +1,11 @@
-package simpledrawer.shapes;
+package uk.ac.gre.ma8521e.simpledrawer.DrawableEntities.Shapes;
 
-import simpledrawer.shapes.Container.ContainerI;
+import uk.ac.gre.ma8521e.simpledrawer.DrawableEntities.Container.ContainerI;
 import java.awt.Color;
 import java.awt.Point;
 import java.util.Arrays;
+import uk.ac.gre.ma8521e.simpledrawer.DrawableEntities.DrawableEntity;
+import uk.ac.gre.ma8521e.simpledrawer.DrawableEntities.EntityType;
 
 /**
  * Shape object implements DrawableEntity because this shapes are meant to be
@@ -108,23 +110,18 @@ public class Shape extends DrawableEntity implements ContainerI {
         //whether the shape is filled with a color
         private boolean filled = false;
         //if not assigned let s just use the same as the border because why not
-        public Color filledColor;
+        private Color filledColor;
         private EntityType type;
         private int height;
         private int width;
         private Point origin;
         private Color color;
 
-        public Builder setType(DrawableEntity.EntityType type) {
+        public Builder setType(EntityType type) {
             this.type = type;
             return this;
         }
 
-        public Builder isShapeFilled(boolean b){
-            this.filled=b;
-            return this;
-        }
-        
         public Builder setBorderThickness(int t){
             this.borderThickness=t;
             return this;

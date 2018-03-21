@@ -1,5 +1,11 @@
-package simpledrawer.shapes;
+package uk.ac.gre.ma8521e.simpledrawer.DrawableEntities.Shapes;
  
+import uk.ac.gre.ma8521e.simpledrawer.DrawableEntities.Shapes.SLine;
+import uk.ac.gre.ma8521e.simpledrawer.DrawableEntities.Shapes.SOval;
+import uk.ac.gre.ma8521e.simpledrawer.DrawableEntities.Shapes.STriangle;
+import uk.ac.gre.ma8521e.simpledrawer.DrawableEntities.Shapes.SRectangle;
+import uk.ac.gre.ma8521e.simpledrawer.DrawableEntities.Shapes.Shape;
+
 
 public class ShapeFactory {
  
