@@ -5,6 +5,7 @@
  */
 package simpledrawer.shapes;
 
+import uk.ac.gre.ma8521e.simpledrawer.DrawableEntities.DrawableEntity;
 import com.rits.cloning.Cloner;
 import java.awt.Color;
 import java.awt.Graphics2D;
@@ -12,7 +13,7 @@ import java.awt.Point;
 import java.util.Arrays;
 import java.util.List;
 import junit.framework.TestCase;
-import simpledrawer.shapes.DrawableEntity.EntityType;
+import uk.ac.gre.ma8521e.simpledrawer.DrawableEntities.DrawableEntity.EntityType;
 
 /**
  *
