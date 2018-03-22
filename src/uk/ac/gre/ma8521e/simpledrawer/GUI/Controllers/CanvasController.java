@@ -1,5 +1,6 @@
 package uk.ac.gre.ma8521e.simpledrawer.GUI.Controllers;
 
+import uk.ac.gre.ma8521e.simpledrawer.GUI.DrawingState;
 import drawingpanel.DrawableI;
 import drawingpanel.DrawingPanel;
 import uk.ac.gre.ma8521e.simpledrawer.GUI.Views.RightMenuView;
@@ -17,13 +18,13 @@ import java.util.List;
 import javax.swing.SwingUtilities;
 import uk.ac.gre.ma8521e.simpledrawer.DrawableEntities.Container.ContainerSpawnAnimation;
 import uk.ac.gre.ma8521e.simpledrawer.GUI.Models.CanvasOptions;
-import uk.ac.gre.ma8521e.simpledrawer.DrawableEntities.InteractiveShape;
 import uk.ac.gre.ma8521e.simpledrawer.Utils;
 import uk.ac.gre.ma8521e.simpledrawer.DrawableEntities.Container.Container;
 import uk.ac.gre.ma8521e.simpledrawer.DrawableEntities.Container.ContainerI;
 import uk.ac.gre.ma8521e.simpledrawer.DrawableEntities.DrawableEntity;
 import uk.ac.gre.ma8521e.simpledrawer.DrawableEntities.Shapes.Shape;
 import uk.ac.gre.ma8521e.simpledrawer.DrawableEntities.Shapes.ShapeFactory;
+import uk.ac.gre.ma8521e.simpledrawer.DrawableEntities.InteractiveShapeI;
 
 public class CanvasController implements MouseListener, MouseMotionListener, MouseWheelListener {
 
@@ -161,8 +162,8 @@ public class CanvasController implements MouseListener, MouseMotionListener, Mou
                 switch (canvasOptions.getState()) {
                     case MOVING: {
                         DrawableI drawable = canvas.getSelectedDrawing();
-                        if (drawable instanceof InteractiveShape) {
-                            InteractiveShape interactiveSelected = (InteractiveShape) drawable;
+                        if (drawable instanceof InteractiveShapeI) {
+                            InteractiveShapeI interactiveSelected = (InteractiveShapeI) drawable;
                             //figuring out the offset of our first click and the last done
                             int offsetX = e.getX() - canvasOptions.getLastClick().x;
                             int offsetY = e.getY() - canvasOptions.getLastClick().y;
@@ -173,20 +174,20 @@ public class CanvasController implements MouseListener, MouseMotionListener, Mou
                     }
                     case RESIZING_BOTTOM: {
                         DrawableI drawable = canvas.getSelectedDrawing();
-                        InteractiveShape interactiveSelected = (InteractiveShape) drawable;
+                        InteractiveShapeI interactiveSelected = (InteractiveShapeI) drawable;
                         //figuring out the offset of our first click and the last done
                         int offsetX = e.getX() - canvasOptions.getLastClick().x;
                         int offsetY = e.getY() - canvasOptions.getLastClick().y;
-                        canvas.setDrawing(canvas.getSelectedDrawingIndex(), interactiveSelected.resize(canvasOptions.getOldDimensions(), new Point(offsetX, offsetY), InteractiveShape.SelectedPart.BOTTOMSIDE));
+                        canvas.setDrawing(canvas.getSelectedDrawingIndex(), interactiveSelected.resize(canvasOptions.getOldDimensions(), new Point(offsetX, offsetY), InteractiveShapeI.SelectedPart.BOTTOMSIDE));
                         break;
                     }
                     case RESIZING_RIGHTSIDE: {
                         DrawableI drawable = canvas.getSelectedDrawing();
-                        InteractiveShape interactiveSelected = (InteractiveShape) drawable;
+                        InteractiveShapeI interactiveSelected = (InteractiveShapeI) drawable;
                         //figuring out the offset of our first click and the last done
                         int offsetX = e.getX() - canvasOptions.getLastClick().x;
                         int offsetY = e.getY() - canvasOptions.getLastClick().y;
-                        canvas.setDrawing(canvas.getSelectedDrawingIndex(), interactiveSelected.resize(canvasOptions.getOldDimensions(), new Point(offsetX, offsetY), InteractiveShape.SelectedPart.RIGHTSIDE));
+                        canvas.setDrawing(canvas.getSelectedDrawingIndex(), interactiveSelected.resize(canvasOptions.getOldDimensions(), new Point(offsetX, offsetY), InteractiveShapeI.SelectedPart.RIGHTSIDE));
                         break;
                     }
                     default:
@@ -199,18 +200,18 @@ public class CanvasController implements MouseListener, MouseMotionListener, Mou
     @Override
     public void mouseMoved(MouseEvent e) {
         getView().setCursor(Cursor.getDefaultCursor());
-        InteractiveShape intercShape = checkLocforInteractiveShapes(e.getPoint());
-        InteractiveShape.SelectedPart selected = null;
+        InteractiveShapeI intercShape = checkLocforInteractiveShapes(e.getPoint());
+        InteractiveShapeI.SelectedPart selected = null;
         if (intercShape != null) {
 
             selected = checkPartSelected(intercShape, e.getPoint());
-            if (selected.equals(InteractiveShape.SelectedPart.WHOLE)) {
+            if (selected.equals(InteractiveShapeI.SelectedPart.WHOLE)) {
                 getView().setCursor(Cursor.getPredefinedCursor(Cursor.MOVE_CURSOR));
                 canvasOptions.setDrawingState(DrawingState.MOVING);
-            } else if (checkPartSelected(intercShape, e.getPoint()).equals(InteractiveShape.SelectedPart.RIGHTSIDE)) {
+            } else if (checkPartSelected(intercShape, e.getPoint()).equals(InteractiveShapeI.SelectedPart.RIGHTSIDE)) {
                 canvasOptions.setDrawingState(DrawingState.RESIZING_RIGHTSIDE);
                 getView().setCursor(Cursor.getPredefinedCursor(Cursor.E_RESIZE_CURSOR));
-            } else if (checkPartSelected(intercShape, e.getPoint()).equals(InteractiveShape.SelectedPart.BOTTOMSIDE)) {
+            } else if (checkPartSelected(intercShape, e.getPoint()).equals(InteractiveShapeI.SelectedPart.BOTTOMSIDE)) {
                 canvasOptions.setDrawingState(DrawingState.RESIZING_BOTTOM);
                 getView().setCursor(Cursor.getPredefinedCursor(Cursor.S_RESIZE_CURSOR));
             }
@@ -219,12 +220,12 @@ public class CanvasController implements MouseListener, MouseMotionListener, Mou
         }
     }
 
-    public InteractiveShape checkLocforInteractiveShapes(Point locPoint) {
-        InteractiveShape intercShape = null;
+    public InteractiveShapeI checkLocforInteractiveShapes(Point locPoint) {
+        InteractiveShapeI intercShape = null;
         for (Integer key : canvas.getDrawings().keySet()) {
             DrawableI drawable = canvas.getDrawings().get(key);
-            if (drawable instanceof InteractiveShape) {
-                intercShape = (InteractiveShape) drawable;
+            if (drawable instanceof InteractiveShapeI) {
+                intercShape = (InteractiveShapeI) drawable;
                 if (intercShape.contains(locPoint)) {
                     canvas.setDrawingSelected(key);
                     return intercShape;
@@ -236,14 +237,14 @@ public class CanvasController implements MouseListener, MouseMotionListener, Mou
         return intercShape;
     }
 
-    public InteractiveShape.SelectedPart checkPartSelected(InteractiveShape shape, Point p) {
-        InteractiveShape.SelectedPart part = null;
+    public InteractiveShapeI.SelectedPart checkPartSelected(InteractiveShapeI shape, Point p) {
+        InteractiveShapeI.SelectedPart part = null;
         if (shape.bottomSideContains(p)) {
-            part = InteractiveShape.SelectedPart.BOTTOMSIDE;
+            part = InteractiveShapeI.SelectedPart.BOTTOMSIDE;
         } else if (shape.rightSideContains(p)) {
-            part = InteractiveShape.SelectedPart.RIGHTSIDE;
+            part = InteractiveShapeI.SelectedPart.RIGHTSIDE;
         } else if (shape.contains(p)) {
-            part = InteractiveShape.SelectedPart.WHOLE;
+            part = InteractiveShapeI.SelectedPart.WHOLE;
         }
         //   System.out.println("part" + part);
         return part;
@@ -265,7 +266,7 @@ public class CanvasController implements MouseListener, MouseMotionListener, Mou
 
     @Override
     public void mouseWheelMoved(MouseWheelEvent e) {
-        InteractiveShape intercShape = checkLocforInteractiveShapes(e.getPoint());
+        InteractiveShapeI intercShape = checkLocforInteractiveShapes(e.getPoint());
         if (intercShape != null) {
             if (e.getScrollType() == MouseWheelEvent.WHEEL_UNIT_SCROLL) {
                 float amount = e.getWheelRotation() * 5f;

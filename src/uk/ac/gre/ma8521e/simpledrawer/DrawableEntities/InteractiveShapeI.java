@@ -12,7 +12,7 @@ import java.util.List;
  * clicked a shape If Shape is overlaping another rshape etc.
  *
  */
-public interface InteractiveShape {
+public interface InteractiveShapeI {
 
     /*Checks whether the shape contains a certain coordinate 
     * @return true if it does   and false if not
@@ -32,7 +32,7 @@ public interface InteractiveShape {
 
     public Container updateLocation(Point oldPoints, Point origin);
 
-    public Container resize(Dimension oldDimension,Point offset,InteractiveShape.SelectedPart part);
+    public Container resize(Dimension oldDimension,Point offset,InteractiveShapeI.SelectedPart part);
 
     public Container linearResizing(float amount);
 

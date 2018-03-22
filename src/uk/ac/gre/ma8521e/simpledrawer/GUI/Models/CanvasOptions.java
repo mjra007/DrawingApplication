@@ -1,14 +1,13 @@
 package uk.ac.gre.ma8521e.simpledrawer.GUI.Models;
 
-import uk.ac.gre.ma8521e.simpledrawer.GUI.Controllers.DrawingState;
+import uk.ac.gre.ma8521e.simpledrawer.GUI.DrawingState;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
-import uk.ac.gre.ma8521e.simpledrawer.DrawableEntities.CopyPasteCutI;
-import uk.ac.gre.ma8521e.simpledrawer.DrawableEntities.DrawableEntity;
 import uk.ac.gre.ma8521e.simpledrawer.DrawableEntities.EntityType;
+import uk.ac.gre.ma8521e.simpledrawer.DrawableEntities.CloneI;
 
 public class CanvasOptions {
 
@@ -20,7 +19,7 @@ public class CanvasOptions {
     private List<Point> currentPoints;
     private List<Point> savedPoints;
     private Dimension savedDimension;
-    private CopyPasteCutI copied;
+    private CloneI copied;
     private boolean cut;
     private Point lastClick;
 
@@ -31,7 +30,7 @@ public class CanvasOptions {
         currentBrightness = 1;
     }
 
-    public CopyPasteCutI getDrawableCopied() {
+    public CloneI getDrawableCopied() {
         return copied;
     }
     
@@ -47,7 +46,7 @@ public class CanvasOptions {
         return cut;
     }
 
-    public void setCopy(CopyPasteCutI cutpaste) {
+    public void setCopy(CloneI cutpaste) {
         this.copied = cutpaste;
     }
 

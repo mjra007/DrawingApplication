@@ -11,12 +11,12 @@ import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JPopupMenu;
-import uk.ac.gre.ma8521e.simpledrawer.DrawableEntities.CopyPasteCutI;
 import drawingpanel.DrawableI;
 import drawingpanel.DrawingPanel;
 import uk.ac.gre.ma8521e.simpledrawer.GUI.Models.CanvasOptions;
 import uk.ac.gre.ma8521e.simpledrawer.DrawableEntities.Container.Container;
 import uk.ac.gre.ma8521e.simpledrawer.DrawableEntities.Shapes.Shape;
+import uk.ac.gre.ma8521e.simpledrawer.DrawableEntities.CloneI;
 
 /**
  *
@@ -77,14 +77,14 @@ public class RightMenuController {
 
     public void copy() {
         DrawableI drawable = canvas.getDrawings().get(canvas.getSelectedDrawingIndex());
-        if (drawable instanceof CopyPasteCutI) {
-            CopyPasteCutI copyIitem = (CopyPasteCutI) drawable;
-            canvasOptions.setCopy((CopyPasteCutI) copyIitem.clone());
+        if (drawable instanceof CloneI) {
+            CloneI copyIitem = (CloneI) drawable;
+            canvasOptions.setCopy((CloneI) copyIitem.clone());
         }
     }
 
     public void pasteCopy(Point p) {
-        CopyPasteCutI copyIitem = new Cloner().deepClone(canvasOptions.getDrawableCopied());
+        CloneI copyIitem = new Cloner().deepClone(canvasOptions.getDrawableCopied());
         copyIitem.setOrigin(p);
         canvas.addDrawing((DrawableI) copyIitem);
         if (canvasOptions.hasCutBeenPerformed()) {
@@ -95,9 +95,9 @@ public class RightMenuController {
 
     public void cut() {
         DrawableI drawable = canvas.getDrawings().get(canvas.getSelectedDrawingIndex());
-        if (drawable instanceof CopyPasteCutI) {
-            CopyPasteCutI copyIitem = (CopyPasteCutI) drawable;
-            CopyPasteCutI copied = (CopyPasteCutI) copyIitem.clone();
+        if (drawable instanceof CloneI) {
+            CloneI copyIitem = (CloneI) drawable;
+            CloneI copied = (CloneI) copyIitem.clone();
             canvasOptions.setCopy(copied);
         }
         canvasOptions.setCut(true);
@@ -132,7 +132,7 @@ public class RightMenuController {
     }
 
     public boolean implementsCutCopyPaste(DrawableI drawable) {
-        return drawable instanceof CopyPasteCutI;
+        return drawable instanceof CloneI;
     }
 
     public JPopupMenu buildMenu() {

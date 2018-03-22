@@ -11,7 +11,7 @@ import java.awt.Point;
  *
  * @author micae
  */
-public interface CopyPasteCutI {
+public interface CloneI {
     
     public Object clone();
     

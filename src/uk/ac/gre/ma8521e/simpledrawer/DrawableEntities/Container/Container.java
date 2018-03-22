@@ -16,12 +16,12 @@ import java.awt.Point;
 import java.awt.Rectangle;
 import java.util.Arrays;
 import java.util.List;
-import uk.ac.gre.ma8521e.simpledrawer.DrawableEntities.CopyPasteCutI;
-import uk.ac.gre.ma8521e.simpledrawer.DrawableEntities.InteractiveShape;
 import uk.ac.gre.ma8521e.simpledrawer.DrawableEntities.DrawableEntity;
 import uk.ac.gre.ma8521e.simpledrawer.DrawableEntities.EntityType;
+import uk.ac.gre.ma8521e.simpledrawer.DrawableEntities.InteractiveShapeI;
+import uk.ac.gre.ma8521e.simpledrawer.DrawableEntities.CloneI;
 
-public class Container extends DrawableEntity implements InteractiveShape, CopyPasteCutI, ContainerI {
+public class Container extends DrawableEntity implements InteractiveShapeI, CloneI, ContainerI {
 
     //Points required to draw the shape contained
     private DrawableEntity contained = null;
@@ -252,10 +252,10 @@ public class Container extends DrawableEntity implements InteractiveShape, CopyP
     }
 
     @Override
-    public Container resize(Dimension old, Point offset, InteractiveShape.SelectedPart part) {
-        if (part.equals(InteractiveShape.SelectedPart.BOTTOMSIDE) && old.height + offset.y > 5) {
+    public Container resize(Dimension old, Point offset, InteractiveShapeI.SelectedPart part) {
+        if (part.equals(InteractiveShapeI.SelectedPart.BOTTOMSIDE) && old.height + offset.y > 5) {
             this.getContained().setHeight(old.height + offset.y);
-        } else if (part.equals(InteractiveShape.SelectedPart.RIGHTSIDE) && old.width + offset.x > 5) {
+        } else if (part.equals(InteractiveShapeI.SelectedPart.RIGHTSIDE) && old.width + offset.x > 5) {
             this.getContained().setWidth(old.width + offset.x);
 
         }

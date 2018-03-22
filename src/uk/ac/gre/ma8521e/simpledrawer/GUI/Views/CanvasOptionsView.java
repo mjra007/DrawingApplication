@@ -1,5 +1,6 @@
 package uk.ac.gre.ma8521e.simpledrawer.GUI.Views;
 
+import uk.ac.gre.ma8521e.simpledrawer.GUI.View;
 import uk.ac.gre.ma8521e.simpledrawer.GUI.Controllers.CanvasOptionsController;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -12,6 +13,9 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import colormixerbean.ColorMixer;
 import drawingpanel.DrawingPanel;
+import java.text.NumberFormat;
+import javax.swing.JFormattedTextField;
+import javax.swing.text.NumberFormatter;
 
 public class CanvasOptionsView extends javax.swing.JFrame implements View {
 
@@ -59,7 +63,15 @@ public class CanvasOptionsView extends javax.swing.JFrame implements View {
         white = new javax.swing.JLabel();
         Brush = new javax.swing.JPanel();
         lblThickness = new javax.swing.JLabel();
-        txtThickness = new javax.swing.JTextField();
+		NumberFormat format = NumberFormat.getInstance();
+		NumberFormatter formatter = new NumberFormatter(format);
+		formatter.setValueClass(Integer.class);
+		formatter.setMinimum(1);
+		formatter.setMaximum(40);
+		formatter.setAllowsInvalid(true);
+		formatter.setCommitsOnValidEdit(false);
+        txtThickness = new javax.swing.JFormattedTextField(formatter);
+		txtThickness.setFocusLostBehavior(JFormattedTextField.PERSIST);
         currentColor = new javax.swing.JLabel();
         finalColor = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
@@ -180,6 +192,8 @@ public class CanvasOptionsView extends javax.swing.JFrame implements View {
         txtThickness.setMaximumSize(new java.awt.Dimension(20, 16));
         txtThickness.setMinimumSize(new java.awt.Dimension(20, 16));
         txtThickness.setPreferredSize(new java.awt.Dimension(20, 16));
+		
+		
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
         Brush.add(txtThickness, gridBagConstraints);
@@ -247,13 +261,13 @@ public class CanvasOptionsView extends javax.swing.JFrame implements View {
         drawingPanel2.setPreferredSize(new java.awt.Dimension(1000, 700));
         getContentPane().add(drawingPanel2, java.awt.BorderLayout.CENTER);
 
-        menuFile.setIcon(new javax.swing.ImageIcon(getClass().getResource("/simpledrawer/GUI/Images/file.png"))); // NOI18N
+        menuFile.setIcon(new javax.swing.ImageIcon(getClass().getResource("/uk/ac/gre/ma8521e/simpledrawer/GUI/Images/file.png"))); // NOI18N
         menuFile.setText("File     ");
 
         menuImport.setText("Import");
 
         menuImportJSON.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_I, java.awt.event.InputEvent.CTRL_MASK));
-        menuImportJSON.setIcon(new javax.swing.ImageIcon(getClass().getResource("/simpledrawer/GUI/Images/json-file.png"))); // NOI18N
+        menuImportJSON.setIcon(new javax.swing.ImageIcon(getClass().getResource("/uk/ac/gre/ma8521e/simpledrawer/GUI/Images/json-file.png"))); // NOI18N
         menuImportJSON.setText("JSON");
         menuImport.add(menuImportJSON);
 
@@ -262,7 +276,7 @@ public class CanvasOptionsView extends javax.swing.JFrame implements View {
         menuExport.setText("Export");
 
         menuExportJSON.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_E, java.awt.event.InputEvent.CTRL_MASK));
-        menuExportJSON.setIcon(new javax.swing.ImageIcon(getClass().getResource("/simpledrawer/GUI/Images/json-file.png"))); // NOI18N
+        menuExportJSON.setIcon(new javax.swing.ImageIcon(getClass().getResource("/uk/ac/gre/ma8521e/simpledrawer/GUI/Images/json-file.png"))); // NOI18N
         menuExportJSON.setText("JSON");
         menuExport.add(menuExportJSON);
 
@@ -270,11 +284,11 @@ public class CanvasOptionsView extends javax.swing.JFrame implements View {
 
         jMenuBar1.add(menuFile);
 
-        menuEdit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/simpledrawer/GUI/Images/ruler.png"))); // NOI18N
+        menuEdit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/uk/ac/gre/ma8521e/simpledrawer/GUI/Images/ruler.png"))); // NOI18N
         menuEdit.setText("Edit     ");
         menuEdit.setActionCommand(" Edit     ");
 
-        menuRotate.setIcon(new javax.swing.ImageIcon(getClass().getResource("/simpledrawer/GUI/Images/rotate.png"))); // NOI18N
+        menuRotate.setIcon(new javax.swing.ImageIcon(getClass().getResource("/uk/ac/gre/ma8521e/simpledrawer/GUI/Images/rotate.png"))); // NOI18N
         menuRotate.setText("     Rotate     ");
 
         menuLeft.setText("Left");
@@ -285,38 +299,38 @@ public class CanvasOptionsView extends javax.swing.JFrame implements View {
 
         menuEdit.add(menuRotate);
 
-        menuClear.setIcon(new javax.swing.ImageIcon(getClass().getResource("/simpledrawer/GUI/Images/easel.png"))); // NOI18N
+        menuClear.setIcon(new javax.swing.ImageIcon(getClass().getResource("/uk/ac/gre/ma8521e/simpledrawer/GUI/Images/easel.png"))); // NOI18N
         menuClear.setText("Clear Canvas");
         menuEdit.add(menuClear);
 
-        menuReset.setIcon(new javax.swing.ImageIcon(getClass().getResource("/simpledrawer/GUI/Images/settings.png"))); // NOI18N
+        menuReset.setIcon(new javax.swing.ImageIcon(getClass().getResource("/uk/ac/gre/ma8521e/simpledrawer/GUI/Images/settings.png"))); // NOI18N
         menuReset.setText("Reset Settings");
         menuEdit.add(menuReset);
 
         jMenuBar1.add(menuEdit);
 
-        menuShapes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/simpledrawer/GUI/Images/Shapes.png"))); // NOI18N
+        menuShapes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/uk/ac/gre/ma8521e/simpledrawer/GUI/Images/Shapes.png"))); // NOI18N
         menuShapes.setText("Shapes");
 
         menuRectangle.setText("Rectangle");
-        menuRectangle.setIcon(new javax.swing.ImageIcon(getClass().getResource("/simpledrawer/GUI/Images/square.png"))); // NOI18N
+        menuRectangle.setIcon(new javax.swing.ImageIcon(getClass().getResource("/uk/ac/gre/ma8521e/simpledrawer/GUI/Images/square.png"))); // NOI18N
         menuShapes.add(menuRectangle);
 
         menuOval.setText("Oval");
-        menuOval.setIcon(new javax.swing.ImageIcon(getClass().getResource("/simpledrawer/GUI/Images/oval.png"))); // NOI18N
+        menuOval.setIcon(new javax.swing.ImageIcon(getClass().getResource("/uk/ac/gre/ma8521e/simpledrawer/GUI/Images/oval.png"))); // NOI18N
         menuShapes.add(menuOval);
 
         menuTriangle.setText("Triangle");
-        menuTriangle.setIcon(new javax.swing.ImageIcon(getClass().getResource("/simpledrawer/GUI/Images/triangle.png"))); // NOI18N
+        menuTriangle.setIcon(new javax.swing.ImageIcon(getClass().getResource("/uk/ac/gre/ma8521e/simpledrawer/GUI/Images/triangle.png"))); // NOI18N
         menuShapes.add(menuTriangle);
 
         menuLine.setText("Line");
-        menuLine.setIcon(new javax.swing.ImageIcon(getClass().getResource("/simpledrawer/GUI/Images/spiral.png"))); // NOI18N
+        menuLine.setIcon(new javax.swing.ImageIcon(getClass().getResource("/uk/ac/gre/ma8521e/simpledrawer/GUI/Images/spiral.png"))); // NOI18N
         menuShapes.add(menuLine);
 
         jMenuBar1.add(menuShapes);
 
-        menuColorMixer.setIcon(new javax.swing.ImageIcon(getClass().getResource("/simpledrawer/GUI/Images/paint-palette.png"))); // NOI18N
+        menuColorMixer.setIcon(new javax.swing.ImageIcon(getClass().getResource("/uk/ac/gre/ma8521e/simpledrawer/GUI/Images/paint-palette.png"))); // NOI18N
         menuColorMixer.setText("Colour Mixer     ");
         menuColorMixer.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         menuColorMixer.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -349,7 +363,7 @@ public class CanvasOptionsView extends javax.swing.JFrame implements View {
         return this.jMenuBar1;
     }
 
-    public JTextField getTxtThickness() {
+    public JFormattedTextField getTxtThickness() {
         return this.txtThickness;
     }
 
@@ -499,7 +513,7 @@ public class CanvasOptionsView extends javax.swing.JFrame implements View {
     private javax.swing.JLabel pink;
     private javax.swing.JLabel red;
     private javax.swing.JPanel toolbar;
-    private javax.swing.JTextField txtThickness;
+    private javax.swing.JFormattedTextField txtThickness;
     private javax.swing.JLabel white;
     private javax.swing.JLabel yellow;
     // End of variables declaration//GEN-END:variables
@@ -507,6 +521,7 @@ public class CanvasOptionsView extends javax.swing.JFrame implements View {
     @Override
     public void refresh() {
         repaint();
+        
     }
 
 }

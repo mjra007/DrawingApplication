@@ -382,14 +382,19 @@ public class CanvasOptionsController {
 
     public void getShapesFromJSON(String path) {
         try {
-            JSONShapeReader shapeReader = new JSONShapeReader();
-            shapeReader.getShapesFromFile(path,canvas);
+            JSONShapeReader reader = new JSONShapeReader();
+            reader.getShapesFromFile(path, canvas);
+            canvas.setBackground(reader.getBackground());
+            for(DrawableI drawing : reader.getDrawings()){
+                canvas.addDrawing(drawing);
+            }
         } catch (FileNotFoundException ex) {
             Logger.getLogger(CanvasOptionsView.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
     public void importJSON(ActionEvent evt) {
+        this.clearDisplay();
         JFileChooser fileChooser = getView().getFileChooser();
         fileChooser.setDialogTitle("Choose the drawing you wish to import...");
         FileFilter JSON = new FileNameExtensionFilter("JSON FILE", "JSON");
@@ -400,9 +405,9 @@ public class CanvasOptionsController {
         }
     }
 
-    public void saveShapesJSON(String path, HashMap<Integer, DrawableI> drawings) {
+    public void saveShapesJSON(String path) {
         JSONShapeReader shapeReader = new JSONShapeReader();
-        shapeReader.saveJSON(path, drawings);
+        shapeReader.saveJSON(path,this.canvas);
     }
 
     public Color getCurrentColor() {
@@ -416,10 +421,10 @@ public class CanvasOptionsController {
         fileChooser.setFileFilter(JSON);
         int state = fileChooser.showOpenDialog(getView().getmenuExportJSON());
         if (state == JFileChooser.APPROVE_OPTION) {
-            if(canvas.getDrawings().size()==0){
+            if (canvas.getDrawings().size() == 0) {
                 System.out.println("nothing");
             }
-            saveShapesJSON(fileChooser.getSelectedFile().getAbsolutePath(), canvas.getDrawings());
+            saveShapesJSON(fileChooser.getSelectedFile().getAbsolutePath());
         }
     }
 
@@ -507,7 +512,7 @@ public class CanvasOptionsController {
         canvas.setBackground(Color.white);
         getView().getCanvas().setBackground(Color.white);
         canvasOptions.setCurrentColor(new java.awt.Color(0, 0, 0));
-        getView().getTxtThickness().setText("5");
+        getView().getTxtThickness().setText("2");
         getView().getmenuRectangle().doClick();
     }
 
@@ -522,9 +527,9 @@ public class CanvasOptionsController {
             /* only allow thicknesses in the range 1 to 40 */
             thickness = thickness < 1 || thickness > 40 ? 40 : thickness;
             canvasOptions.setCurrentThickness(thickness);
-            canvasOptionsView.getTxtThickness().setText(canvasOptions.getCurrentThickness() + "");
+            canvasOptionsView.getTxtThickness().setValue(canvasOptions.getCurrentThickness());
         } catch (NumberFormatException ex) {
-            canvasOptionsView.getTxtThickness().setText(canvasOptions.getCurrentThickness() + "");
+            canvasOptionsView.getTxtThickness().setValue(null);
         }
     }
 

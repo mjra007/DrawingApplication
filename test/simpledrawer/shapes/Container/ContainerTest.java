@@ -14,8 +14,8 @@ import java.awt.Rectangle;
 import java.util.Arrays;
 import java.util.List;
 import junit.framework.TestCase;
-import uk.ac.gre.ma8521e.simpledrawer.DrawableEntities.InteractiveShape;
 import uk.ac.gre.ma8521e.simpledrawer.DrawableEntities.DrawableEntity;
+import uk.ac.gre.ma8521e.simpledrawer.DrawableEntities.InteractiveShapeI;
 
 /**
  *
@@ -298,7 +298,7 @@ public class ContainerTest extends TestCase {
         System.out.println("resize");
         Dimension old = null;
         Point offset = null;
-        InteractiveShape.SelectedPart part = null;
+        InteractiveShapeI.SelectedPart part = null;
         Container instance = null;
         Container expResult = null;
         Container result = instance.resize(old, offset, part);

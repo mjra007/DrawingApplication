@@ -14,7 +14,7 @@ import java.awt.Point;
  *
  * @author ma8521e
  */
-public class DrawingIndicator implements DrawableI {
+public class DrawingIndicator implements DrawableI{
 
     Point point;
 
