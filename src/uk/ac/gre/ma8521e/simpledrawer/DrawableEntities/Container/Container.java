@@ -122,7 +122,7 @@ public class Container extends DrawableEntity implements InteractiveShapeI, Clon
     @Override
     public Container updateLocation(Point old, Point offset) {
 
-        contained.setOrigin(new Point(old.x + offset.x, old.y + offset.y));
+        getContained().setOrigin(new Point(old.x + offset.x, old.y + offset.y));
 
         return this;
 
@@ -326,7 +326,7 @@ public class Container extends DrawableEntity implements InteractiveShapeI, Clon
     }
 
     @Override
-    public Object clone() {
+    public Object getCopy() {
         return new Cloner().deepClone(this);
     }
 

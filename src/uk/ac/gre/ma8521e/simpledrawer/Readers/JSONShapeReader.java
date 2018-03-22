@@ -18,7 +18,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import uk.ac.gre.ma8521e.simpledrawer.DrawableEntities.Container.Container;
 import uk.ac.gre.ma8521e.simpledrawer.DrawableEntities.DrawableEntity;
-import uk.ac.gre.ma8521e.simpledrawer.DrawableEntities.Shapes.ShapeFactory;
+import uk.ac.gre.ma8521e.simpledrawer.DrawableEntities.Shapes.DrawingFactory;
 import uk.ac.gre.ma8521e.simpledrawer.DrawableEntities.Shapes.Shape;
 
 public class JSONShapeReader {
@@ -68,8 +68,7 @@ public class JSONShapeReader {
         //add a null pointer try an catch !!!!URGENT!!!!!!
         this.drawables = new ArrayList<>();
         for (ShapeEvent se : listData.listOfShapes) {
-            Shape shape = ShapeFactory.createShape(
-                    new Shape.Builder()
+            Shape shape =  new Shape.Builder()
                             .setOrigin(se.getOrigin())
                             .setHeight(se.getHeight())
                             .setWidth(se.getWidth())
@@ -78,7 +77,7 @@ public class JSONShapeReader {
                             .setFilledColor(se.getFilledColor())
                             .setBorderThickness(se.getThickness())
                             .setType(se.type())
-                            .build());
+                            .build();
             drawables.add(shape.contain(shape));
         }
         this.background = listData.listOfOptions.get(0).getBackground();

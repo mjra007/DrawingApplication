@@ -2,6 +2,7 @@ package uk.ac.gre.ma8521e.simpledrawer.DrawableEntities.Shapes;
 
 import uk.ac.gre.ma8521e.simpledrawer.DrawableEntities.Container.ContainerI;
 import java.awt.Color;
+import java.awt.Graphics2D;
 import java.awt.Point;
 import java.util.Arrays;
 import uk.ac.gre.ma8521e.simpledrawer.DrawableEntities.DrawableEntity;
@@ -52,8 +53,6 @@ public class Shape extends DrawableEntity implements ContainerI {
         this.filled=filled;
         this.filledColor=filledColor;
     }
-
-
     /**
      *
      * @return the thickness of this shape
@@ -102,6 +101,7 @@ public class Shape extends DrawableEntity implements ContainerI {
         setFilled(true);
         this.filledColor = c;
     }
+
 
     public static final class Builder {
 

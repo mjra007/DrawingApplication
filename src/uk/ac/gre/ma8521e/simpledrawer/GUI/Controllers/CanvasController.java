@@ -22,8 +22,8 @@ import uk.ac.gre.ma8521e.simpledrawer.Utils;
 import uk.ac.gre.ma8521e.simpledrawer.DrawableEntities.Container.Container;
 import uk.ac.gre.ma8521e.simpledrawer.DrawableEntities.Container.ContainerI;
 import uk.ac.gre.ma8521e.simpledrawer.DrawableEntities.DrawableEntity;
+import uk.ac.gre.ma8521e.simpledrawer.DrawableEntities.DrawingIndicator;
 import uk.ac.gre.ma8521e.simpledrawer.DrawableEntities.Shapes.Shape;
-import uk.ac.gre.ma8521e.simpledrawer.DrawableEntities.Shapes.ShapeFactory;
 import uk.ac.gre.ma8521e.simpledrawer.DrawableEntities.InteractiveShapeI;
 
 public class CanvasController implements MouseListener, MouseMotionListener, MouseWheelListener {
@@ -56,7 +56,6 @@ public class CanvasController implements MouseListener, MouseMotionListener, Mou
     }
 
     public void drawingListChangedListener(PropertyChangeEvent evt) {
-
     }
 
     @Override
@@ -95,26 +94,33 @@ public class CanvasController implements MouseListener, MouseMotionListener, Mou
             if (canvasOptions.getState().equals(DrawingState.MOVING)) {
                 canvasOptions.resetOldClicks();
                 DrawableI drawable = this.canvas.getSelectedDrawing();
-                if (drawable instanceof Container) {
-                    Container container = (Container) drawable;
-                    if (container.getContained() instanceof DrawableEntity) {
-                        DrawableEntity entity = (DrawableEntity) container.getContained();
-                        canvasOptions.addMouseClicktoOldPoints(entity.getStructuralPoints().get(0));
+                if (drawable instanceof InteractiveShapeI) {
+                    if (drawable instanceof Container) {
+                        Container container = (Container) drawable;
+                        canvasOptions.addMouseClicktoOldPoints(container.getContained().getStructuralPoints().get(0));
+
+                    } else {
+                        InteractiveShapeI interactiveShape = (InteractiveShapeI) drawable;
+                        canvasOptions.addMouseClicktoOldPoints(interactiveShape.getStructuralPoints().get(0));
                     }
                 }
             }
-            if (canvas.getSelectedDrawing() instanceof Container) {
-                Container container = (Container) canvas.getSelectedDrawing();
-                canvasOptions.setSavedDimension(new Dimension(container.getWidth(), container.getHeight()));
+            if (canvasOptions.getState().equals(DrawingState.RESIZING_BOTTOM) || canvasOptions.getState().equals(DrawingState.RESIZING_RIGHTSIDE)) {
+                if (canvas.getSelectedDrawing() instanceof InteractiveShapeI) {
+                    InteractiveShapeI interactive = (Container) canvas.getSelectedDrawing();
+                    canvasOptions.setSavedDimension(new Dimension(interactive.getWidth(), interactive.getHeight()));
+                }
             }
             if (canvasOptions.getState().equals(DrawingState.DRAWING)) {
                 if (canvasOptions.getClicks() == null) {
                     //as it is let s add the current point clicked to the current points list
                     canvasOptions.addMouseClick(e.getPoint());
+                    canvas.addDrawing(new DrawingIndicator(e.getPoint()));
                     //in case it is not the first point
                 } else if (canvasOptions.getClicks() != null) {
                     //add point to the list
                     canvasOptions.addMouseClick(e.getPoint());
+                    canvas.addDrawing(new DrawingIndicator(e.getPoint()));
                     //and check wehther we meet the amount of required points for the shape selected
                     //   System.out.print("" + this.canvasOptions.getEntityTypeSelected());
                     System.out.println("size" + canvasOptions.getClicks().size());
@@ -123,29 +129,28 @@ public class CanvasController implements MouseListener, MouseMotionListener, Mou
                         int width = reorganizedCoords.get(1).x - reorganizedCoords.get(0).x;
                         int height = reorganizedCoords.get(1).y - reorganizedCoords.get(0).y;
 
-                        DrawableEntity entity = ShapeFactory.createShape(
-                                new Shape.Builder()
+                        DrawableI drawing= new Shape.Builder()
                                         .setOrigin(reorganizedCoords.get(0))
                                         .setWidth(width)
                                         .setHeight(height)
                                         .setColor(canvasOptions.getCurrentColor())
                                         .setBorderThickness(canvasOptions.getCurrentThickness())
                                         .setType(canvasOptions.getEntityTypeSelected())
-                                        .build());
-                        
-                        if (entity instanceof ContainerI) {
-                            ContainerI entityContainerI = (ContainerI) entity;
+                                        .build();
+
+                        if (drawing instanceof ContainerI) {
+                            ContainerI entityContainerI = (ContainerI) drawing;
                             Container container = entityContainerI.contain(entityContainerI);
                             // System.out.println(""+container.getContained().toString());
-                            ContainerSpawnAnimation t = new ContainerSpawnAnimation(container,canvas);
+                            ContainerSpawnAnimation t = new ContainerSpawnAnimation(container, canvas);
                             t.start();
                             canvas.addDrawing(container);
 
                         } else {
-                            canvas.addDrawing(entity);
+                            canvas.addDrawing(drawing);
                         }
                         //reseting the cpoints selected
-                        canvasOptions.resetClicks();
+                        canvasOptions.resetClicks(canvas.getDrawings());
                     }
                 }
             }
@@ -162,14 +167,12 @@ public class CanvasController implements MouseListener, MouseMotionListener, Mou
                 switch (canvasOptions.getState()) {
                     case MOVING: {
                         DrawableI drawable = canvas.getSelectedDrawing();
-                        if (drawable instanceof InteractiveShapeI) {
-                            InteractiveShapeI interactiveSelected = (InteractiveShapeI) drawable;
-                            //figuring out the offset of our first click and the last done
-                            int offsetX = e.getX() - canvasOptions.getLastClick().x;
-                            int offsetY = e.getY() - canvasOptions.getLastClick().y;
-                            canvas.setDrawing(canvas.getSelectedDrawingIndex(), interactiveSelected.updateLocation(canvasOptions.getOldClicks().get(0), new Point(offsetX, offsetY)));
+                        InteractiveShapeI interactiveSelected = (InteractiveShapeI) drawable;
+                        //figuring out the offset of our first click and the last done
+                        int offsetX = e.getX() - canvasOptions.getLastClick().x;
+                        int offsetY = e.getY() - canvasOptions.getLastClick().y;
+                        canvas.setDrawing(canvas.getSelectedDrawingIndex(), interactiveSelected.updateLocation(canvasOptions.getOldClicks().get(0), new Point(offsetX, offsetY)));
 
-                        }
                         break;
                     }
                     case RESIZING_BOTTOM: {

@@ -7,7 +7,6 @@ import uk.ac.gre.ma8521e.simpledrawer.GUI.Views.CanvasOptionsView;
 import java.awt.Color;
 import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.awt.event.ActionEvent;
@@ -15,17 +14,11 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.util.HashMap;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
-import uk.ac.gre.ma8521e.simpledrawer.DrawableEntities.Container.ContainerSpawnAnimation;
-import uk.ac.gre.ma8521e.simpledrawer.DrawableEntities.DrawableEntity;
-import uk.ac.gre.ma8521e.simpledrawer.Readers.JSONShapeReader;
-import uk.ac.gre.ma8521e.simpledrawer.DrawableEntities.Container.Container;
-import uk.ac.gre.ma8521e.simpledrawer.DrawableEntities.Shapes.Shape;
-import uk.ac.gre.ma8521e.simpledrawer.DrawableEntities.Container.ContainerI;
 import uk.ac.gre.ma8521e.simpledrawer.DrawableEntities.EntityType;
+import uk.ac.gre.ma8521e.simpledrawer.Readers.JSONShapeReader;
 
 public class CanvasOptionsController {
 
@@ -333,6 +326,7 @@ public class CanvasOptionsController {
 
     public void setupKeyListener() {
         getView().getTxtThickness().addKeyListener(new java.awt.event.KeyAdapter() {
+            @Override
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 txtThicknessKeyReleased(evt);
             }
