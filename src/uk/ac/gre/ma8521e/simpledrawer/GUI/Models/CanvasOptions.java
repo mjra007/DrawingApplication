@@ -1,19 +1,13 @@
 package uk.ac.gre.ma8521e.simpledrawer.GUI.Models;
 
-import drawingpanel.DrawableI;
 import uk.ac.gre.ma8521e.simpledrawer.GUI.DrawingState;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Point;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
-import java.util.concurrent.locks.ReadWriteLock;
-import java.util.concurrent.locks.ReentrantReadWriteLock;
 import uk.ac.gre.ma8521e.simpledrawer.DrawableEntities.EntityType;
 import uk.ac.gre.ma8521e.simpledrawer.DrawableEntities.CloneI;
-import uk.ac.gre.ma8521e.simpledrawer.DrawableEntities.DrawingIndicator;
 
 public class CanvasOptions {
 
@@ -39,13 +33,13 @@ public class CanvasOptions {
     public CloneI getDrawableCopied() {
         return copied;
     }
-
-    public Point getLastClick() {
+    
+    public Point getLastClick(){
         return this.lastClick;
     }
-
-    public void addLastClick(Point p) {
-        this.lastClick = p;
+    
+    public void addLastClick(Point p){
+        this.lastClick=p;
     }
 
     public boolean hasCutBeenPerformed() {
@@ -76,6 +70,7 @@ public class CanvasOptions {
         return this.state;
     }
 
+
     public void addMouseClick(Point point) {
         if (currentPoints == null) {
             currentPoints = new ArrayList<>();
@@ -90,13 +85,8 @@ public class CanvasOptions {
         savedPoints.add(point);
     }
 
-    public void resetClicks(HashMap<Integer, DrawableI> drawings) {
+    public void resetClicks() {
         this.currentPoints = null;
-        removeDrawingIndicators(drawings);
-    }
-
-    public void removeDrawingIndicators(HashMap<Integer, DrawableI> drawings) {
-        drawings.entrySet().removeIf(e -> e.getValue() instanceof DrawingIndicator);
     }
 
     /**
@@ -142,10 +132,10 @@ public class CanvasOptions {
         this.currentColor = currentColor;
     }
 
+
     public void setCurrentBrightness(float c) {
         this.currentBrightness = c;
     }
-
     public void setEntityTypeSelected(EntityType type) {
         this.currentEntityType = type;
 

@@ -17,7 +17,6 @@ import uk.ac.gre.ma8521e.simpledrawer.GUI.Models.CanvasOptions;
 import uk.ac.gre.ma8521e.simpledrawer.DrawableEntities.Container.Container;
 import uk.ac.gre.ma8521e.simpledrawer.DrawableEntities.Shapes.Shape;
 import uk.ac.gre.ma8521e.simpledrawer.DrawableEntities.CloneI;
-import uk.ac.gre.ma8521e.simpledrawer.DrawableEntities.DrawableEntity;
 
 /**
  *
@@ -80,16 +79,13 @@ public class RightMenuController {
         DrawableI drawable = canvas.getDrawings().get(canvas.getSelectedDrawingIndex());
         if (drawable instanceof CloneI) {
             CloneI copyIitem = (CloneI) drawable;
-            canvasOptions.setCopy((CloneI) copyIitem.getCopy());
+            canvasOptions.setCopy((CloneI) copyIitem.clone());
         }
     }
 
     public void pasteCopy(Point p) {
         CloneI copyIitem = new Cloner().deepClone(canvasOptions.getDrawableCopied());
-        if (copyIitem instanceof DrawableEntity) {
-            DrawableEntity drawableEntity = (DrawableEntity)copyIitem;
-            drawableEntity.setOrigin(p);
-        }
+        copyIitem.setOrigin(p);
         canvas.addDrawing((DrawableI) copyIitem);
         if (canvasOptions.hasCutBeenPerformed()) {
             canvasOptions.setCopy(null);
@@ -101,7 +97,7 @@ public class RightMenuController {
         DrawableI drawable = canvas.getDrawings().get(canvas.getSelectedDrawingIndex());
         if (drawable instanceof CloneI) {
             CloneI copyIitem = (CloneI) drawable;
-            CloneI copied = (CloneI) copyIitem.getCopy();
+            CloneI copied = (CloneI) copyIitem.clone();
             canvasOptions.setCopy(copied);
         }
         canvasOptions.setCut(true);

@@ -7,6 +7,7 @@ import java.awt.Graphics2D;
 import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
+import uk.ac.gre.ma8521e.simpledrawer.DrawableEntities.DrawableEntity.Builder;
 
 /**
  * A drawableEntity is the most basic object you can have. Everything that can
@@ -15,7 +16,7 @@ import java.util.List;
  * implementation of the draw method to be able to be drawn.
  *
  */
-public abstract class DrawableEntity implements DrawableI  {
+public class DrawableEntity implements DrawableI  {
 
     // Type of entity e.g. line or oval
     private final EntityType TYPE;
@@ -125,7 +126,8 @@ public abstract class DrawableEntity implements DrawableI  {
      *
      * meant to be implemented by the dev when creating a new shape
      */
-        public void draw(Graphics2D g2d) {
+    @Override
+    public void draw(Graphics2D g2d) {
         System.out.println("You forgot to implement the drawing method!");
     }
 
@@ -167,47 +169,47 @@ public abstract class DrawableEntity implements DrawableI  {
     }
 
     @Override
-        public Object clone() {
+    public Object clone() {
         return new Cloner().deepClone(this);
-}
+    }
 
     public static final class Builder {
 
-    private EntityType type;
-    private int height;
-    private int width;
-    private List<Point> structuralPoints = new ArrayList<Point>();
-    private Color color;
+        private EntityType type;
+        private int height;
+        private int width;
+        private List<Point> structuralPoints = new ArrayList<Point>();
+        private Color color;
 
-    public Builder setType(EntityType type) {
-        this.type = type;
-        return this;
+        public Builder setType(EntityType type) {
+            this.type = type;
+            return this;
+        }
+
+        public Builder setHeight(int height) {
+            this.height = height;
+            return this;
+        }
+
+        public Builder setWidth(int width) {
+            this.width = width;
+            return this;
+        }
+
+        public Builder setColor(Color color) {
+            this.color = color;
+            return this;
+        }
+
+        public Builder setStructuralPoints(List<Point> list) {
+            this.structuralPoints = list;
+            return this;
+        }
+
+        public DrawableEntity build() {
+            return new DrawableEntity(structuralPoints, height, width, color, type);
+        }
+
     }
-
-    public Builder setHeight(int height) {
-        this.height = height;
-        return this;
-    }
-
-    public Builder setWidth(int width) {
-        this.width = width;
-        return this;
-    }
-
-    public Builder setColor(Color color) {
-        this.color = color;
-        return this;
-    }
-
-    public Builder setStructuralPoints(List<Point> list) {
-        this.structuralPoints = list;
-        return this;
-    }
-
-    public DrawableEntity build() {
-        return new DrawableEntity(structuralPoints, height, width, color, type) {};
-    }
-
-}
 
 }

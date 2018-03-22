@@ -39,8 +39,4 @@ public interface InteractiveShapeI {
     public Container rotate(float amount);
 
     public List<Point> getStructuralPoints();
-    
-    public int getHeight();
-    
-    public int getWidth();
 }
