@@ -2,7 +2,6 @@ package uk.ac.gre.ma8521e.simpledrawer.Readers;
 
 import java.awt.Color;
 import java.awt.Point;
-import uk.ac.gre.ma8521e.simpledrawer.DrawableEntities.DrawableEntity;
 import uk.ac.gre.ma8521e.simpledrawer.DrawableEntities.EntityType;
 import uk.ac.gre.ma8521e.simpledrawer.DrawableEntities.Shapes.Shape;
 
