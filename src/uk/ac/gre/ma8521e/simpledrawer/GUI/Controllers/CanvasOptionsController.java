@@ -387,6 +387,11 @@ public class CanvasOptionsController {
             canvas.setBackground(reader.getBackground());
             for(DrawableI drawing : reader.getDrawings()){
                 canvas.addDrawing(drawing);
+                if(drawing instanceof ContainerI){
+                    ContainerI containerI =(ContainerI)drawing;
+                    containerI.contain(containerI);
+                }
+                   
             }
         } catch (FileNotFoundException ex) {
             Logger.getLogger(CanvasOptionsView.class.getName()).log(Level.SEVERE, null, ex);
