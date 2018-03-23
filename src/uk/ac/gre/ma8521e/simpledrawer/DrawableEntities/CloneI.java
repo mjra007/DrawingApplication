@@ -13,7 +13,7 @@ import java.awt.Point;
  */
 public interface CloneI {
     
-    public Object clone();
+    public Object getCopy();
     
     public void setOrigin(Point p);
     

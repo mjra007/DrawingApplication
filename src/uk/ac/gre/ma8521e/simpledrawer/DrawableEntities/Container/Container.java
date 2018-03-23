@@ -326,7 +326,7 @@ public class Container extends DrawableEntity implements InteractiveShapeI, Clon
     }
 
     @Override
-    public Object clone() {
+    public Object getCopy() {
         return new Cloner().deepClone(this);
     }
 

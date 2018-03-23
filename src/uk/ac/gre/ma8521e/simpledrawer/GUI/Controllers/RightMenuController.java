@@ -79,13 +79,14 @@ public class RightMenuController {
         DrawableI drawable = canvas.getDrawings().get(canvas.getSelectedDrawingIndex());
         if (drawable instanceof CloneI) {
             CloneI copyIitem = (CloneI) drawable;
-            canvasOptions.setCopy((CloneI) copyIitem.clone());
+            canvasOptions.setCopy((CloneI) copyIitem.getCopy());
         }
     }
 
     public void pasteCopy(Point p) {
         CloneI copyIitem = new Cloner().deepClone(canvasOptions.getDrawableCopied());
         copyIitem.setOrigin(p);
+        
         canvas.addDrawing((DrawableI) copyIitem);
         if (canvasOptions.hasCutBeenPerformed()) {
             canvasOptions.setCopy(null);
@@ -97,7 +98,7 @@ public class RightMenuController {
         DrawableI drawable = canvas.getDrawings().get(canvas.getSelectedDrawingIndex());
         if (drawable instanceof CloneI) {
             CloneI copyIitem = (CloneI) drawable;
-            CloneI copied = (CloneI) copyIitem.clone();
+            CloneI copied = (CloneI) copyIitem.getCopy();
             canvasOptions.setCopy(copied);
         }
         canvasOptions.setCut(true);

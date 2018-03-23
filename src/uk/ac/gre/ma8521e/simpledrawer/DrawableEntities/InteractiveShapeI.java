@@ -32,11 +32,15 @@ public interface InteractiveShapeI {
 
     public Container updateLocation(Point oldPoints, Point origin);
 
-    public Container resize(Dimension oldDimension,Point offset,InteractiveShapeI.SelectedPart part);
+    public Container resize(Dimension oldDimension, Point offset, InteractiveShapeI.SelectedPart part);
 
     public Container linearResizing(float amount);
 
     public Container rotate(float amount);
 
     public List<Point> getStructuralPoints();
+
+    public int getHeight();
+
+    public int getWidth();
 }
