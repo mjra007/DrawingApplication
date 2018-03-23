@@ -25,11 +25,8 @@ import uk.ac.gre.ma8521e.simpledrawer.DrawableEntities.DrawableEntity;
 import uk.ac.gre.ma8521e.simpledrawer.DrawableEntities.DrawingIndicator;
 import uk.ac.gre.ma8521e.simpledrawer.DrawableEntities.Shapes.Shape;
 import uk.ac.gre.ma8521e.simpledrawer.DrawableEntities.InteractiveShapeI;
-import uk.ac.gre.ma8521e.simpledrawer.GUI.Controller;
-import uk.ac.gre.ma8521e.simpledrawer.GUI.Model;
-import uk.ac.gre.ma8521e.simpledrawer.GUI.View;
 
-public class CanvasController implements Controller,MouseListener, MouseMotionListener, MouseWheelListener {
+public class CanvasController implements MouseListener, MouseMotionListener, MouseWheelListener {
 
     private DrawingPanel canvas;
     private CanvasOptions canvasOptions;
@@ -279,16 +276,6 @@ public class CanvasController implements Controller,MouseListener, MouseMotionLi
                 intercShape.linearResizing(amount);
             }
         }
-    }
-
-    @Override
-    public void addModel(Model model) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void addView(View view) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }

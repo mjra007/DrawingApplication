@@ -18,15 +18,12 @@ import uk.ac.gre.ma8521e.simpledrawer.DrawableEntities.Container.Container;
 import uk.ac.gre.ma8521e.simpledrawer.DrawableEntities.Shapes.Shape;
 import uk.ac.gre.ma8521e.simpledrawer.DrawableEntities.CloneI;
 import uk.ac.gre.ma8521e.simpledrawer.DrawableEntities.DrawableEntity;
-import uk.ac.gre.ma8521e.simpledrawer.GUI.Controller;
-import uk.ac.gre.ma8521e.simpledrawer.GUI.Model;
-import uk.ac.gre.ma8521e.simpledrawer.GUI.View;
 
 /**
  *
  * @author ma8521e
  */
-public class RightMenuController implements Controller{
+public class RightMenuController {
 
     RightMenuView popupMenu;
     DrawingPanel canvas;
@@ -155,16 +152,6 @@ public class RightMenuController implements Controller{
             newMenu.add(popupMenu.getCut());
         }
         return newMenu;
-    }
-
-    @Override
-    public void addModel(Model model) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void addView(View view) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }

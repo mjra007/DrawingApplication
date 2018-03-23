@@ -16,7 +16,6 @@ import drawingpanel.DrawingPanel;
 import java.text.NumberFormat;
 import javax.swing.JFormattedTextField;
 import javax.swing.text.NumberFormatter;
-import uk.ac.gre.ma8521e.simpledrawer.GUI.Controller;
 
 public class CanvasOptionsView extends javax.swing.JFrame implements View {
 
@@ -523,11 +522,6 @@ public class CanvasOptionsView extends javax.swing.JFrame implements View {
     public void refresh() {
         repaint();
         
-    }
-
-    @Override
-    public void addController(Controller controller) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }

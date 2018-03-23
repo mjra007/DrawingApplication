@@ -18,6 +18,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import uk.ac.gre.ma8521e.simpledrawer.DrawableEntities.Container.Container;
 import uk.ac.gre.ma8521e.simpledrawer.DrawableEntities.DrawableEntity;
+import uk.ac.gre.ma8521e.simpledrawer.DrawableEntities.Shapes.DrawingFactory;
 import uk.ac.gre.ma8521e.simpledrawer.DrawableEntities.Shapes.Shape;
 
 public class JSONShapeReader {

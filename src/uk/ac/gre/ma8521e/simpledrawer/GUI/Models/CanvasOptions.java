@@ -7,14 +7,15 @@ import java.awt.Dimension;
 import java.awt.Point;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.concurrent.locks.ReadWriteLock;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
 import uk.ac.gre.ma8521e.simpledrawer.DrawableEntities.EntityType;
 import uk.ac.gre.ma8521e.simpledrawer.DrawableEntities.CloneI;
 import uk.ac.gre.ma8521e.simpledrawer.DrawableEntities.DrawingIndicator;
-import uk.ac.gre.ma8521e.simpledrawer.GUI.Controller;
-import uk.ac.gre.ma8521e.simpledrawer.GUI.Model;
 
-public class CanvasOptions implements Model{
+public class CanvasOptions {
 
     private EntityType currentEntityType;
     private float currentBrightness;
@@ -27,7 +28,7 @@ public class CanvasOptions implements Model{
     private CloneI copied;
     private boolean cut;
     private Point lastClick;
-    
+
     public CanvasOptions() {
         currentEntityType = EntityType.LINE;
         currentColor = Color.BLACK;
@@ -152,10 +153,5 @@ public class CanvasOptions implements Model{
 
     public EntityType getEntityTypeSelected() {
         return this.currentEntityType;
-    }
-
-    @Override
-    public void addController(Controller controller) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }
