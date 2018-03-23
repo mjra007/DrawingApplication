@@ -18,9 +18,12 @@ import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import uk.ac.gre.ma8521e.simpledrawer.DrawableEntities.EntityType;
+import uk.ac.gre.ma8521e.simpledrawer.GUI.Controller;
+import uk.ac.gre.ma8521e.simpledrawer.GUI.Model;
+import uk.ac.gre.ma8521e.simpledrawer.GUI.View;
 import uk.ac.gre.ma8521e.simpledrawer.Readers.JSONShapeReader;
 
-public class CanvasOptionsController {
+public class CanvasOptionsController implements Controller{
 
     private CanvasOptionsView canvasOptionsView;
     private DrawingPanel canvas;
@@ -525,6 +528,16 @@ public class CanvasOptionsController {
         } catch (NumberFormatException ex) {
             canvasOptionsView.getTxtThickness().setValue(null);
         }
+    }
+
+    @Override
+    public void addModel(Model model) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void addView(View view) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }

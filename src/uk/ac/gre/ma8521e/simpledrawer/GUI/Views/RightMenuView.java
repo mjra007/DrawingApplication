@@ -12,7 +12,7 @@ import javax.swing.JPopupMenu;
 
 
 
-public class RightMenuView extends JPopupMenu {
+public class RightMenuView extends JPopupMenu implements View {
 
     private JMenuItem fill = new JMenuItem("Fill");
     private JMenuItem delete = new JMenuItem("Delete");
