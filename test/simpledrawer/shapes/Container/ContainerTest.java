@@ -15,6 +15,7 @@ import java.util.Arrays;
 import java.util.List;
 import junit.framework.TestCase;
 import uk.ac.gre.ma8521e.simpledrawer.DrawableEntities.DrawableEntity;
+import uk.ac.gre.ma8521e.simpledrawer.DrawableEntities.EntityType;
 import uk.ac.gre.ma8521e.simpledrawer.DrawableEntities.InteractiveShapeI;
 
 /**
@@ -37,11 +38,11 @@ public class ContainerTest extends TestCase {
      */
     public void testGetOrigin() {
         System.out.println("getOrigin");
-        Container instance = new Container(new DrawableEntity.Builder()
+        Container instance = new Container(new DrawableEntity.Builder(structuralPoints, height, width, color, filledColor, borderThickness, filled, type)
                 .setColor(Color.yellow)
                 .setHeight(100)
                 .setWidth(400)
-                .setType(DrawableEntity.EntityType.LINE)
+                .setType(EntityType.LINE)
                 .setStructuralPoints(Arrays.asList(new Point(10, 10), new Point(10 + 400, 10 - 200)))
                 .build());
         Point expResult = new Point(5, 5);
@@ -54,11 +55,11 @@ public class ContainerTest extends TestCase {
      */
     public void testGetWidth() {
         System.out.println("getWidth");
-        Container instance = new Container(new DrawableEntity.Builder()
+        Container instance = new Container(new DrawableEntity.Builder(structuralPoints, height, width, color, filledColor, borderThickness, filled, type)
                 .setColor(Color.yellow)
                 .setHeight(100)
                 .setWidth(400)
-                .setType(DrawableEntity.EntityType.LINE)
+                .setType(EntityType.LINE)
                 .setStructuralPoints(Arrays.asList(new Point(10, 10), new Point(10 + 400, 10 - 200)))
                 .build());
         int expResult = 400 + 10;
@@ -71,11 +72,11 @@ public class ContainerTest extends TestCase {
      */
     public void testGetHeight() {
         System.out.println("getHeight");
-        Container instance = new Container(new DrawableEntity.Builder()
+        Container instance = new Container(new DrawableEntity.Builder(structuralPoints, height, width, color, filledColor, borderThickness, filled, type)
                 .setColor(Color.yellow)
                 .setHeight(100)
                 .setWidth(400)
-                .setType(DrawableEntity.EntityType.LINE)
+                .setType(EntityType.LINE)
                 .setStructuralPoints(Arrays.asList(new Point(10, 10), new Point(10 + 400, 10 - 200)))
                 .build());
         int expResult = 100 + 10;
@@ -89,11 +90,11 @@ public class ContainerTest extends TestCase {
     public void testSetHeight() {
         System.out.println("setHeight");
         int height = 100 + 10;
-        Container instance = new Container(new DrawableEntity.Builder()
+        Container instance = new Container(new DrawableEntity.Builder(structuralPoints, height, width, color, filledColor, borderThickness, filled, type)
                 .setColor(Color.yellow)
                 .setHeight(100)
                 .setWidth(400)
-                .setType(DrawableEntity.EntityType.LINE)
+                .setType(EntityType.LINE)
                 .setStructuralPoints(Arrays.asList(new Point(10, 10), new Point(10 + 400, 10 - 200)))
                 .build());
         instance.setHeight(height);
@@ -106,11 +107,11 @@ public class ContainerTest extends TestCase {
     public void testSetWidth() {
         System.out.println("setWidth");
         int width = 200 + 10;
-        Container instance = new Container(new DrawableEntity.Builder()
+        Container instance = new Container(new DrawableEntity.Builder(structuralPoints, height, width, color, filledColor, borderThickness, filled, type)
                 .setColor(Color.yellow)
                 .setHeight(100)
                 .setWidth(400)
-                .setType(DrawableEntity.EntityType.LINE)
+                .setType(EntityType.LINE)
                 .setStructuralPoints(Arrays.asList(new Point(10, 10), new Point(10 + 400, 10 - 200)))
                 .build());
         instance.setWidth(width);
@@ -122,11 +123,11 @@ public class ContainerTest extends TestCase {
      */
     public void testGetEndPoint() {
         System.out.println("getEndPoint");
-        Container instance = new Container(new DrawableEntity.Builder()
+        Container instance = new Container(new DrawableEntity.Builder(structuralPoints, height, width, color, filledColor, borderThickness, filled, type)
                 .setColor(Color.yellow)
                 .setHeight(100)
                 .setWidth(400)
-                .setType(DrawableEntity.EntityType.LINE)
+                .setType(EntityType.LINE)
                 .setStructuralPoints(Arrays.asList(new Point(10, 10), new Point(10 + 400, 10 +100)))
                 .build());
         Point expResult = new Point((10 + 400)+5, (100 + 10)+5);

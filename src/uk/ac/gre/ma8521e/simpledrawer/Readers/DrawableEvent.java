@@ -2,10 +2,10 @@ package uk.ac.gre.ma8521e.simpledrawer.Readers;
 
 import java.awt.Color;
 import java.awt.Point;
+import uk.ac.gre.ma8521e.simpledrawer.DrawableEntities.DrawableEntity;
 import uk.ac.gre.ma8521e.simpledrawer.DrawableEntities.EntityType;
-import uk.ac.gre.ma8521e.simpledrawer.DrawableEntities.Shapes.Shape;
 
-public class ShapeEvent {
+public class DrawableEvent {
 
     private Point origin;
     private int height;
@@ -16,7 +16,7 @@ public class ShapeEvent {
     private Color color;
     private EntityType type;
 
-    private ShapeEvent(Point o, int h, int w, int bT, boolean f, Color fC, Color c, EntityType t) {
+    private DrawableEvent(Point o, int h, int w, int bT, boolean f, Color fC, Color c, EntityType t) {
         this.origin = o;
         this.height = h;
         this.width = w;
@@ -27,7 +27,7 @@ public class ShapeEvent {
         this.type = t;
     }
 
-    public ShapeEvent(Shape shape) {
+    public DrawableEvent(DrawableEntity shape) {
         this.origin = shape.getOrigin();
         this.height = shape.getHeight();
         this.width = shape.getWidth();

@@ -14,6 +14,7 @@ import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.Arrays;
 import java.util.List;
 import javax.swing.SwingUtilities;
 import uk.ac.gre.ma8521e.simpledrawer.DrawableEntities.Container.ContainerSpawnAnimation;
@@ -23,9 +24,8 @@ import uk.ac.gre.ma8521e.simpledrawer.DrawableEntities.Container.Container;
 import uk.ac.gre.ma8521e.simpledrawer.DrawableEntities.Container.ContainerI;
 import uk.ac.gre.ma8521e.simpledrawer.DrawableEntities.DrawableEntity;
 import uk.ac.gre.ma8521e.simpledrawer.DrawableEntities.DrawingIndicator;
-import uk.ac.gre.ma8521e.simpledrawer.DrawableEntities.Shapes.Shape;
 import uk.ac.gre.ma8521e.simpledrawer.DrawableEntities.InteractiveShapeI;
-import uk.ac.gre.ma8521e.simpledrawer.DrawableEntities.Shapes.ShapeFactory;
+import uk.ac.gre.ma8521e.simpledrawer.DrawableEntities.DrawableFactory;
 
 public class CanvasController implements MouseListener, MouseMotionListener, MouseWheelListener {
 
@@ -124,20 +124,19 @@ public class CanvasController implements MouseListener, MouseMotionListener, Mou
                     canvas.addDrawing(new DrawingIndicator(e.getPoint()));
                     //and check wehther we meet the amount of required points for the shape selected
                     //   System.out.print("" + this.canvasOptions.getEntityTypeSelected());
-                    System.out.println("size" + canvasOptions.getClicks().size());
                     if (canvasOptions.getClicks().size() == 2) {
-                        List<Point> reorganizedCoords = Utils.getReorganizedCoords(canvasOptions.getClicks().get(0), canvasOptions.getClicks().get(1));
-                        int width = reorganizedCoords.get(1).x - reorganizedCoords.get(0).x;
-                        int height = reorganizedCoords.get(1).y - reorganizedCoords.get(0).y;
-
-                        DrawableI drawing=ShapeFactory.createShape(new Shape.Builder()
-                                        .setOrigin(reorganizedCoords.get(0))
+                        List<Point> coords = Arrays.asList(canvasOptions.getClicks().get(0), canvasOptions.getClicks().get(1));
+                        int width = coords.get(1).x - coords.get(0).x;
+                        int height = coords.get(1).y - coords.get(0).y;
+                        DrawableEntity builder= new DrawableEntity.Builder()
+                                        .setStructuralPoints(coords)
                                         .setWidth(width)
                                         .setHeight(height)
                                         .setColor(canvasOptions.getCurrentColor())
                                         .setBorderThickness(canvasOptions.getCurrentThickness())
                                         .setType(canvasOptions.getEntityTypeSelected())
-                                        .build());
+                                        .build();
+                        DrawableI drawing=(DrawableI)DrawableFactory.createDrawable(builder);
                         if (drawing instanceof ContainerI) {
                             ContainerI entityContainerI = (ContainerI) drawing;
                             Container container = entityContainerI.contain(entityContainerI);

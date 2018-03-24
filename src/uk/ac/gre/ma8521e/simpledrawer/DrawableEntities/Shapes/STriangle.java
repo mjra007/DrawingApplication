@@ -1,14 +1,16 @@
 package uk.ac.gre.ma8521e.simpledrawer.DrawableEntities.Shapes;
 
+import uk.ac.gre.ma8521e.simpledrawer.DrawableEntities.Shape;
 import java.awt.BasicStroke;
 import java.awt.Graphics2D;
 import java.awt.Point;
+import uk.ac.gre.ma8521e.simpledrawer.DrawableEntities.DrawableEntity;
 
 
-public class STriangle extends Shape {
+public class STriangle extends Shape  {
 
-    public STriangle(Shape shape) {
-        super(shape);    
+    public STriangle(DrawableEntity drawable) {
+        super(drawable);
     }
     
     @Override
@@ -37,6 +39,5 @@ public class STriangle extends Shape {
     public String toString() {
         return "Color: " + super.getColor() + " Thick: " + super.getThickness() + " Points: " + super.getStructuralPoints().toString() + " width: " + super.getWidth() + " height: " + super.getHeight() + "  " + super.getX() + " , " + super.getX();
     }
-
 
 }

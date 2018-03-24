@@ -4,6 +4,7 @@ import com.google.gson.*;
 import drawingpanel.DrawableI;
 import drawingpanel.DrawingPanel;
 import java.awt.Color;
+import java.awt.Point;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -12,19 +13,20 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import uk.ac.gre.ma8521e.simpledrawer.DrawableEntities.Container.Container;
 import uk.ac.gre.ma8521e.simpledrawer.DrawableEntities.DrawableEntity;
-import uk.ac.gre.ma8521e.simpledrawer.DrawableEntities.Shapes.ShapeFactory;
-import uk.ac.gre.ma8521e.simpledrawer.DrawableEntities.Shapes.Shape;
+import uk.ac.gre.ma8521e.simpledrawer.DrawableEntities.DrawableFactory;
+import uk.ac.gre.ma8521e.simpledrawer.DrawableEntities.Shape;
 
 public class JSONShapeReader {
 
     private static class listData {
 
-        List<ShapeEvent> listOfShapes;
+        List<DrawableEvent> listOfShapes;
         List<CanvasOptionsEvent> listOfOptions;
     }
 
@@ -66,10 +68,10 @@ public class JSONShapeReader {
     private void storeData() {
         //add a null pointer try an catch !!!!URGENT!!!!!!
         this.drawables = new ArrayList<>();
-        for (ShapeEvent se : listData.listOfShapes) {
-            Shape shape = ShapeFactory.createShape(
-                    new Shape.Builder()
-                            .setOrigin(se.getOrigin())
+        for (DrawableEvent se : listData.listOfShapes) {
+            DrawableEntity drawable = DrawableFactory.createDrawable(
+                    new DrawableEntity.Builder()
+                            .setStructuralPoints(Arrays.asList(se.getOrigin(), new Point(se.getOrigin().x + se.getWidth(), se.getOrigin().y + se.getHeight())))
                             .setHeight(se.getHeight())
                             .setWidth(se.getWidth())
                             .setColor(se.getColor())
@@ -78,7 +80,7 @@ public class JSONShapeReader {
                             .setBorderThickness(se.getThickness())
                             .setType(se.type())
                             .build());
-            drawables.add(shape.contain(shape));
+            drawables.add(drawable.contain(drawable));
         }
         this.background = listData.listOfOptions.get(0).getBackground();
     }
@@ -95,7 +97,7 @@ public class JSONShapeReader {
     }
 
     public void saveJSON(String file, DrawingPanel dp) {
-        List<ShapeEvent> shapeList = new ArrayList<>();
+        List<DrawableEvent> shapeList = new ArrayList<>();
         List<CanvasOptionsEvent> optionsList = new ArrayList<>();
         if(dp.getDrawings().isEmpty()){
             System.out.println("it is empty");    
@@ -105,7 +107,7 @@ public class JSONShapeReader {
             if(drawings instanceof Container){
                 Container container = (Container) drawings;
                 DrawableEntity de = (DrawableEntity) container.getContained();
-                shapeList.add(new ShapeEvent((Shape) de));
+                shapeList.add(new DrawableEvent((DrawableEntity) de));
             }
         }
         optionsList.add(new CanvasOptionsEvent(dp.getBackground()));

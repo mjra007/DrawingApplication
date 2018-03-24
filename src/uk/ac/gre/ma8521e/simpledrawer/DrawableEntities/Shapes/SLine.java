@@ -2,27 +2,14 @@ package uk.ac.gre.ma8521e.simpledrawer.DrawableEntities.Shapes;
 
 import java.awt.BasicStroke;
 import java.awt.Graphics2D;
-import java.awt.Point;
+import uk.ac.gre.ma8521e.simpledrawer.DrawableEntities.DrawableEntity;
+import uk.ac.gre.ma8521e.simpledrawer.DrawableEntities.Shape;
 
 public class SLine extends Shape {
 
     //To draw a line you only need a starting point and end point
-    public SLine(Shape shape) {
-        super(shape);
-    }
-
-    /**
-     * @return an int that is the y of the opposite point of the origin
-     */
-    public int getXEnd() {
-        return this.getStructuralPoints().get(1).x;
-    }
-
-    /**
-     * @return an int that is the y of the opposite point of the origin
-     */
-    public int getYEnd() {
-        return this.getStructuralPoints().get(1).y;
+    public SLine(DrawableEntity drawable) {
+        super(drawable);
     }
 
     @Override
@@ -33,19 +20,12 @@ public class SLine extends Shape {
         // Set the thickness of the line
         g2d.setStroke(new BasicStroke(this.getThickness()));
         // Draw the line
-        g2d.drawLine(getX(), getY(), this.getX() + getWidth(), this.getY() + getHeight());
+        g2d.drawLine(getX(), getY(), getX()+super.getWidth(), getY()+super.getHeight());
     }
 
     @Override
     public String toString() {
-        return "Color: " + super.getColor() + " Thick: " + super.getThickness() + " Points: " + super.getStructuralPoints().toString() + " width: " + super.getWidth() + " height: " + super.getHeight() + "  " + super.getX() + " , " + super.getX() + "Last " + this.getXEnd() + ", " + this.getYEnd();
+        return "Color: " + super.getColor() + " Thick: " + super.getThickness() + " Points: " + super.getStructuralPoints().toString() + " width: " + super.getWidth() + " height: " + super.getHeight() + "  " + super.getX() + " , " + super.getX() ;
     }
-
-    @Override
-    public void setOrigin(Point newPoint) {
-        super.getStructuralPoints().set(0, newPoint);
-    }
-    
-    
 
 }

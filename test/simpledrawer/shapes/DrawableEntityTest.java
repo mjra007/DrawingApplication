@@ -35,7 +35,7 @@ public class DrawableEntityTest extends TestCase {
      */
     public void testGetWidth() {
         System.out.println("getWidth");
-        DrawableEntity instance = new DrawableEntity.Builder()
+        DrawableEntity instance = new DrawableEntity.Builder(structuralPoints, height, width, color, filledColor, borderThickness, filled, type)
                 .setColor(Color.yellow)
                 .setHeight(100)
                 .setWidth(400)
@@ -52,7 +52,7 @@ public class DrawableEntityTest extends TestCase {
      */
     public void testGetHeight() {
         System.out.println("getHeight");
-        DrawableEntity instance = new DrawableEntity.Builder()
+        DrawableEntity instance = new DrawableEntity.Builder(structuralPoints, height, width, color, filledColor, borderThickness, filled, type)
                 .setColor(Color.yellow)
                 .setHeight(100)
                 .setWidth(400)
@@ -71,7 +71,7 @@ public class DrawableEntityTest extends TestCase {
     public void testSetWidth() {
         System.out.println("setWidth");
         int newWidth = 300;
-        DrawableEntity instance = new DrawableEntity.Builder()
+        DrawableEntity instance = new DrawableEntity.Builder(structuralPoints, height, width, color, filledColor, borderThickness, filled, type)
                 .setColor(Color.yellow)
                 .setHeight(200)
                 .setWidth(400)
@@ -88,7 +88,7 @@ public class DrawableEntityTest extends TestCase {
     public void testSetHeight() {
         System.out.println("setHeight");
         int newHeight = 2;
-        DrawableEntity instance = new DrawableEntity.Builder()
+        DrawableEntity instance = new DrawableEntity.Builder(structuralPoints, height, width, color, filledColor, borderThickness, filled, type)
                 .setColor(Color.yellow)
                 .setHeight(200)
                 .setWidth(400)
@@ -104,7 +104,7 @@ public class DrawableEntityTest extends TestCase {
      */
     public void testGetOrigin() {
         System.out.println("getOrigin");
-        DrawableEntity instance = new DrawableEntity.Builder()
+        DrawableEntity instance = new DrawableEntity.Builder(structuralPoints, height, width, color, filledColor, borderThickness, filled, type)
                 .setColor(Color.yellow)
                 .setHeight(200)
                 .setWidth(400)
@@ -122,7 +122,7 @@ public class DrawableEntityTest extends TestCase {
     public void testSetOrigin() {
         System.out.println("setOrigin");
         Point newPoint = new Point(3, 0);
-        DrawableEntity instance = new DrawableEntity.Builder()
+        DrawableEntity instance = new DrawableEntity.Builder(structuralPoints, height, width, color, filledColor, borderThickness, filled, type)
                 .setColor(Color.yellow)
                 .setHeight(200)
                 .setWidth(400)
@@ -138,7 +138,7 @@ public class DrawableEntityTest extends TestCase {
      */
     public void testGetX() {
         System.out.println("getX");
-        DrawableEntity instance = new DrawableEntity.Builder()
+        DrawableEntity instance = new DrawableEntity.Builder(structuralPoints, height, width, color, filledColor, borderThickness, filled, type)
                 .setColor(Color.yellow)
                 .setHeight(200)
                 .setWidth(400)
@@ -155,7 +155,7 @@ public class DrawableEntityTest extends TestCase {
      */
     public void testGetY() {
         System.out.println("getY");
-        DrawableEntity instance = new DrawableEntity.Builder()
+        DrawableEntity instance = new DrawableEntity.Builder(structuralPoints, height, width, color, filledColor, borderThickness, filled, type)
                 .setColor(Color.yellow)
                 .setHeight(200)
                 .setWidth(400)
@@ -172,7 +172,7 @@ public class DrawableEntityTest extends TestCase {
      */
     public void testGetColor() {
         System.out.println("getColor");
-        DrawableEntity instance = new DrawableEntity.Builder()
+        DrawableEntity instance = new DrawableEntity.Builder(structuralPoints, height, width, color, filledColor, borderThickness, filled, type)
                 .setColor(Color.yellow)
                 .setHeight(200)
                 .setWidth(400)
@@ -190,7 +190,7 @@ public class DrawableEntityTest extends TestCase {
     public void testSetColor() {
         System.out.println("setColor");
         Color newColor = Color.BLACK;
-        DrawableEntity instance = new DrawableEntity.Builder()
+        DrawableEntity instance = new DrawableEntity.Builder(structuralPoints, height, width, color, filledColor, borderThickness, filled, type)
                 .setColor(Color.yellow)
                 .setHeight(200)
                 .setWidth(400)
@@ -207,7 +207,7 @@ public class DrawableEntityTest extends TestCase {
     public void testSetStructuralPoints() {
         System.out.println("setStructuralPoints");
         List<Point> list = Arrays.asList(new Point(3, 3), new Point(3 + 400, 3 - 200));
-        DrawableEntity instance = new DrawableEntity.Builder()
+        DrawableEntity instance = new DrawableEntity.Builder(structuralPoints, height, width, color, filledColor, borderThickness, filled, type)
                 .setColor(Color.yellow)
                 .setHeight(200)
                 .setWidth(400)
@@ -223,7 +223,7 @@ public class DrawableEntityTest extends TestCase {
      */
     public void testGetStructuralPoints() {
         System.out.println("getStructuralPoints");
-        DrawableEntity instance = new DrawableEntity.Builder()
+        DrawableEntity instance = new DrawableEntity.Builder(structuralPoints, height, width, color, filledColor, borderThickness, filled, type)
                 .setColor(Color.yellow)
                 .setHeight(200)
                 .setWidth(400)
@@ -241,7 +241,7 @@ public class DrawableEntityTest extends TestCase {
     public void testGetEntityType() {
         System.out.println("getEntityType");
         System.out.println("getStructuralPoints");
-        DrawableEntity instance = new DrawableEntity.Builder()
+        DrawableEntity instance = new DrawableEntity.Builder(structuralPoints, height, width, color, filledColor, borderThickness, filled, type)
                 .setColor(Color.yellow)
                 .setHeight(200)
                 .setWidth(400)

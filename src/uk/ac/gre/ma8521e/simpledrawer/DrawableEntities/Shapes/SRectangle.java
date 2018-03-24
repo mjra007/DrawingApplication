@@ -1,13 +1,14 @@
 package uk.ac.gre.ma8521e.simpledrawer.DrawableEntities.Shapes;
 
+import uk.ac.gre.ma8521e.simpledrawer.DrawableEntities.Shape;
 import java.awt.BasicStroke;
 import java.awt.Graphics2D;
-import java.awt.Point;
+import uk.ac.gre.ma8521e.simpledrawer.DrawableEntities.DrawableEntity;
 
-public class SRectangle extends Shape {
+public class SRectangle extends Shape{
 
-    public SRectangle(Shape shape) {
-        super(shape);    
+    public SRectangle(DrawableEntity drawable) {
+        super(drawable);
     }
 
 
@@ -46,6 +47,7 @@ public class SRectangle extends Shape {
     public String toString() {
         return "Color: " + super.getColor() + " Thick: " + super.getThickness() + " Points: " + super.getStructuralPoints().toString() + " width: " + super.getWidth() + " height: " + super.getHeight() + "  " + super.getX() + " , " + super.getX() + "Last " + this.getXEnd() + ", " + this.getYEnd();
     }
+
 
 
 }

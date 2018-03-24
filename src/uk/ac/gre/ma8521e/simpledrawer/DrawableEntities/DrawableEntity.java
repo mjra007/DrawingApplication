@@ -7,6 +7,7 @@ import java.awt.Graphics2D;
 import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
+import uk.ac.gre.ma8521e.simpledrawer.DrawableEntities.Container.ContainerI;
 import uk.ac.gre.ma8521e.simpledrawer.DrawableEntities.DrawableEntity.Builder;
 
 /**
@@ -16,17 +17,23 @@ import uk.ac.gre.ma8521e.simpledrawer.DrawableEntities.DrawableEntity.Builder;
  * implementation of the draw method to be able to be drawn.
  *
  */
-public class DrawableEntity implements DrawableI  {
+public abstract class DrawableEntity implements DrawableI, ContainerI {
 
+    //border of the shape
+    private int borderThickness;
+    //whether the shape is filled with a color
+    private boolean filled = false;
+    //if not assigned let s just use the same as the border because why not
+    public Color filledColor;
     // Type of entity e.g. line or oval
     private final EntityType TYPE;
     private int height;
-    private int width;
+    int width;
     /**
      * Every entity holds some points that are crucial to draw it, They are held
      * in this list
      */
-    private List<Point> structuralPoints = new ArrayList<Point>();
+    private List<Point> structuralPoints = new ArrayList<>();
     /**
      * Everything you draw has a color
      */
@@ -40,14 +47,20 @@ public class DrawableEntity implements DrawableI  {
         this.width = dE.width;
         this.color = dE.color;
         this.TYPE = dE.TYPE;
+        this.filled = dE.filled;
+        this.filledColor = dE.filledColor;
+        this.borderThickness = dE.borderThickness;
     }
 
-    private DrawableEntity(List<Point> structuralPoints, int height, int width, Color color, EntityType type) {
+    private DrawableEntity(List<Point> structuralPoints, int height, int width, Color color, Color filledColor, int borderThickness, boolean filled, EntityType type) {
         this.structuralPoints = structuralPoints;
         this.height = height;
         this.width = width;
         this.color = color;
         this.TYPE = type;
+        this.filled = filled;
+        this.filledColor = filledColor;
+        this.borderThickness = borderThickness;
     }
 
     /**
@@ -72,7 +85,6 @@ public class DrawableEntity implements DrawableI  {
      * set a new width for this shape
      */
     public void setWidth(int newWidth) {
-        getStructuralPoints().set(1, new Point(getOrigin().x + newWidth, getOrigin().y));
         this.width = newWidth;
     }
 
@@ -83,17 +95,12 @@ public class DrawableEntity implements DrawableI  {
      * set a new height for this shape
      */
     public void setHeight(int newHeight) {
-        getStructuralPoints().set(1, new Point(getOrigin().x, getOrigin().y + newHeight));
         this.height = newHeight;
     }
 
     /**
      *
      * @return the first of the structural points of your shape
-     *
-     * X******s * * * * *******
-     *
-     * If it was a Rectangle It would returnthe x point in that square
      *
      */
     public Point getOrigin() {
@@ -127,9 +134,7 @@ public class DrawableEntity implements DrawableI  {
      * meant to be implemented by the dev when creating a new shape
      */
     @Override
-    public void draw(Graphics2D g2d) {
-        System.out.println("You forgot to implement the drawing method!");
-    }
+    public abstract void draw(Graphics2D g2d);
 
     /**
      * @return the color for the entity
@@ -173,13 +178,68 @@ public class DrawableEntity implements DrawableI  {
         return new Cloner().deepClone(this);
     }
 
+    /**
+     *
+     * @return the thickness of this shape
+     */
+    public int getThickness() {
+        return this.borderThickness;
+    }
+
+    /**
+     *
+     * @param thickness set a new thickness for the shape
+     */
+    public void setThickness(int thickness) {
+        this.borderThickness = thickness;
+    }
+
+    /**
+     *
+     * @return a boolean if shape is filled
+     */
+    public boolean isItFilled() {
+        return this.filled;
+    }
+
+    /**
+     *
+     * @param b set a shape to filled or not with a boolean
+     */
+    private void setFilled(boolean b) {
+        this.filled = b;
+    }
+
+    /**
+     *
+     * @return get the color that was used to fill the shape
+     */
+    public Color getFilledColor() {
+        return this.filledColor;
+    }
+
+    /**
+     *
+     * @param c set the color used to fill the shape
+     */
+    public void setFilledColor(Color c) {
+        setFilled(true);
+        this.filledColor = c;
+    }
+
     public static final class Builder {
 
         private EntityType type;
         private int height;
         private int width;
-        private List<Point> structuralPoints = new ArrayList<Point>();
+        private List<Point> structuralPoints = new ArrayList<>();
         private Color color;
+        //border of the shape
+        private int borderThickness;
+        //whether the shape is filled with a color
+        private boolean filled = false;
+        //if not assigned let s just use the same as the border because why not
+        private Color filledColor;
 
         public Builder setType(EntityType type) {
             this.type = type;
@@ -206,9 +266,30 @@ public class DrawableEntity implements DrawableI  {
             return this;
         }
 
-        public DrawableEntity build() {
-            return new DrawableEntity(structuralPoints, height, width, color, type);
+        public Builder setBorderThickness(int t) {
+            this.borderThickness = t;
+            return this;
         }
+
+        public Builder setFilledColor(Color c) {
+            this.filledColor = c;
+            return this;
+        }
+
+        public Builder setFilled(boolean b) {
+            this.filled = b;
+            return this;
+        }
+
+        public DrawableEntity build() {
+            return new DrawableEntity(structuralPoints, height, width, color, filledColor, borderThickness, filled, type) {
+                @Override
+                public void draw(Graphics2D g2d) {
+                    throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+                }
+            };
+        }
+
 
     }
 

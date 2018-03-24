@@ -23,7 +23,6 @@ import uk.ac.gre.ma8521e.simpledrawer.DrawableEntities.Container.ContainerSpawnA
 import uk.ac.gre.ma8521e.simpledrawer.DrawableEntities.DrawableEntity;
 import uk.ac.gre.ma8521e.simpledrawer.Readers.JSONShapeReader;
 import uk.ac.gre.ma8521e.simpledrawer.DrawableEntities.Container.Container;
-import uk.ac.gre.ma8521e.simpledrawer.DrawableEntities.Shapes.Shape;
 import uk.ac.gre.ma8521e.simpledrawer.DrawableEntities.Container.ContainerI;
 import uk.ac.gre.ma8521e.simpledrawer.DrawableEntities.EntityType;
 

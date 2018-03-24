@@ -15,8 +15,8 @@ import drawingpanel.DrawableI;
 import drawingpanel.DrawingPanel;
 import uk.ac.gre.ma8521e.simpledrawer.GUI.Models.CanvasOptions;
 import uk.ac.gre.ma8521e.simpledrawer.DrawableEntities.Container.Container;
-import uk.ac.gre.ma8521e.simpledrawer.DrawableEntities.Shapes.Shape;
 import uk.ac.gre.ma8521e.simpledrawer.DrawableEntities.CloneI;
+import uk.ac.gre.ma8521e.simpledrawer.DrawableEntities.DrawableEntity;
 
 /**
  *
@@ -127,8 +127,8 @@ public class RightMenuController {
 
     private void fillShape(ActionEvent evt) {
         Container container = (Container) canvas.getSelectedDrawing();
-        Shape shape = (Shape) container.getContained();
-        shape.setFilledColor(canvasOptions.getCurrentColor());
+        DrawableEntity drawable = container.getContained();
+        drawable.setFilledColor(canvasOptions.getCurrentColor());
         canvas.refresh();;
     }
 

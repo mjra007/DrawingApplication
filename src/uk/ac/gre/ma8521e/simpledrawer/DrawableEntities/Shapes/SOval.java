@@ -1,13 +1,15 @@
 package uk.ac.gre.ma8521e.simpledrawer.DrawableEntities.Shapes;
 
+import uk.ac.gre.ma8521e.simpledrawer.DrawableEntities.Shape;
 import java.awt.BasicStroke;
 import java.awt.Graphics2D;
 import java.awt.Point;
+import uk.ac.gre.ma8521e.simpledrawer.DrawableEntities.DrawableEntity;
 
-public class SOval extends Shape {
+public class SOval extends Shape{
 
-    public SOval(Shape shape) {
-        super(shape);
+    public SOval(DrawableEntity drawable) {
+        super(drawable);
     }
 
     /**
@@ -24,15 +26,6 @@ public class SOval extends Shape {
         return getY() + getHeight();
     }
 
-    /**
-     * @return the area in pixels of the ellipse. Does this always work?
-     */
-    public double getArea() {
-        int line1 = getXEnd() - getX();
-        int line2 = getYEnd() - getY();
-        System.out.println(line1 + ", " + line2 + " " + Math.PI * line1 / 2 * line2 / 2);
-        return Math.PI * line1 / 2 * line2 / 2;
-    }
 
     @Override
     public void draw(Graphics2D g2d) {
