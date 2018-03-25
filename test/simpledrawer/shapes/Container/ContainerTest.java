@@ -38,7 +38,7 @@ public class ContainerTest extends TestCase {
      */
     public void testGetOrigin() {
         System.out.println("getOrigin");
-        Container instance = new Container(new DrawableEntity.Builder(structuralPoints, height, width, color, filledColor, borderThickness, filled, type)
+        Container instance = new Container(new DrawableEntity.Builder()
                 .setColor(Color.yellow)
                 .setHeight(100)
                 .setWidth(400)
@@ -55,7 +55,7 @@ public class ContainerTest extends TestCase {
      */
     public void testGetWidth() {
         System.out.println("getWidth");
-        Container instance = new Container(new DrawableEntity.Builder(structuralPoints, height, width, color, filledColor, borderThickness, filled, type)
+        Container instance = new Container(new DrawableEntity.Builder()
                 .setColor(Color.yellow)
                 .setHeight(100)
                 .setWidth(400)
@@ -72,7 +72,7 @@ public class ContainerTest extends TestCase {
      */
     public void testGetHeight() {
         System.out.println("getHeight");
-        Container instance = new Container(new DrawableEntity.Builder(structuralPoints, height, width, color, filledColor, borderThickness, filled, type)
+        Container instance = new Container(new DrawableEntity.Builder()
                 .setColor(Color.yellow)
                 .setHeight(100)
                 .setWidth(400)
@@ -90,7 +90,7 @@ public class ContainerTest extends TestCase {
     public void testSetHeight() {
         System.out.println("setHeight");
         int height = 100 + 10;
-        Container instance = new Container(new DrawableEntity.Builder(structuralPoints, height, width, color, filledColor, borderThickness, filled, type)
+        Container instance = new Container(new DrawableEntity.Builder()
                 .setColor(Color.yellow)
                 .setHeight(100)
                 .setWidth(400)
@@ -107,7 +107,7 @@ public class ContainerTest extends TestCase {
     public void testSetWidth() {
         System.out.println("setWidth");
         int width = 200 + 10;
-        Container instance = new Container(new DrawableEntity.Builder(structuralPoints, height, width, color, filledColor, borderThickness, filled, type)
+        Container instance = new Container(new DrawableEntity.Builder()
                 .setColor(Color.yellow)
                 .setHeight(100)
                 .setWidth(400)
@@ -123,7 +123,7 @@ public class ContainerTest extends TestCase {
      */
     public void testGetEndPoint() {
         System.out.println("getEndPoint");
-        Container instance = new Container(new DrawableEntity.Builder(structuralPoints, height, width, color, filledColor, borderThickness, filled, type)
+        Container instance = new Container(new DrawableEntity.Builder()
                 .setColor(Color.yellow)
                 .setHeight(100)
                 .setWidth(400)
