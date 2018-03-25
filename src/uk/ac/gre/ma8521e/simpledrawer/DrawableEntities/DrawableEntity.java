@@ -226,6 +226,11 @@ public abstract class DrawableEntity implements DrawableI, ContainerI {
         setFilled(true);
         this.filledColor = c;
     }
+    
+    @Override
+    public String toString(){
+        return this.TYPE+ " " + this.borderThickness + " "+ this.color+ " "+ this.filled+ " "+this.filledColor+" "+this.height+" "+this.structuralPoints+" "+this.getStructuralPoints();
+    }
 
     public static final class Builder {
 

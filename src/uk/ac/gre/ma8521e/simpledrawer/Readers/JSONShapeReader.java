@@ -80,7 +80,7 @@ public class JSONShapeReader {
                             .setBorderThickness(se.getThickness())
                             .setType(se.type())
                             .build());
-            drawables.add(drawable.contain(drawable));
+            drawables.add(drawable.contain());
         }
         this.background = listData.listOfOptions.get(0).getBackground();
     }

@@ -139,7 +139,7 @@ public class CanvasController implements MouseListener, MouseMotionListener, Mou
                         DrawableI drawing=(DrawableI)DrawableFactory.createDrawable(builder);
                         if (drawing instanceof ContainerI) {
                             ContainerI entityContainerI = (ContainerI) drawing;
-                            Container container = entityContainerI.contain(entityContainerI);
+                            Container container = entityContainerI.contain();
                             // System.out.println(""+container.getContained().toString());
                             ContainerSpawnAnimation t = new ContainerSpawnAnimation(container, canvas);
                             t.start();

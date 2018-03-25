@@ -154,31 +154,7 @@ public class Container extends DrawableEntity implements InteractiveShapeI, Clon
         System.out.println(this.getClass().getName()+" rotate()  is not implemented");
         return null;
     }
-
-    private Rectangle getBottomRightCorner() {
-        Rectangle rectangle = new Rectangle();
-        rectangle.setFrameFromDiagonal(new Point(getEndPoint().x - 10, getEndPoint().y - 10), new Point(getEndPoint().x + 10, getEndPoint().y + 10));
-        return rectangle;
-    }
-
-    private Rectangle getBottomLeftCorner() {
-        Rectangle rectangle = new Rectangle();
-        rectangle.setFrameFromDiagonal(new Point(getOrigin().x - 10, getEndPoint().y - 10), new Point(getOrigin().x + 10, getEndPoint().y + 10));
-        return rectangle;
-    }
-
-    private Rectangle getTopLeftCorner() {
-        Rectangle rectangle = new Rectangle();
-        rectangle.setFrameFromDiagonal(new Point(getOrigin().x - 10, getOrigin().y - 10), new Point(getOrigin().x + 10, getOrigin().y + 10));
-        return rectangle;
-    }
-
-    private Rectangle getTopRightCorner() {
-        Rectangle rectangle = new Rectangle();
-        rectangle.setFrameFromDiagonal(new Point(getEndPoint().x - 10, getOrigin().y - 10), new Point(getEndPoint().x + 10, getOrigin().y + 10));
-        return rectangle;
-    }
-
+    
     private Rectangle getBottomSide() {
         Rectangle rectangle = new Rectangle();
         rectangle.setFrameFromDiagonal(new Point(getOrigin().x, getEndPoint().y - 5), new Point(getEndPoint().x, getEndPoint().y));
@@ -191,6 +167,7 @@ public class Container extends DrawableEntity implements InteractiveShapeI, Clon
         return rectangle;
     }
 
+    @Override
     public boolean rightSideContains(Point p) {
         boolean cornerDetected = false;
         if (contains(p, getRightSide())) {
@@ -199,44 +176,10 @@ public class Container extends DrawableEntity implements InteractiveShapeI, Clon
         return cornerDetected;
     }
 
+    @Override
     public boolean bottomSideContains(Point p) {
         boolean cornerDetected = false;
         if (contains(p, getBottomSide())) {
-            cornerDetected = true;
-        }
-        return cornerDetected;
-    }
-
-    public boolean topRightCornerContains(Point p) {
-        boolean cornerDetected = false;
-        if (contains(p, getTopRightCorner())) {
-            cornerDetected = true;
-            System.out.println("topright");
-        }
-        return cornerDetected;
-    }
-
-    public boolean topLeftCornerContains(Point p) {
-        boolean cornerDetected = false;
-        if (contains(p, getTopLeftCorner())) {
-            cornerDetected = true;
-            System.out.println("topleft");
-        }
-        return cornerDetected;
-    }
-
-    public boolean bottomRightCornerContains(Point p) {
-        boolean cornerDetected = false;
-        if (contains(p, getBottomRightCorner())) {
-            cornerDetected = true;
-            System.out.println("bottomright");
-        }
-        return cornerDetected;
-    }
-
-    public boolean bottomLeftCornerContains(Point p) {
-        boolean cornerDetected = false;
-        if (contains(p, getBottomLeftCorner())) {
             cornerDetected = true;
         }
         return cornerDetected;

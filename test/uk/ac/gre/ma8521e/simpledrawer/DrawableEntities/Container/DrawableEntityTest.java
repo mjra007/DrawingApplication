@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package simpledrawer.shapes;
+package uk.ac.gre.ma8521e.simpledrawer.DrawableEntities.Container;
 
 import uk.ac.gre.ma8521e.simpledrawer.DrawableEntities.DrawableEntity;
 import com.rits.cloning.Cloner;

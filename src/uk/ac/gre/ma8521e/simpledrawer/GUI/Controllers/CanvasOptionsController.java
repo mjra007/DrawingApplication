@@ -388,7 +388,7 @@ public class CanvasOptionsController {
                 canvas.addDrawing(drawing);
                 if(drawing instanceof ContainerI){
                     ContainerI containerI =(ContainerI)drawing;
-                    containerI.contain(containerI);
+                    new ContainerSpawnAnimation(containerI.contain(),canvas).start();
                 }
                    
             }
