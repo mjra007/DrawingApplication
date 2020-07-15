@@ -1,4 +1,4 @@
-# SimpleDraw
+# SimpleDrawing App
 
 #### A simple drawing app developed in JAVA with the following learning outcomes:
   1. Use professional techniques for code and design reuse such as library creation, application of design patterns
